@@ -1,0 +1,87 @@
+{% extends "wagtailadmin/base.html" %}
+{% block titletag %} درخواست های پشتیبانی {% endblock %}
+{% block extra_css %}
+    {{ block.super }}
+    <style>/* Center align the page content */
+        .row {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          flex-direction: column;
+          margin: 50px 0;
+        }
+        
+        /* Style the user label */
+        label {
+          font-size: 18px;
+          font-weight: bold;
+        }
+        
+        /* Style the user name */
+        h4:nth-of-type(1) {
+          font-size: 24px;
+          margin: 10px 0;
+        }
+        
+        /* Style the wait time label */
+        label:nth-of-type(2) {
+          font-size: 18px;
+          font-weight: bold;
+        }
+        
+        /* Style the wait time */
+        h4:nth-of-type(2) {
+          font-size: 24px;
+          margin: 10px 0;
+        }
+        
+        /* Style the support button */
+        button {
+          font-size: 18px;
+          margin-top: 20px;
+          padding: 10px 20px;
+          border-radius: 5px;
+          background-color: #dc3545;
+          color: white;
+          border: none;
+          cursor: pointer;
+          transition: 0.3s;
+        }
+        
+        /* Style the disabled support button */
+        button[disabled] {
+          background-color: #6c757d;
+          cursor: not-allowed;
+        }
+        
+        /* Add hover effect to the support button */
+        button:hover {
+          background-color: #c82333;
+        }</style>
+{% endblock %}
+
+{% block content %}
+{% include "wagtailadmin/shared/header.html" with title="پشتیبانی آنلاین" icon="tablet-alt" %}
+{% for support in support_requests %}
+{% if support.user %} 
+<div class="row" style="text-align: center;">
+    <label>کاربر در خواست دهنده :</label>
+    <h4> {{support.user}} </h4><br>
+    <label>زمان انتظار</label>
+    <h4> {{support.wait}} </h4><br>
+    {% if support.operator %}
+    <button class="btn btn-outline-danger" disabled>درخواست پشتیبانی توسط {{support.operator}} تایید شده و در حال انجام است</button>
+     {% else %}
+     <button class="btn btn-outline-danger" onclick="get_support('{{support.support_request}}');">پشتیبانی کاربر</button>
+      {% endif %}
+</div>
+{% else %}
+<label>در حال حاظر درخواستی برای پشتیبانی وجود ندارد</label>
+{% endif %}
+{% endfor %}
+<script>
+function get_support(room){
+    window.open('/support/' + room + '/', '_blank');
+}
+</script>
+{% endblock %}

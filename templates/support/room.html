@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block HEADING %}
+<meta name="description" content="" />
+<meta name="keywords" content="" />
+{% endblock %}
+{% block TITLE %}پشتیبانی آنلاین{% endblock %}
+{% block CSS %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+{% endblock %}
+{% block CONTENT %}
+{% csrf_token %}
+<input type="hidden" name="Supported_user" value="{{request.user.phoneNumber}}">
+<div id="support_log" class="row">
+</div>
+<input id="support_message" type="text" size="100"><br>
+<input id="support_submit" type="button" value="ارسال">
+    {% block JS %}
+    <script src="{% static 'js/support/support.js' %}"></script>
+    {% endblock %}
+{% endblock %}
