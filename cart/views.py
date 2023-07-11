@@ -24,7 +24,7 @@ class CartViewSet(generics.ListCreateAPIView):
 class SupportViewSet(generics.ListCreateAPIView):
     queryset = Support.objects.all()
     serializer_class = SupportSerializer
-    ordering_fields = ['room', 'support_user','message','support_status','timestamp',]
+    ordering_fields = ['room', 'support_user','message','support_status','timestamp', 'time']
     search_fields = ['support_user']
     
     filter_backends = [filters.OrderingFilter, filters.SearchFilter]
@@ -48,7 +48,7 @@ def support_add(request):
                         room = support_room,
                         support_user = support_user,
                         support_status = support_status,
-                        message = 'welcome',
+                        message = 'خوش آمدید. لطفا پیام خود را وارد کنید',
                     )
                     SupportRequest.objects.create(
                         user = support_user,

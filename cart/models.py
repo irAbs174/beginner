@@ -108,6 +108,7 @@ class Support(models.Model):
     message = models.TextField(verbose_name='پیام', null=True, blank=True)
     support_status = models.CharField(max_length=100, verbose_name='وضعیت پشتیبانی', null=True, blank=True)
     timestamp = models.DateTimeField(auto_now_add=True, null=True, blank=True)
+    time = models.TextField(null=True, blank=True)
     
     class Meta:
         verbose_name = 'تاریخچه پیام پشتیبانی'

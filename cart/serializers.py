@@ -10,4 +10,4 @@ class CartSerializer(serializers.HyperlinkedModelSerializer):
 class SupportSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Support
-        fields = ['room', 'support_user','message','support_status','timestamp',]
+        fields = ['room', 'support_user','message','support_status','timestamp', 'time']

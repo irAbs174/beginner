@@ -12,13 +12,14 @@ def post_message(request):
         if request.user.is_authenticated:
             message = request.POST.get('support_message')
             support_room = request.POST.get('support_room')
+            time = request.POST.get('time')
             user = request.user.phoneNumber
-            if User.objects.filter(phoneNumber=user, is_supporter=True):
-                support = Support.objects.create(room=support_room, support_user=user, message=message, support_status="SUPPORTER")
-                return JsonResponse({'message': support.message, 'timestamp': support.timestamp.isoformat()})
+            if User.objects.filter(phoneNumber=user, is_superuser=True):
+                support = Support.objects.create(room=support_room, support_user=user, message=message, support_status="SUPPORTER", time = time)
+                return JsonResponse({'message': support.message, 'timestamp': support.timestamp.isoformat(), 'time' : support.time})
             else:
-                support = Support.objects.create(room=support_room, support_user=user, message=message, support_status="USER")
-                return JsonResponse({'message': support.message, 'timestamp': support.timestamp.isoformat()})
+                support = Support.objects.create(room=support_room, support_user=user, message=message, support_status="USER", time = time)
+                return JsonResponse({'message': support.message, 'timestamp': support.timestamp.isoformat(), 'time' : support.time})
         else:
             return JsonResponse({'status':"برای ارسال پیام پشتیبانی ابتدا وارد سایت شوید یا ثبت نام کنید", 'success': False})
     else:
@@ -29,7 +30,7 @@ def get_message(request):
     timestamp = request.GET.get('timestamp')
     support_room = request.GET.get('support_room')
     supports = Support.objects.filter(room=support_room, timestamp__gt=timestamp)
-    response = [{'message': support.message, 'timestamp': support.timestamp.isoformat()} for support in supports]
+    response = [{'message': support.message, 'timestamp': support.timestamp.isoformat(), 'status': support.support_status, 'time' : support.time} for support in supports]
     return JsonResponse({'messages': response})
 
 @csrf_exempt

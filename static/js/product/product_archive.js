@@ -1,15 +1,15 @@
 $(document).ready(function() {
-    var perPage = 8;
-    var page = 1;
-
+var perPage = 8;
+var page = 1;
     function loadProducts() {
       var startIndex = (page - 1) * perPage;
       var endIndex = startIndex + perPage;
-      $.getJSON(`/UNIQUEAPI174/pages/?type=product.InventoryItem`, function(data) {
+      $.getJSON(`/UNIQUEAPI174/pages/?type=product.InventoryItem&limit=${perPage}&offset=${startIndex}`, function(data) { //BUG FIXED NEW
         var product_item = data.items;
         if (product_item.length > 0) {
-          totalPages = Math.ceil(product_item.length / perPage);
-          for (var i = startIndex; i < endIndex; i++) {
+          totalPages = Math.ceil(data.meta.total_count / perPage); //BUG FIXED NEW
+          console.log('=>'+totalPages);
+          for (var i = 0; i < product_item.length; i++) {
             if (i >= product_item.length) {
               break;
             }
@@ -80,19 +80,19 @@ $(document).ready(function() {
     loadProducts();
   });
 // Start filters :
+var pageD = 1;
 function defaultProduct() {
   var perPage = 8;
-  var page = 1;
   var startIndex = (page - 1) * perPage;
   var endIndex = startIndex + perPage;
 
-  $.getJSON(`/UNIQUEAPI174/pages/?type=product.InventoryItem&order=first_published_at`, function(data) {
+  $.getJSON(`/UNIQUEAPI174/pages/?type=product.InventoryItem&order=first_published_at&limit=${perPage}&offset=${startIndex}`, function(data) {
     var product_item = data.items;
     if (product_item.length > 0) {
-      totalPages = Math.ceil(product_item.length / perPage);
+      totalPages = Math.ceil(data.meta.total_count / perPage);
       $('#PRODUCT').html("");
 
-      for (var i = startIndex; i < endIndex; i++) {
+      for (var i = 0; i < product_item.length; i++) {
         if (i >= product_item.length) {
           break;
         }
@@ -147,29 +147,29 @@ function defaultProduct() {
 
         });
       }
-      if (page >= totalPages) {
+      if (pageD >= totalPages) {
         $('#load-more').hide();
       } else {
         $('#load-more').show();
       }
 
-      page++;
+      pageD++;
     }
   });
 }
+var pageO = 1;
 function oldProduct() {
   var perPage = 8;
-  var page = 1;
-  var startIndex = (page - 1) * perPage;
+  var startIndex = (pageO - 1) * perPage;
   var endIndex = startIndex + perPage;
 
-  $.getJSON(`/UNIQUEAPI174/pages/?type=product.InventoryItem&order=-first_published_at`, function(data) {
+  $.getJSON(`/UNIQUEAPI174/pages/?type=product.InventoryItem&order=-first_published_at&limit=${perPage}&offset=${startIndex}`, function(data) {
     var product_item = data.items;
     if (product_item.length > 0) {
-      totalPages = Math.ceil(product_item.length / perPage);
+      totalPages = Math.ceil(data.meta.total_count / perPage);
       $('#PRODUCT').html("");
 
-      for (var i = startIndex; i < endIndex; i++) {
+      for (var i = 0; i < product_item.length; i++) {
         if (i >= product_item.length) {
           break;
         }
@@ -223,27 +223,27 @@ function oldProduct() {
           }
         });
       }
-      if (page >= totalPages) {
+      if (pageO >= totalPages) {
         $('#load-more').hide();
       } else {
         $('#load-more').show();
       }
 
-      page++;
+      pageO++;
     }
   });
 }
+var pageL = 1;
 function lowPrice() {
   var perPage = 8;
-  var page = 1;
-  var startIndex = (page - 1) * perPage;
+  var startIndex = (pageL - 1) * perPage;
   var endIndex = startIndex + perPage;
-  $.getJSON(`/UNIQUEAPI174/pages/?type=product.InventoryItem&order=price`, function(data) {
+  $.getJSON(`/UNIQUEAPI174/pages/?type=product.InventoryItem&order=price&limit=${perPage}&offset=${startIndex}`, function(data) {
     var product_item = data.items;
     if (product_item.length > 0) {
-      totalPages = Math.ceil(product_item.length / perPage);
+      totalPages = Math.ceil(data.meta.total_count / perPage);
       $('#PRODUCT').html("");
-      for (var i = startIndex; i < endIndex; i++) {
+      for (var i = 0; i < product_item.length; i++) {
         if (i >= product_item.length) {
           break;
         }
@@ -298,27 +298,27 @@ function lowPrice() {
 
         });
       }
-      if (page >= totalPages) {
+      if (pageL >= totalPages) {
         $('#load-more').hide();
       } else {
         $('#load-more').show();
       }
 
-      page++;
+      pageL++;
     }
   });
 }
+var pageH = 1;
 function highPrice() {
   var perPage = 8;
-  var page = 1;
-  var startIndex = (page - 1) * perPage;
+  var startIndex = (pageH - 1) * perPage;
   var endIndex = startIndex + perPage;
-  $.getJSON(`/UNIQUEAPI174/pages/?type=product.InventoryItem&order=-price`, function(data) {
+  $.getJSON(`/UNIQUEAPI174/pages/?type=product.InventoryItem&order=-price&limit=${perPage}&offset=${startIndex}`, function(data) {
     var product_item = data.items;
     if (product_item.length > 0) {
-      totalPages = Math.ceil(product_item.length / perPage);
+      totalPages = Math.ceil(data.meta.total_count / perPage);
       $('#PRODUCT').html("");
-      for (var i = startIndex; i < endIndex; i++) {
+      for (var i = 0; i < product_item.length; i++) {
         if (i >= product_item.length) {
           break;
         }
@@ -373,13 +373,13 @@ function highPrice() {
 
         });
       }
-      if (page >= totalPages) {
+      if (pageH >= totalPages) {
         $('#load-more').hide();
       } else {
         $('#load-more').show();
       }
 
-      page++;
+      pageH++;
     }
   });
 }
@@ -582,18 +582,19 @@ $('#oldFilter').click(function() {
 var inventoryCheckbox = document.getElementById("inventory");
 var specialDiscountCheckbox = document.getElementById("specialdiscount");
 // Offer CheckBox ! =>CHANGE<=
+var pageQ = 1;
+var pageQE = 1;
 inventoryCheckbox.addEventListener("change", function() {
   var perPage = 8;
-  var page = 1;
-  var startIndex = (page - 1) * perPage;
+  var startIndex = (pageQ - 1) * perPage;
   var endIndex = startIndex + perPage;
   if (inventoryCheckbox.checked) {
-    $.getJSON(`/UNIQUEAPI174/pages/?type=product.InventoryItem`, function(data) {
+    $.getJSON(`/UNIQUEAPI174/pages/?type=product.InventoryItem&limit=${perPage}&offset=${startIndex}`, function(data) {
       var product_item = data.items;
       if (product_item.length > 0) {
-        totalPages = Math.ceil(product_item.length / perPage);
+        totalPages = Math.ceil(data.meta.total_count / perPage);
         $('#PRODUCT').html("");
-        for (var i = startIndex; i < endIndex; i++) {
+        for (var i = 0; i < product_item.length; i++) {
           if (i >= product_item.length) {
             break;
           }
@@ -625,25 +626,24 @@ inventoryCheckbox.addEventListener("change", function() {
               $('#PRODUCT').append(postHTML);
             });
         }
-        if (page >= totalPages) {
+        if (pageQ >= totalPages) {
           $('#load-more').hide();
         } else {
           $('#load-more').show();
         }
-        page++;
+        pageQ++;
       }
     });
   } else {
     var perPage = 8;
-    var page = 1;
     var startIndex = (page - 1) * perPage;
     var endIndex = startIndex + perPage;
-    $.getJSON(`/UNIQUEAPI174/pages/?type=product.InventoryItem`, function(data) {
+    $.getJSON(`/UNIQUEAPI174/pages/?type=product.InventoryItem&limit=${perPage}&offset=${startIndex}`, function(data) {
       var product_item = data.items;
       if (product_item.length > 0) {
-        totalPages = Math.ceil(product_item.length / perPage);
+        totalPages = Math.ceil(data.meta.total_count / perPage);
         $('#PRODUCT').html("");
-        for (var i = startIndex; i < endIndex; i++) {
+        for (var i = 0; i < product_item.length; i++) {
           if (i >= product_item.length) {
             break;
           }
@@ -674,30 +674,30 @@ inventoryCheckbox.addEventListener("change", function() {
               $('#PRODUCT').append(postHTML);
           });
         }
-        if (page >= totalPages) {
+        if (pageQE >= totalPages) {
           $('#load-more').hide();
         } else {
           $('#load-more').show();
         }
   
-        page++;
+        pageQE++;
       }
     });
   }
 });
 
+var pageXZ = 1;
 specialDiscountCheckbox.addEventListener("change", function() {
   var perPage = 8;
-  var page = 1;
-  var startIndex = (page - 1) * perPage;
+  var startIndex = (pageXZ - 1) * perPage;
   var endIndex = startIndex + perPage;
   if (specialDiscountCheckbox.checked) {
-    $.getJSON(`/UNIQUEAPI174/pages/?type=product.InventoryItem&is_available=true`, function(data) {
+    $.getJSON(`/UNIQUEAPI174/pages/?type=product.InventoryItem&is_available=true&limit=${perPage}&offset=${startIndex}`, function(data) {
       var product_item = data.items;
       if (product_item.length > 0) {
-        totalPages = Math.ceil(product_item.length / perPage);
+        totalPages = Math.ceil(data.meta.total_count / perPage);
         $('#PRODUCT').html("");
-        for (var i = startIndex; i < endIndex; i++) {
+        for (var i = 0; i < product_item.length; i++) {
           if (i >= product_item.length) {
             break;
           }
@@ -752,22 +752,22 @@ specialDiscountCheckbox.addEventListener("change", function() {
 
           });
         }
-        if (page >= totalPages) {
+        if (pageXZ >= totalPages) {
           $('#load-more').hide();
         } else {
           $('#load-more').show();
         }
 
-        page++;
+        pageXZ++;
       }
     });
   } else {
-    $.getJSON(`/UNIQUEAPI174/pages/?type=product.InventoryItem`, function(data) {
+    $.getJSON(`/UNIQUEAPI174/pages/?type=product.InventoryItem&limit=${perPage}&offset=${startIndex}`, function(data) {
       var product_item = data.items;
       if (product_item.length > 0) {
-        totalPages = Math.ceil(product_item.length / perPage);
+        totalPages = Math.ceil(data.meta.total_count / perPage);
         $('#PRODUCT').html("");
-        for (var i = startIndex; i < endIndex; i++) {
+        for (var i = 0; i < product_item.length; i++) {
           if (i >= product_item.length) {
             break;
           }
@@ -822,13 +822,13 @@ specialDiscountCheckbox.addEventListener("change", function() {
 
           });
         }
-        if (page >= totalPages) {
+        if (pageXZ >= totalPages) {
           $('#load-more').hide();
         } else {
           $('#load-more').show();
         }
 
-        page++;
+        pageXZ++;
       }else{
         Swal.fire({
           title: "محصولی برای نمایش با این فیلتر وجود ندارد",

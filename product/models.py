@@ -302,7 +302,7 @@ class InventoryItem(RoutablePageMixin, Page):
         help_text='یک برند برای محصول انتخاب کنید',
     )
     price = models.PositiveIntegerField(verbose_name='قیمت', blank=False, null=False)
-    short_description = models.CharField(max_length=300, db_index=True, null=True, blank=True, verbose_name='توضیحات کوتاه')
+    short_description = RichTextField(max_length=300, null=True, blank=True, verbose_name='توضیحات کوتاه')
     is_active = models.BooleanField(default=True, verbose_name='فعال / غیرفعال', blank=False, null=False)
     is_available = models.BooleanField(default=True, verbose_name='موجودی / عدم موجودی', blank=False, null=False)
     product_type = models.CharField(max_length=30, db_index=True, null=True, blank=True, verbose_name='نوع محصول')
@@ -527,7 +527,8 @@ class Orders(models.Model):
     color = models.CharField(max_length=30, db_index=True, null=True, blank=True, verbose_name='رنگ')
     price = models.PositiveIntegerField(verbose_name='قیمت')
     status = models.IntegerField(choices=ORDER_STATUS, default=0, verbose_name='وضعیت سفارش')
-    date = models.DateTimeField(auto_now_add=True, verbose_name='زمان ثبت')
+    date = models.DateTimeField(auto_now_add=True, verbose_name='زمان دقیق ثبت', null=True, blank=True)
+    create_on = models.DateField(auto_now_add=True, verbose_name='تاریخ ثبت', null=True, blank=True)
     send_method = models.IntegerField(choices=SEND_METHOD, default=0, verbose_name='روش ارسال')
     send_price = models.PositiveIntegerField(verbose_name='هزینه ارسال')
 
