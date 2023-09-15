@@ -46,8 +46,9 @@ urlpatterns = [
     path('UNIQUEDOC/', include(wagtaildocs_urls)),
     path('get_order/', submit_order, name="order"),
     path(SITE_TRAFFIC, include("monitor.urls")),
-    path(DEVELOPERS_PANEL, admin.site.urls),
+    path('shop_api/', include('product.urls')),
     path('get_bank/', get_bank, name="bank"),
+    path(DEVELOPERS_PANEL, admin.site.urls),
     path('cart/', include('cart.urls')),
     path(SITE_API, api_router.urls),
     

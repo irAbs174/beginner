@@ -2,8 +2,6 @@ $(document).ready(function() {
 var perPage = 8;
 var page = 1;
     function loadProducts() {
-      var startIndex = (page - 1) * perPage;
-      var endIndex = startIndex + perPage;
       $.getJSON(`/UNIQUEAPI174/pages/?type=product.InventoryItem&limit=${perPage}&offset=${startIndex}`, function(data) { //BUG FIXED NEW
         var product_item = data.items;
         if (product_item.length > 0) {
