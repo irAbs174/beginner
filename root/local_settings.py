@@ -19,10 +19,10 @@ LOCAL_ACCOUNT_USERNAME_BLACKLIST = ["admin", 'security', 'secure', 'protection',
            'virus', 'vulnerabilityassessment', 'zeroday', "god"]
 
 # CSRF LOCAL TRUSTED ORIGINS :
-CSRF_LOCAL_TRUSTED_ORIGINS = ['https://8003-irabs174-beginner-tt98x58mqoq.ws-eu101.gitpod.io']
+CSRF_LOCAL_TRUSTED_ORIGINS = ['https://8000-irabs174-beginner-cgg2bi8fn3h.ws-eu104.gitpod.io']
 
 # ALLOWED LOCAL HOSTS :
-ALLOWED_LOCAL_HOSTS = ['8003-irabs174-beginner-tt98x58mqoq.ws-eu101.gitpod.io', '127.0.0.1', 'localhost']
+ALLOWED_LOCAL_HOSTS = ['8000-irabs174-beginner-cgg2bi8fn3h.ws-eu104.gitpod.io', '127.0.0.1', 'localhost']
 
 # SECRET KEY
 SEC_KEY = '0x!b#(1*cd73w$&azzc6p+essg7v=g80ls#z&xcx*mpemx&@9$'
@@ -52,14 +52,10 @@ SUPPORT_PAGE = 'UNIQUESUPPORT174/'
 SITE_TRAFFIC = 'UNIQUETRAFFIC174/'
 
 # BASE_SITE
-BASE_ACTIVE_SITE = '8003-irabs174-beginner-tt98x58mqoq.ws-eu101.gitpod.io'
+BASE_ACTIVE_SITE = '8000-irabs174-beginner-cgg2bi8fn3h.ws-eu104.gitpod.io'
 
 # SITE API URL
 SITE_API = 'UNIQUEAPI174/'
 
 # SITE DEBUG
 SITE_DEBIG = True
-
-
-
-
