@@ -8,12 +8,13 @@ developer : #ABS
 from cart.views import CartViewSet, support_index, support_room, support_add, SupportViewSet
 from .local_settings import DEVELOPERS_PANEL, ADMINS_PANEL, SITE_API, SITE_TRAFFIC
 from cart.support import post_message, get_message, close_room
-from product.views import price_search, last_offers, submit_order, get_bank
+from product.views import last_offers, submit_order, get_bank
 from wagtail.documents import urls as wagtaildocs_urls
 from django.conf.urls import handler404, handler500
 from wagtail.admin import urls as wagtailadmin_urls
 from wagtail.contrib.sitemaps.views import sitemap
 from django.views.generic.base import RedirectView
+from wagtail.images.views.serve import ServeView
 from django.urls import include, path, re_path
 from django.conf.urls.static import static
 from index.views import custom_pages_view
@@ -35,7 +36,6 @@ urlpatterns = [
     path("support/<room>/", support_room, name="Support_room"),
     path('api/cart/', CartViewSet.as_view(), name='cart-api'),
     path("summernote/", include("django_summernote.urls")),
-    path('priceSearch', price_search, name="priceSearch"),
     path('last_offers/', last_offers, name="last_offers"),
     path('support/close', close_room, name='close_room'),
     path('support/add',support_add, name="Support_add"),

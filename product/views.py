@@ -11,27 +11,6 @@ import random
 def last_offers(request):
     return render(request, 'products/productarchive/last_offers.html')
 
-@csrf_exempt
-def price_search(request):
-    min = request.POST.get('minPrice')
-    max = request.POST.get('maxPrice')
-    if isinstance(int(min), int) and isinstance(int(max), int):
-        try:
-            result = product.objects.all()
-            items = result.model.objects.filter(price__gte=int(min), price__lte=int(max))
-            if items.count() > 0:
-                data_list = []
-                for data in items:
-                    print(f"=>{data.id}")
-                    data_list.append({'status':data.id})
-                return JsonResponse({'data_list': data_list, 'success': True})
-            else:
-                return JsonResponse({'status':'محصولی در این بازه قیمتی یافت نشد', 'success': False})
-        except product.DoesNotExist:
-            return JsonResponse({'status':'درخواست نامعتبر', 'success': False})
-    else:
-        return JsonResponse({'status':'مقادیر وارد شده معتبر نیست. لطفا یک مقدار عددی وارد کنید','success': False})
-
 @login_required
 def submit_order(request):
     if request.user.is_authenticated:

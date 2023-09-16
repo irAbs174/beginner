@@ -11,7 +11,7 @@
 
 {% endblock %}
 {% block CONTENT %}
-{% csrf_token %}
+<input type="hidden" name="page_number" value="1">
 <header class="headerblog">
       <div class="h1divhead">
         <h1 class="blogh1 white-color">آرشیو محصولات</h1>
@@ -21,6 +21,10 @@
       <div class="row">
         <div class="col-xxl-3 col-xl-3 col-lg-4 col-md-4 col-sm-12 col-12">
           <div class="position-sticky" style="top: 1rem">
+            <div id="setBrand" class="p-4 mb-3 asidefilter">
+              <h4 class="h3 bchs">انتخاب برند</h4>
+              <!--LOAD FROM JS-->
+            </div>
             <div id="setCat" class="p-4 mb-3 asidefilter">
               <h4 class="h3 bchs">انتخاب دسته بندی</h4>
               <!--LOAD FROM JS-->
@@ -46,7 +50,7 @@
               />
               <button
                 id="rangePriceFilter"
-                class="btn btn-outline-danger" onclick="priceSearch();">
+                class="btn btn-outline-danger">
                 اعمال فیلتر
               </button>
             </div>
@@ -55,11 +59,10 @@
         <section class="col-xxl-9 col-xl-9 col-lg-8 col-md-8 col-sm-12 col-12">
           <div class="sortpro">
             <span class="bi bi-sort-down"> مرتب سازی: </span>
-            <a href="#" id="defaultFilter"><span class="icon2">پیشفرض</span></a>
-            <a href="#" id="lowPriceFilter"><span class="icon2">ارزان‌ترین</span></a>
-            <a href="#" id="highPriceFilter"><span class="icon2">گران‌ترین</span></a>
-            <a href="#" id="newFilter"><span class="icon2">جدیدترین</span></a>
-            <a href="#" id="oldFilter"><span class="icon2">قدیمی ترین</span></a>
+            <a href="#"><span class="icon2 default_filter">جدیدترین</span></a>
+            <a href="#"><span class="icon2 old_filter">قدیمی ترین</span></a>
+            <a href="#"><span class="icon2 expensive_filter">گران‌ترین</span></a>
+            <a href="#"><span class="icon2 cheapest_filter">ارزان‌ترین</span></a>
           </div>
 
           <div id="PRODUCT" class="row">
