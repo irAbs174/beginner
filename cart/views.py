@@ -141,7 +141,7 @@ def update_cart(request):
     if request.method == 'POST':
         product_title = request.POST.get('product_title')
         quantity = int(request.POST.get('quantity'))
-        color_quantity = product_color_quantity = int(request.POST.get('product_color_quantity'))
+        color_quantity = int(request.POST.get('product_color_quantity'))
         if quantity > 0:
             product = InventoryItem.objects.get(product_title=product_title)
             if quantity <= product.quantity and quantity <= color_quantity:
