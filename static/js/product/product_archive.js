@@ -1,10 +1,13 @@
 $(document).ready(function () {
   function loadProducts() {
     let page_number = $('input[name=page_number]').val();
+    let pagintage_key = $('input[name=pagintage_key]').val();
     data = {
       'page_number': page_number,
+      'pagintage_key': pagintage_key,
     };
     set_page_data('/shop_api/shop_data', data);
+    window.scrollTo(0, 0);
   };// end function loadProducts
 
   function brand_count() {
@@ -64,7 +67,6 @@ $(document).ready(function () {
 });//end ready
 
 function set_page_data(url, data) {
-  window.scrollTo(0, 0);
   $.ajax({
     url: url,
     type: 'POST',
@@ -78,6 +80,7 @@ function set_page_data(url, data) {
         });
       } else {
         $('input[name=page_number]').val(response.next_pagintage);
+        $('input[name=pagintage_key]').val(response.pagintage_key);
         let products = response.context;
         for (let i = 0; i < products.length; i++) {
           if (i >= products.length) {
@@ -140,6 +143,7 @@ $('.default_filter').click(function (e) {
     'page_number': 1,
   };
   set_page_data('/shop_api/shop_data', data);
+  window.scrollTo(0, 0);
 }); //end default filter
 
 $('.old_filter').click(function (e) {
@@ -150,6 +154,7 @@ $('.old_filter').click(function (e) {
     'load_filter': 'old_filter',
   };
   set_page_data('/shop_api/shop_data', data);
+  window.scrollTo(0, 0);
 }); //end expensive filter
 
 $('.expensive_filter').click(function (e) {
@@ -160,6 +165,7 @@ $('.expensive_filter').click(function (e) {
     'load_filter': 'expensive_filter',
   };
   set_page_data('/shop_api/shop_data', data);
+  window.scrollTo(0, 0);
 }); //end expensive filter
 
 $('.cheapest_filter').click(function (e) {
@@ -170,21 +176,44 @@ $('.cheapest_filter').click(function (e) {
     'load_filter': 'cheapest_filter',
   };
   set_page_data('/shop_api/shop_data', data);
+  window.scrollTo(0, 0);
 }); //end cheapest_filter filter
 
 $('#rangePriceFilter').click(function (e) {
   e.preventDefault();
-  $('#PRODUCT').html("");
-  var minPrice = document.getElementById("min-price").value;
-  var maxPrice = document.getElementById("max-price").value;
+  let minPrice = document.getElementById("min-price").value;
+  let maxPrice = document.getElementById("max-price").value;
+  if(minPrice != ''){
+    if(maxPrice != ''){
+      $('#PRODUCT').html("");
+      data = {
+        'page_number': 1,
+        'minPrice': minPrice,
+        'maxPrice': maxPrice,
+        'load_filter': 'price_filter',
+      };
+      set_page_data('/shop_api/shop_data', data);
+      window.scrollTo(0, 0);
+    }
+  }else{
+    Swal.fire({
+      title: 'ابتدا مقادیر بیشترین و کمترین قیمت را وارد نمایید',
+      showConfirmButton: false,
+      timer: 3000,
+    });
+  };;//ENDIF
+}); //end expensive filter
+
+$('#load-more').click(function (e) {
+  e.preventDefault();
+  let page_number = $('input[name=page_number]').val();
+  let pagintage_key = $('input[name=pagintage_key]').val();
   data = {
-    'page_number': 1,
-    'minPrice': minPrice,
-    'maxPrice': maxPrice,
-    'load_filter': 'price_filter',
+    'page_number': page_number,
+    'load_filter': pagintage_key,
   };
   set_page_data('/shop_api/shop_data', data);
-}); //end expensive filter
+}); //end cheapest_filter filter
 
 function add_favourite(product_id, product_slug, product_title, product_image, product_quantity, product_color, product_add_cart_date) {
   // Data to be sent with the POST request
@@ -282,12 +311,11 @@ function add_comparison(product_id, product_slug, product_title, product_image, 
 }
 
 // فیلتر - چک باکس
-var inventoryCheckbox = document.getElementById("inventory");
 var specialDiscountCheckbox = document.getElementById("specialdiscount");
+let page;
 // Offer CheckBox ! =>CHANGE<=
-var pageQ = 1;
-var pageQE = 1;
 inventoryCheckbox.addEventListener("change", function () {
+  window.scrollTo(0, 0);
   var perPage = 8;
   var startIndex = (pageQ - 1) * perPage;
   var endIndex = startIndex + perPage;
@@ -377,17 +405,17 @@ inventoryCheckbox.addEventListener("change", function () {
             $('#PRODUCT').append(postHTML);
           });
         }
-        if (pageQE >= totalPages) {
+        if (page >= totalPages) {
           $('#load-more').hide();
         } else {
           $('#load-more').show();
         }
-
-        pageQE++;
+        page++;
       }
     });
   }
 });
+
 
 var pageXZ = 1;
 specialDiscountCheckbox.addEventListener("change", function () {

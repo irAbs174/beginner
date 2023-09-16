@@ -49,17 +49,27 @@ def shop_data(request):
         min = request.POST.get('minPrice')
         max = request.POST.get('maxPrice')
         if isinstance(int(min), int) and isinstance(int(max), int):
-            products = InventoryItem.objects.all().model.objects.filter(price__gte=int(min), price__lte=int(max))
+            if max and min:
+                products = InventoryItem.objects.all().model.objects.filter(price__gte=int(min), price__lte=int(max))
+                if products.count() < 0 :
+                    return JsonResponse({'status':'محصولی در بازه وارد شده یافت نشد', 'success': False})
+                pagintage_key = 'price_filter'
+            else:
+                return JsonResponse({'status':'مقداری برای اعمال فیلتر وارد نشده', 'success': False})
         else:
             return JsonResponse({'status':'مقادیر وارد شده معتبر نیست. لطفا یک مقدار عددی وارد کنید','success': False})
     elif load_filter == 'old_filter':
         products = InventoryItem.objects.live().public().order_by('first_published_at')
+        pagintage_key = 'old_filter'
     elif load_filter == 'expensive_filter':
         products = InventoryItem.objects.live().public().order_by('-price')
+        pagintage_key = 'expensive_filter'
     elif load_filter == 'cheapest_filter':
         products = InventoryItem.objects.live().public().order_by('price')
+        pagintage_key = 'cheapest_filter'
     else:
         products = InventoryItem.objects.live().public().order_by('-first_published_at')
+        pagintage_key = ''
     paginator = Paginator(products, 12)
     try:
         products_list = paginator.get_page(page_number)
@@ -99,5 +109,6 @@ def shop_data(request):
         'status': 200,
         'context': context,
         'next_pagintage': next_pagintage,
+        'pagintage_key' : pagintage_key,
         'success': True
     })
