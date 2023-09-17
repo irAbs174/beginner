@@ -2,6 +2,7 @@ from django.urls import path
 from .views import cart_view, add_to_cart, update_cart, remove_from_cart, apply_discount, clear_cart ,checkout, checkout_view
 from .favourite import add_favourite, remove_favourite, clear_favourite
 from .comparison import comparison_view ,add_comparison, clear_comparison
+from .payment import (fadax_return_shop)
 
 
 urlpatterns = [
@@ -19,4 +20,5 @@ urlpatterns = [
     path('favourite/add', add_favourite, name="add_favourite"),
     path('favourite/remove', remove_favourite, name="remove_favourite"),
     path('favourite/clear', clear_favourite, name="clear_favourite"),
+    path('callback_fadax', fadax_return_shop, name="fadax_payment_callback"),
 ]

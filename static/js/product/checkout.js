@@ -1,4 +1,27 @@
 $(document).ready(function(){
+  function load_fadax_payment (){
+    $.ajax({
+      url: '/shop_api/fadax',
+      type: 'POST',
+      data: {
+        'task': 'payment_possible',
+      },
+      success: function (response) {
+        if (response.success === false) {
+          Swal.fire({
+            title: response.status,
+            showConfirmButton: false,
+            timer: 3000,
+          });
+        }else{
+          $('.fadax_btn').append(`<button class="w-100 btn btn-danger btn-lg click_fadax_btn" onclick="order();">
+          پرداخت با درگاه فدکس
+        </button>`)
+        };// end if
+      }
+    }); // end AJAX
+  };//end function load fadax
+  load_fadax_payment();
     function separateDigitsWithComma() {
       // Convert the number to a string
       let total = $('input[name=TOTAL_CART_NAME]').val();
@@ -88,3 +111,41 @@ $(document).ready(function(){
       }
     });
   }
+$('click_fadax_btn').click(function (e) {
+  e.preventDefault();
+  data = {
+    'task': 'recive_payment_token',
+  }
+  $.ajax({
+    url: '/shop_api/fadax',
+    type: 'POST',
+    data: data,
+    success: function(response) {
+      if (response.success === false) {
+        Swal.fire({
+          icon: "error",
+          title: response.status,
+          showConfirmButton: false,
+          timer: 3000,
+        });
+      } else {
+        Swal.fire({
+          icon: "success",
+          title: response.status,
+          showConfirmButton: false,
+          timer: 3000,
+        });
+        window.location.href = response.status;
+      }
+    },
+    error: function(xhr, status, error) {
+      console.log(status);
+      Swal.fire({
+        icon: "error",
+        title: status,
+        showConfirmButton: false,
+        timer: 3000,
+      });
+    }
+  });
+});
