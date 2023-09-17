@@ -25,7 +25,7 @@ CSRF_LOCAL_TRUSTED_ORIGINS = ['https://8000-irabs174-beginner-wfsug12uvtv.ws-eu1
 ALLOWED_LOCAL_HOSTS = ['8000-irabs174-beginner-wfsug12uvtv.ws-eu104.gitpod.io', '127.0.0.1', 'localhost']
 
 # SECRET KEY
-SEC_KEY = '_YOUR_SECRET-KEY'
+SEC_KEY = '&jd297bkjdw87t@@sjihc87)iidoksijy@Q#4seyuig()&^%&^'
 
 # LOCAL HOST IP :
 LOCAL_HOST = ('127.0.0.1', '10.0.2.2')

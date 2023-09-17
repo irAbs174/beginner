@@ -9,7 +9,59 @@ from .models import InventoryItem
 def shop_data(request):
     page_number = request.POST.get('page_number')
     load_filter = request.POST.get('load_filter')
-    if load_filter == 'brand_count_list':
+    if load_filter == 'offer_products_list':
+        context = []
+        if page_number == 'indexOff':
+            page_number = 1 
+            per_page = 10
+            next_pagintage = 'index_products'
+        else:
+            per_page = 8
+            next_pagintage = int(page_number) + 1
+        products = InventoryItem.objects.live().public().order_by('first_published_at')
+        paginator = Paginator(products, per_page)
+        try:
+            products_list = paginator.get_page(page_number)
+        except PageNotAnInteger:
+            products_list = paginator.get_page(1)
+        except EmptyPage:
+            products_list = paginator.page(paginator.num_pages)
+        if products_list.has_next() == False:
+            context = 'end'
+        else:
+            for data in products_list:
+                offer = data.PRODUCT_OFFER.values()
+                if offer:
+                    item = {
+                    'id': data.id,
+                    'slug': data.slug,
+                    'title': data.title,
+                    'product_title': data.product_title,
+                    'price': data.price,
+                    'offer': 0,
+                    'quantity': data.quantity,
+                    'brand': data.brand.title,
+                    'color': [],
+                    'image': data.image.get_rendition('fill-250x280').url,
+                    'is_available': data.is_available,
+                    }
+                item['offer'] = offer[0]['value']
+                colors = data.PRODUCT_COLORS.values()
+                for color in colors:
+                    color_data = {
+                        'name': color['color_title'],
+                        'code': color['color']
+                    }
+                    item['color'].append(color_data)
+                context.append(item)
+        return JsonResponse({
+            'status': 200,
+            'context': context,
+            'next_pagintage': next_pagintage,
+            'pagintage_key' : 'offer_products_list',
+            'success': True
+            })
+    elif load_filter == 'brand_count_list':
         brand_list = []
         for b in brand.objects.live().public().order_by('first_published_at'):
             item = {
@@ -70,41 +122,49 @@ def shop_data(request):
     else:
         products = InventoryItem.objects.live().public().order_by('-first_published_at')
         pagintage_key = ''
-    paginator = Paginator(products, 12)
+    if page_number == 'index':
+        per_page = 10
+        next_pagintage = 'index_products'
+    else:
+        per_page = 8
+        next_pagintage = int(page_number) + 1
+    paginator = Paginator(products, per_page)
     try:
         products_list = paginator.get_page(page_number)
     except PageNotAnInteger:
         products_list = paginator.get_page(1)
     except EmptyPage:
         products_list = paginator.page(paginator.num_pages)
-    context = []
-    for data in products_list:
-        item = {
-            'id': data.id,
-            'slug': data.slug,
-            'title': data.title,
-            'product_title': data.product_title,
-            'price': data.price,
-            'offer': 0,
-            'quantity': data.quantity,
-            'brand': data.brand.title,
-            'color': [],
-            'image': data.image.get_rendition('fill-250x280').url,
-            'is_available': data.is_available,
-        }
-        offer = data.PRODUCT_OFFER.values()
-        if offer:
-            item['offer'] = offer[0]['value']
-        
-        colors = data.PRODUCT_COLORS.values()
-        for color in colors:
-            color_data = {
-                'name': color['color_title'],
-                'code': color['color']
+    if products_list.has_next() == False:
+        context = 'end'
+    else:
+        context = []
+        for data in products_list:
+            item = {
+                'id': data.id,
+                'slug': data.slug,
+                'title': data.title,
+                'product_title': data.product_title,
+                'price': data.price,
+                'offer': 0,
+                'quantity': data.quantity,
+                'brand': data.brand.title,
+                'color': [],
+                'image': data.image.get_rendition('fill-250x280').url,
+                'is_available': data.is_available,
             }
-            item['color'].append(color_data)
-        context.append(item)
-    next_pagintage = int(page_number) + 1
+            offer = data.PRODUCT_OFFER.values()
+            if offer:
+                item['offer'] = offer[0]['value']
+            
+            colors = data.PRODUCT_COLORS.values()
+            for color in colors:
+                color_data = {
+                    'name': color['color_title'],
+                    'code': color['color']
+                }
+                item['color'].append(color_data)
+            context.append(item)
     return JsonResponse({
         'status': 200,
         'context': context,

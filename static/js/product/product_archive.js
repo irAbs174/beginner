@@ -4,7 +4,7 @@ $(document).ready(function () {
     let pagintage_key = $('input[name=pagintage_key]').val();
     data = {
       'page_number': page_number,
-      'pagintage_key': pagintage_key,
+      'load_filter': pagintage_key,
     };
     set_page_data('/shop_api/shop_data', data);
     window.scrollTo(0, 0);
@@ -67,6 +67,7 @@ $(document).ready(function () {
 });//end ready
 
 function set_page_data(url, data) {
+  $('.load-more').show();
   $.ajax({
     url: url,
     type: 'POST',
@@ -83,6 +84,10 @@ function set_page_data(url, data) {
         $('input[name=pagintage_key]').val(response.pagintage_key);
         let products = response.context;
         for (let i = 0; i < products.length; i++) {
+          if (products === 'end'){
+            $('.load-more').hide();
+            break;
+          };//endif
           if (i >= products.length) {
             break;
           };// end if
@@ -193,6 +198,8 @@ $('#rangePriceFilter').click(function (e) {
         'load_filter': 'price_filter',
       };
       set_page_data('/shop_api/shop_data', data);
+      $('#min-price').val(minPrice);
+      $('#max-price').val(maxPrice);
       window.scrollTo(0, 0);
     }
   }else{
@@ -204,13 +211,17 @@ $('#rangePriceFilter').click(function (e) {
   };;//ENDIF
 }); //end expensive filter
 
-$('#load-more').click(function (e) {
+$('.load-more').click(function (e) {
   e.preventDefault();
   let page_number = $('input[name=page_number]').val();
   let pagintage_key = $('input[name=pagintage_key]').val();
+  let minPrice = document.getElementById("min-price").value;
+  let maxPrice = document.getElementById("max-price").value;
   data = {
     'page_number': page_number,
     'load_filter': pagintage_key,
+    'minPrice': minPrice,
+    'maxPrice': maxPrice,
   };
   set_page_data('/shop_api/shop_data', data);
 }); //end cheapest_filter filter
@@ -312,107 +323,66 @@ function add_comparison(product_id, product_slug, product_title, product_image, 
 
 // فیلتر - چک باکس
 var specialDiscountCheckbox = document.getElementById("specialdiscount");
-let page;
 // Offer CheckBox ! =>CHANGE<=
-inventoryCheckbox.addEventListener("change", function () {
+specialdiscount.addEventListener("change", function () {
   window.scrollTo(0, 0);
-  var perPage = 8;
-  var startIndex = (pageQ - 1) * perPage;
-  var endIndex = startIndex + perPage;
-  if (inventoryCheckbox.checked) {
-    $.getJSON(`/UNIQUEAPI174/pages/?type=product.InventoryItem&limit=${perPage}&offset=${startIndex}`, function (data) {
-      var product_item = data.items;
-      if (product_item.length > 0) {
-        totalPages = Math.ceil(data.meta.total_count / perPage);
-        $('#PRODUCT').html("");
-        for (var i = 0; i < product_item.length; i++) {
-          if (i >= product_item.length) {
-            break;
-          }
-          var productPage = product_item[i];
-          var productPageId = productPage.id;
-          var productPageSlug = productPage.meta.slug;
-          var productPostsAPIURL = `/UNIQUEAPI174/pages/${productPageId}`;
-          $.getJSON(productPostsAPIURL, function (productsData) {
-            var product = productsData;
-            var postHTML = `
-              <div id="PRODUCT_BODY" class="cardpro" style="width: 18rem">
-                <img src="${product.image.url}" class="card-img-top" alt="${product.image.alt}" />
-                <div class="card-body">
-                  <h3 class="card-title h4">
-                    <a href="" class="black-color">${product.title}</a>
-                  </h3>
-                  <span class="text-decoration-line-through icon2">${separateDigitsWithComma(product.price)}</span>
-                  <span class="red-color">${separateDigitsWithComma(product.PRODUCT_OFFER[0].value)}<span>تومان</span></span>
-                  <hr />
-                  <div id="TOOLS" class="tolspro">
-                  <span class="bi bi-heart" onclick="add_favourite('${product.id}', '${productPageSlug}', '${product.product_title}','${product.image.url}','FV','SV','174')"></span>
-                    <span class="price"></span>
-                    <a href="${product.meta.html_url}"><button class="btn btn-danger addtocard" type="submit">مشاهده و خرید</button></a>
-                    <span class="bi bi-arrow-left-right" onclick="add_comparison('${product.id}','${productPageSlug}','${product.product_title}','${product.image.url}','FV','SV','1','174')"></span>
-                  </div>
-                </div>
-              </div>
-            `;
-            $('#PRODUCT').append(postHTML);
+  if (specialdiscount.checked) {
+    $.ajax({
+      url: '/shop_api/shop_data',
+      type: 'POST',
+      data: {'page_number': 1, 'load_filter': 'offer_products_list'},
+      success: function (response) {
+        if (response.success === false) {
+          Swal.fire({
+            title: response.status,
+            showConfirmButton: false,
+            timer: 3000,
           });
-        }
-        if (pageQ >= totalPages) {
-          $('#load-more').hide();
         } else {
-          $('#load-more').show();
-        }
-        pageQ++;
-      }
+          $('input[name=page_number]').val(response.next_pagintage);
+          $('input[name=pagintage_key]').val(response.pagintage_key);
+          let products = response.context;
+          for (let i = 0; i < products.length; i++) {
+            if (i >= products.length) {
+              break;
+            };// end if
+            let product = products[i];
+              let postHTML = `
+            <div class="cardpro border d-inline-block">
+            <img src="${product.image}" class="card-img-top" alt="${product.title}" />
+            <div class="card-body">
+              <h3 class="card-title h4">
+                <a href="" class="black-color">${product.title}</a>
+              </h3>
+              <span class="text-decoration-line-through icon2"
+                >${separateDigitsWithComma(product.price)}</span
+              >
+              <span class="red-color">${separateDigitsWithComma(product.offer)}<span>تومان</span></span>
+              <hr />
+            <div class="tolspro">
+            <span class="bi bi-heart black-color"onclick="add_favourite('${product.id}','','${product.product_title}','${product.image}','FV','SV','0')"></span>
+            <a href="/shop/${product.slug}"><button type="submit" class="btn btn-danger addtocard">
+                    مشاهده و خرید
+                </button></a>
+                <span class="bi bi-arrow-left-right" onclick="add_comparison('${product.id}','','${product.product_title}','${product.image.url}','FV','SV','1','0')"></span>
+            </div>
+            </div>
+          </div>
+              `;
+              $('#PRODUCT').append(postHTML);
+          };
+        };
+      },
     });
   } else {
-    var perPage = 8;
-    var startIndex = (page - 1) * perPage;
-    var endIndex = startIndex + perPage;
-    $.getJSON(`/UNIQUEAPI174/pages/?type=product.InventoryItem&limit=${perPage}&offset=${startIndex}`, function (data) {
-      var product_item = data.items;
-      if (product_item.length > 0) {
-        totalPages = Math.ceil(data.meta.total_count / perPage);
-        $('#PRODUCT').html("");
-        for (var i = 0; i < product_item.length; i++) {
-          if (i >= product_item.length) {
-            break;
-          }
-          var productPage = product_item[i];
-          var productPageId = productPage.id;
-          var productPageSlug = productPage.meta.slug;
-          var productPostsAPIURL = `/UNIQUEAPI174/pages/${productPageId}`;
-          $.getJSON(productPostsAPIURL, function (productsData) {
-            var product = productsData;
-            var postHTML = `
-              <div id="PRODUCT_BODY" class="cardpro" style="width: 18rem">
-                <img src="${product.image.url}" class="card-img-top" alt="${product.image.alt}" />
-                <div class="card-body">
-                  <h3 class="card-title h4">
-                    <a href="" class="black-color">${product.title}</a>
-                  </h3>
-                  <span class="red-color">${separateDigitsWithComma(product.price)}<span>تومان</span></span>
-                  <hr />
-                  <div id="TOOLS" class="tolspro">
-                  <span class="bi bi-heart" onclick="add_favourite('${product.id}', '${productPageSlug}', '${product.product_title}','${product.image.url}','FV','SV','174')"></span>
-                    <span class="price"></span>
-                    <a href="${product.meta.html_url}"><button class="btn btn-danger addtocard" type="submit">مشاهده و خرید</button></a>
-                    <span class="bi bi-arrow-left-right" onclick="add_comparison('${product.id}','${productPageSlug}','${product.product_title}','${product.image.url}','FV','SV','1','174')"></span>
-                  </div>
-                </div>
-              </div>
-            `;
-            $('#PRODUCT').append(postHTML);
-          });
-        }
-        if (page >= totalPages) {
-          $('#load-more').hide();
-        } else {
-          $('#load-more').show();
-        }
-        page++;
-      }
-    });
+    let page_number = $('input[name=page_number]').val();
+    let pagintage_key = $('input[name=pagintage_key]').val();
+    data = {
+      'page_number': page_number,
+      'pagintage_key': pagintage_key,
+    };
+    set_page_data('/shop_api/shop_data', data);
+    window.scrollTo(0, 0);
   }
 });
 
