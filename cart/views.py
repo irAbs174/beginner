@@ -1,3 +1,4 @@
+from user_accounts.models import user_accounts as UserModel
 from .serializers import CartSerializer, SupportSerializer
 from django.contrib.auth.decorators import login_required
 from index.extensions.http_service import get_client_ip
@@ -10,6 +11,9 @@ from django.shortcuts import render, redirect
 from rest_framework import generics, filters
 from product.forms import DiscountForm
 from django.contrib import messages
+from .models import Fadax_payment
+import requests
+import json
 
 
 class CartViewSet(generics.ListCreateAPIView):
@@ -68,8 +72,44 @@ def support_room(request, room):
 
 @login_required
 def cart_view(request):
-    list_cart = Cart.objects.filter(user=request.user.phoneNumber)
+
+    phone = request.user.phoneNumber
+    list_cart = Cart.objects.filter(user=phone)
     cart_count = list_cart.count()
+    for i in list_cart:
+        total_price = i.total_price
+    print(f'{total_price}')
+    print(f"0{int(phone)}")
+    # fadax payment possible check:
+    url = f"https://gateway.fadax.ir/supplier/v1/eligible?amount={total_price}&mobile=0{int(phone)}"
+    headers = {
+        "accept": "application/json",
+        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Imtpa3BpY2siLCJpYXQiOjE2OTczNTMzMTd9.Dma35yx2c1L8j9Cwwk2y3McIaX_nAMWI4kXqoTF87Yw",
+        "Content-Type": "application/json"
+        }
+
+    response_recived = requests.get(url, headers=headers)
+    response = response_recived.json()
+    if response['success']:
+        data = response['response']
+        if data['status'] == 1001:
+            Fadax_payment.objects.create(
+                customer = request.user.phoneNumber,
+            )
+            UserModel.objects.filter(phoneNumber=phone).update(
+                fadax_payment_possible = True
+            )
+            print("=> USER CAN PAY WITH FADAX => status : 1001")
+        elif data['status'] == 1002:
+            UserModel.objects.filter(phoneNumber=phone).update(
+                fadax_payment_possible = False
+            )
+            print("=> USER CAN NOT PAY WITH FADAX status : 1002")
+        else:
+            print("=> USER CAN NOT PAY WITH FADAX")
+    else:
+        print("=> USER CAN NOT PAY WITH FADAX")
+    # SEND CART DATA TO PAGE(http response)
     discount = DiscountForm()
     context = {
         'discount': discount,

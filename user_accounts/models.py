@@ -39,6 +39,7 @@ class user_accounts(AbstractBaseUser, PermissionsMixin):
     is_active = models.BooleanField(db_column='is_active',default=True, verbose_name='وضعیت کاربر')
     is_staff = models.BooleanField(db_column='is_staff',default=False, verbose_name='وضعیت راهبری')
     is_supporter = models.BooleanField(blank=True, null=True, verbose_name='عضو تیم پشتیبانی',default=False)
+    fadax_payment_possible = models.BooleanField(blank=True, null=True, verbose_name='امکان پرداخت فدکس برای کاربر',default=False)
     date_joined = forms.DateTimeField(
         label='Date Joined',
         widget=forms.DateTimeInput(attrs={'type': 'datetime-local'}),

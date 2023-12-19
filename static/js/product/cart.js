@@ -153,6 +153,25 @@ function checkout(){
   let data = {
       csrfmiddlewaretoken: token,
   };
+  /*
+  $.ajax({
+    url: '/cart/fadax',
+    type: 'POST',
+    data: {
+      'task': 'payment_possible',
+    },
+    success: function (response) {
+      if (response.success === false) {
+        console.log("امکان پرداخت با درگاه فدکس وجود ندارد");
+      }else{
+        console.log("تبریک -> امکان پرداخت با درگاه فدکس وجود دارد");
+        $('.fadax_btn').append(`<button class="w-100 btn btn-danger btn-lg click_fadax_btn" onclick="order();">
+        پرداخت با درگاه فدکس
+      </button>`)
+      };// end if
+    }
+  }); // end AJAX
+  */
   // Send request to server
   $.ajax({
     url: '/cart/Get_checkout',
