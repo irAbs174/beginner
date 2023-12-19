@@ -19,10 +19,10 @@ LOCAL_ACCOUNT_USERNAME_BLACKLIST = ["admin", 'security', 'secure', 'protection',
            'virus', 'vulnerabilityassessment', 'zeroday', "god"]
 
 # CSRF LOCAL TRUSTED ORIGINS :
-CSRF_LOCAL_TRUSTED_ORIGINS = ['https://https://symmetrical-giggle-45g6r4gr976fvqv-8000.app.github.dev', 'https://www.https://symmetrical-giggle-45g6r4gr976fvqv-8000.app.github.dev']
+CSRF_LOCAL_TRUSTED_ORIGINS = ['https://8000-irabs174-kikpick-v5rg3bflgq6.ws-eu107.gitpod.io', 'https://www.8000-irabs174-kikpick-v5rg3bflgq6.ws-eu107.gitpod.io']
 
 # ALLOWED LOCAL HOSTS :
-ALLOWED_LOCAL_HOSTS = ['https://symmetrical-giggle-45g6r4gr976fvqv-8000.app.github.dev', 'www.https://symmetrical-giggle-45g6r4gr976fvqv-8000.app.github.dev']
+ALLOWED_LOCAL_HOSTS = ['8000-irabs174-kikpick-v5rg3bflgq6.ws-eu107.gitpod.io', 'www.8000-irabs174-kikpick-v5rg3bflgq6.ws-eu107.gitpod.io']
 
 # SECRET KEY
 SEC_KEY = '!!!!!!!!!!!!!!!!YOUR_SEC_KEY_HERE!!!!!!!!!!!!!!!'
@@ -52,7 +52,7 @@ SUPPORT_PAGE = 'UNIQUESUPPORT174/'
 SITE_TRAFFIC = 'UNIQUETRAFFIC174/'
 
 # BASE_SITE
-BASE_ACTIVE_SITE = 'https://symmetrical-giggle-45g6r4gr976fvqv-8000.app.github.dev'
+BASE_ACTIVE_SITE = '8000-irabs174-kikpick-v5rg3bflgq6.ws-eu107.gitpod.io'
 
 # SITE API URL
 SITE_API = 'UNIQUEAPI174/'

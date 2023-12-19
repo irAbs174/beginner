@@ -76,39 +76,6 @@ def cart_view(request):
     phone = request.user.phoneNumber
     list_cart = Cart.objects.filter(user=phone)
     cart_count = list_cart.count()
-    for i in list_cart:
-        total_price = i.total_price
-    print(f'{total_price}')
-    print(f"0{int(phone)}")
-    # fadax payment possible check:
-    url = f"https://gateway.fadax.ir/supplier/v1/eligible?amount={total_price}&mobile=0{int(phone)}"
-    headers = {
-        "accept": "application/json",
-        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Imtpa3BpY2siLCJpYXQiOjE2OTczNTMzMTd9.Dma35yx2c1L8j9Cwwk2y3McIaX_nAMWI4kXqoTF87Yw",
-        "Content-Type": "application/json"
-        }
-
-    response_recived = requests.get(url, headers=headers)
-    response = response_recived.json()
-    if response['success']:
-        data = response['response']
-        if data['status'] == 1001:
-            Fadax_payment.objects.create(
-                customer = request.user.phoneNumber,
-            )
-            UserModel.objects.filter(phoneNumber=phone).update(
-                fadax_payment_possible = True
-            )
-            print("=> USER CAN PAY WITH FADAX => status : 1001")
-        elif data['status'] == 1002:
-            UserModel.objects.filter(phoneNumber=phone).update(
-                fadax_payment_possible = False
-            )
-            print("=> USER CAN NOT PAY WITH FADAX status : 1002")
-        else:
-            print("=> USER CAN NOT PAY WITH FADAX")
-    else:
-        print("=> USER CAN NOT PAY WITH FADAX")
     # SEND CART DATA TO PAGE(http response)
     discount = DiscountForm()
     context = {
@@ -273,6 +240,40 @@ def checkout(request):
 @login_required
 def checkout_view(request):
     if Cart.objects.filter(user = request.user.phoneNumber):
+        # fadax payment possible check:
+        phone = request.user.phoneNumber
+        list_cart = Cart.objects.filter(user=phone)
+        for i in list_cart:
+            total_price = i.total_price
+        url = f"https://gateway.fadax.ir/supplier/v1/eligible?amount={total_price}&mobile=0{int(phone)}"
+        headers = {
+            "accept": "application/json",
+            "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Imtpa3BpY2siLCJpYXQiOjE2OTczNTMzMTd9.Dma35yx2c1L8j9Cwwk2y3McIaX_nAMWI4kXqoTF87Yw",
+            "Content-Type": "application/json"
+            }
+
+        response_recived = requests.get(url, headers=headers)
+        response = response_recived.json()
+        if response['success']:
+            data = response['response']
+            if data['status'] == 1001:
+                Fadax_payment.objects.create(
+                    customer = request.user.phoneNumber,
+                )
+                UserModel.objects.filter(phoneNumber=phone).update(
+                    fadax_payment_possible = True
+                )
+                print("=> USER CAN PAY WITH FADAX => status : 1001")
+            elif data['status'] == 1002:
+                UserModel.objects.filter(phoneNumber=phone).update(
+                    fadax_payment_possible = False
+                )
+                print("=> USER CAN NOT PAY WITH FADAX status : 1002")
+            else:
+                print("=> USER CAN NOT PAY WITH FADAX")
+        else:
+            print("=> USER CAN NOT PAY WITH FADAX")
+
         return render(request, 'products/checkout/checkout.html')
     else:
         return render(request, 'products/cart/cart.html')
