@@ -1,0 +1,31 @@
+{% load static %}
+<div class="main-slider py-20">
+    <div class="container-fluid">
+        <div class="slider shadow-box">
+            <div class="swiper" id="homeSlider">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide">
+                        <a href="">
+                            <img src="{% static '' %}assets/img/slide-3.gif" loading="lazy" class="img-fluid" alt="">
+                        </a>
+                    </div>
+                    <div class="swiper-slide">
+                        <a href="">
+                            <img src="{% static '' %}assets/img/slide-4.gif" loading="lazy" class="img-fluid" alt="">
+                        </a>
+                    </div>
+                    <div class="swiper-slide">
+                        <a href="">
+                            <img src="{% static '' %}assets/img/slide-5.gif" loading="lazy" class="img-fluid" alt="">
+                        </a>
+                    </div>
+                </div>
+                <div class="swiper-button-next d-lg-flex d-none"></div>
+                <div class="swiper-button-prev d-lg-flex d-none"></div>
+                <div class="swiper-pagination"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- end main slider -->
