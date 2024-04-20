@@ -19,10 +19,10 @@ LOCAL_ACCOUNT_USERNAME_BLACKLIST = ["admin", 'security', 'secure', 'protection',
            'virus', 'vulnerabilityassessment', 'zeroday', "god"]
 
 # CSRF LOCAL TRUSTED ORIGINS :
-CSRF_LOCAL_TRUSTED_ORIGINS = ['https://8000-irabs174-kikpick-v5rg3bflgq6.ws-eu107.gitpod.io', 'https://www.8000-irabs174-kikpick-v5rg3bflgq6.ws-eu107.gitpod.io']
+CSRF_LOCAL_TRUSTED_ORIGINS = ['https://8000-cs-256274267521-default.cs-europe-west4-fycr.cloudshell.dev', 'https://www.8000-cs-256274267521-default.cs-europe-west4-fycr.cloudshell.dev']
 
 # ALLOWED LOCAL HOSTS :
-ALLOWED_LOCAL_HOSTS = ['127.0.0.1', '8000-irabs174-kikpick-v5rg3bflgq6.ws-eu107.gitpod.io', 'www.8000-irabs174-kikpick-v5rg3bflgq6.ws-eu107.gitpod.io']
+ALLOWED_LOCAL_HOSTS = ['127.0.0.1', '8000-cs-256274267521-default.cs-europe-west4-fycr.cloudshell.dev', 'www.8000-cs-256274267521-default.cs-europe-west4-fycr.cloudshell.dev']
 
 # SECRET KEY
 SEC_KEY = '!!!!!!!!!!!!!!!!YOUR_SEC_KEY_HERE!!!!!!!!!!!!!!!'
@@ -52,7 +52,7 @@ SUPPORT_PAGE = 'UNIQUESUPPORT174/'
 SITE_TRAFFIC = 'UNIQUETRAFFIC174/'
 
 # BASE_SITE
-BASE_ACTIVE_SITE = '8000-irabs174-kikpick-v5rg3bflgq6.ws-eu107.gitpod.io'
+BASE_ACTIVE_SITE = '8000-cs-256274267521-default.cs-europe-west4-fycr.cloudshell.dev'
 
 # SITE API URL
 SITE_API = 'UNIQUEAPI174/'

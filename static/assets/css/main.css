@@ -70,7 +70,7 @@ html {
 
 :root {
     /* theme color */
-    --main-color-one: #3a3b9c;
+    --main-color-one: rgb(255, 29, 85);
     --main-color-one-shadow: #3a3b9c31;
     --main-color-one-hover: #2a2b82;
     --main-color-two: #FFD100;
