@@ -22,7 +22,7 @@ LOCAL_ACCOUNT_USERNAME_BLACKLIST = ["admin", 'security', 'secure', 'protection',
 CSRF_LOCAL_TRUSTED_ORIGINS = ['https://8000-irabs174-kikpick-v5rg3bflgq6.ws-eu107.gitpod.io', 'https://www.8000-irabs174-kikpick-v5rg3bflgq6.ws-eu107.gitpod.io']
 
 # ALLOWED LOCAL HOSTS :
-ALLOWED_LOCAL_HOSTS = ['8000-irabs174-kikpick-v5rg3bflgq6.ws-eu107.gitpod.io', 'www.8000-irabs174-kikpick-v5rg3bflgq6.ws-eu107.gitpod.io']
+ALLOWED_LOCAL_HOSTS = ['127.0.0.1', '8000-irabs174-kikpick-v5rg3bflgq6.ws-eu107.gitpod.io', 'www.8000-irabs174-kikpick-v5rg3bflgq6.ws-eu107.gitpod.io']
 
 # SECRET KEY
 SEC_KEY = '!!!!!!!!!!!!!!!!YOUR_SEC_KEY_HERE!!!!!!!!!!!!!!!'
