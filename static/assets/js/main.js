@@ -1,4 +1,7 @@
+//Back
+console.log("hello world !")
 
+// Front:
 $(function () {
 
   ///نمایش زیر منو

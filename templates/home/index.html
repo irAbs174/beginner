@@ -26,6 +26,8 @@
     <link rel="stylesheet" href="{% static 'assets/css/main.cs' %}s">
     <link rel="stylesheet" href="{% static 'assets/css/responsive.css' %}">
 
+    <script src="{% static 'js/jquery/jquery-3.6.0.min.js' %}"></script>
+
     <meta name="theme-color" content="#99ff00">
 
 {% endblock %}
@@ -77,6 +79,12 @@
 <script src="{% static 'assets/js/plugin/rasta-contact/script.js' %}"></script>
 <script src="{% static 'assets/js/plugin/bootstrap-touchspin/jquery.bootstrap-touchspin.min.js' %}"></script>
 <script src="{% static 'assets/js/plugins.js' %}"></script>
-<script src="{% static 'assets/js/main.j' %}s"></script>
+<script src="{% static 'assets/js/main.js' %}s"></script>
+<script src="{% static 'js/index/index.js' %}"></script>
+
+<script>
+    console.log("Hello wolld");
+    $.ajax({})
+</script>
 {% endblock %}
 {% endblock %}
