@@ -92,6 +92,7 @@ INSTALLED_APPS = [
     'brand',
     'blog',
     'cart',
+    'home',
 ]
 
 # REST FRAMEWORK CONF

@@ -28,6 +28,8 @@
 
     <script src="{% static 'js/jquery/jquery-3.6.0.min.js' %}"></script>
 
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
     <meta name="theme-color" content="#99ff00">
 
 {% endblock %}
@@ -83,8 +85,37 @@
 <script src="{% static 'js/index/index.js' %}"></script>
 
 <script>
-    console.log("Hello wolld");
-    $.ajax({})
+    $.ajax({
+        url:'shop_api/get_2_random_products',
+        type:'POST',
+        data: 'data',
+        success: function (response) {
+      if (response.success === false) {
+        Swal.fire({
+          icon: "error",
+          title: response.status,
+          showConfirmButton: false,
+          timer: 3000,
+        });
+      } else {
+        Swal.fire({
+          icon: "success",
+          title: response.status,
+          showConfirmButton: false,
+          timer: 3000,
+        });
+      }
+    },
+    error: function (xhr, status, error) {
+      console.log(status);
+      Swal.fire({
+        icon: "error",
+        title: status,
+        showConfirmButton: false,
+        timer: 3000,
+      });
+    }
+    })
 </script>
 {% endblock %}
 {% endblock %}

@@ -5,6 +5,11 @@ from brand.models import BrandPage as brand
 from django.http import JsonResponse
 from .models import InventoryItem
 
+
+@csrf_exempt
+def get_2_random_products(request):
+    return JsonResponse({'status': 'hello', 'success': True})
+
 @csrf_exempt
 def shop_data(request):
     page_number = request.POST.get('page_number')
