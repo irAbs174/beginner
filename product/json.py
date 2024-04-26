@@ -4,11 +4,36 @@ from category.models import CategoryProduct as cat
 from brand.models import BrandPage as brand
 from django.http import JsonResponse
 from .models import InventoryItem
+import random
 
 
 @csrf_exempt
-def get_2_random_products(request):
-    return JsonResponse({'status': 'hello', 'success': True})
+def get_random_products(request):
+    random_number = int(request.POST.get('random_number'))
+    context = []
+    for i in range(random_number):
+        random_int = random.randint(1, len(InventoryItem.objects.all().public().live()))
+        item = {
+            'id': InventoryItem.objects.all().public().live()[random_int].id,
+            'slug': InventoryItem.objects.all().public().live()[random_int].slug,
+            'title': InventoryItem.objects.all().public().live()[random_int].title,
+            'product_title': InventoryItem.objects.all().public().live()[random_int].product_title,
+            'price': InventoryItem.objects.all().public().live()[random_int].price,
+            'offer': InventoryItem.objects.all().public().live()[random_int].PRODUCT_OFFER.values()[0]['value'],
+            'quantity': InventoryItem.objects.all().public().live()[random_int].quantity,
+            'brand': InventoryItem.objects.all().public().live()[random_int].brand.title,
+            'colors': [],
+            'image': InventoryItem.objects.all().public().live()[random_int].image.get_rendition('fill-250x280').url,
+            'is_available': InventoryItem.objects.all().public().live()[random_int].is_available,
+            }
+        for j in range(len(InventoryItem.objects.all().public().live()[random_int].PRODUCT_COLORS.values())):
+            color_data = {
+                'name': InventoryItem.objects.all().public().live()[random_int].PRODUCT_COLORS.values()[j]['color_title'],
+                'code': InventoryItem.objects.all().public().live()[random_int].PRODUCT_COLORS.values()[j]['color']
+            }
+            item['colors'].append(color_data)
+        context.append(item)
+    return JsonResponse({'status': context, 'success': True})
 
 @csrf_exempt
 def shop_data(request):

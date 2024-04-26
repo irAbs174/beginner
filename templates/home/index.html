@@ -85,10 +85,13 @@
 <script src="{% static 'js/index/index.js' %}"></script>
 
 <script>
+  function load_two_random_products(){
     $.ajax({
-        url:'shop_api/get_2_random_products',
+        url:'shop_api/get_random_products',
         type:'POST',
-        data: 'data',
+        data: {
+          'random_number' : '3',
+        },
         success: function (response) {
       if (response.success === false) {
         Swal.fire({
@@ -98,12 +101,108 @@
           timer: 3000,
         });
       } else {
-        Swal.fire({
-          icon: "success",
-          title: response.status,
-          showConfirmButton: false,
-          timer: 3000,
-        });
+        // clear swiper slider :
+        $(".two_random_swipre").html('')
+
+        // load two random swiper
+        for(let i = 0; i <= response.status.length; i++) {
+          if(response.status[i].offer == 0){
+            $(".two_random_swipre").append(`
+          <div class="swiper-slide">
+                                <div class="product-box">
+                                    <a href="">
+                                        <div class="product-box-sugget">
+                                            <h6>پیشنهاد لحظه ای</h6>
+                                        </div>
+                                        <div class="product-box-image">
+                                            <img src="${response.status[i].image}" width="30" alt="">
+                                        </div>
+                                        <div class="product-box-title">
+                                            <h5 class="text-overflow-2">${response.status[i].title}</h5>
+                                        </div>
+                                        <div class="product-box-price">
+                                            <div class="product-box-price-price">
+                                                <h5 class="title-font main-color-green-color h2 mb-0">${response.status[i].price}</h5>
+                                                <p class="mb-0 text-muted">تومان</p>
+                                            </div>
+                                        </div>
+                                        <div class="product-box-hover">
+                                            <nav class="navbar navbar-expand justify-content-center">
+                                                <ul class="navbar-nav align-items-center">
+                                                    <li class="nav-item"><a href="/shop/${response.status[i].slug}"
+                                                                            class="nav-item product-box-hover-item me-3">مشاهده
+                                                        محصول</a></li>
+                                                    <li class="nav-item"><a href=""
+                                                                            class="nav-item product-box-hover-item product-box-hover-item-btn me-1"
+                                                                            data-bs-toggle="tooltip"
+                                                                            data-bs-placement="top"
+                                                                            data-bs-title="افزودن به سبد خرید"><i
+                                                            class="bi bi-basket"></i></a></li>
+                                                    <li class="nav-item"><a href=""
+                                                                            class="nav-item product-box-hover-item product-box-hover-item-btn"
+                                                                            data-bs-toggle="tooltip"
+                                                                            data-bs-placement="top"
+                                                                            data-bs-title="افزودن به علاقه ها"><i
+                                                            class="bi bi-heart"></i></a></li>
+                                                </ul>
+                                            </nav>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+          `);//end $jquery$
+          }else{
+            let percent = Math.round(((response.status[i].price - response.status[i].offer) / response.status[i].price) * 100);
+            $(".two_random_swipre").append(`
+          <div class="swiper-slide">
+                                <div class="product-box">
+                                    <a href="">
+                                        <div class="product-box-sugget">
+                                            <h6>پیشنهاد لحظه ای</h6>
+                                        </div>
+                                        <div class="product-box-image">
+                                            <img src="${response.status[i].image}" width="30" alt="">
+                                        </div>
+                                        <div class="product-box-title">
+                                            <h5 class="text-overflow-2">${response.status[i].title}</h5>
+                                        </div>
+                                        <div class="product-box-price">
+                                            <div class="product-box-price-discount">
+                                                <span class="d-block badge main-color-one-bg text-white font-14 rounded-pill">${percent}%</span>
+                                                <del>${response.status[i].price}</del>
+                                            </div>
+                                            <div class="product-box-price-price">
+                                                <h5 class="title-font main-color-green-color h2 mb-0">${response.status[i].offer}</h5>
+                                                <p class="mb-0 text-muted">تومان</p>
+                                            </div>
+                                        </div>
+                                        <div class="product-box-hover">
+                                            <nav class="navbar navbar-expand justify-content-center">
+                                                <ul class="navbar-nav align-items-center">
+                                                    <li class="nav-item"><a href="/shop/${response.status[i].slug}"
+                                                                            class="nav-item product-box-hover-item me-3">مشاهده
+                                                        محصول</a></li>
+                                                    <li class="nav-item"><a href=""
+                                                                            class="nav-item product-box-hover-item product-box-hover-item-btn me-1"
+                                                                            data-bs-toggle="tooltip"
+                                                                            data-bs-placement="top"
+                                                                            data-bs-title="افزودن به سبد خرید"><i
+                                                            class="bi bi-basket"></i></a></li>
+                                                    <li class="nav-item"><a href=""
+                                                                            class="nav-item product-box-hover-item product-box-hover-item-btn"
+                                                                            data-bs-toggle="tooltip"
+                                                                            data-bs-placement="top"
+                                                                            data-bs-title="افزودن به علاقه ها"><i
+                                                            class="bi bi-heart"></i></a></li>
+                                                </ul>
+                                            </nav>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+          `);//end $jquery$
+          }; //endif
+        };// end loop
       }
     },
     error: function (xhr, status, error) {
@@ -116,6 +215,37 @@
       });
     }
     })
+    //end ajax
+  };// end function
+
+  function load_five_random_products(){
+    $.ajax({
+        url:'shop_api/get_random_products',
+        type:'POST',
+        data: {
+            'random_number' : '5',
+          },
+          success: function (response) {
+      if (response.success === false) {
+        Swal.fire({
+          icon: "error",
+          title: "لطفا اتصال اینترنت خود را برسی کنید و مجددا تلاش کنید",
+          showConfirmButton: false,
+        });
+      } else {
+        Swal.fire({
+          icon: "success",
+          title: "محصولات با موفقیت بارگذاری شدند",
+          showConfirmButton: false,
+        });
+        $
+      }
+    } 
+  });// end ajax
+  };//end function
+
+  load_two_random_products();
+  load_five_random_products();
 </script>
 {% endblock %}
 {% endblock %}
