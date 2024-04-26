@@ -161,7 +161,7 @@
                                             <h6>پیشنهاد لحظه ای</h6>
                                         </div>
                                         <div class="product-box-image">
-                                            <img src="${response.status[i].image}" width="30" alt="">
+                                            <img src="https://kikpick.com/${response.status[i].image}" width="30" alt="">
                                         </div>
                                         <div class="product-box-title">
                                             <h5 class="text-overflow-2">${response.status[i].title}</h5>
@@ -206,13 +206,7 @@
       }
     },
     error: function (xhr, status, error) {
-      console.log(status);
-      Swal.fire({
-        icon: "error",
-        title: status,
-        showConfirmButton: false,
-        timer: 3000,
-      });
+      load_two_random_products();
     }
     })
     //end ajax
