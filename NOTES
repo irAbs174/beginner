@@ -3,4 +3,6 @@ for i in range(2):
     rINT = random.randint(1, len(II.objects.all().live()))
     print(II.objects.all().live()[rINT])
 
-thanks!
+Tasks :
+1. Write product load
+2. Write menu load (Category)
