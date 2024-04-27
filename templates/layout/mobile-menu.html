@@ -1,28 +1,29 @@
 {% load static %}
 <div class="mobile-footer d-lg-none d-flex">
     <div class="parent">
-        <div class="item" onclick="topFunction()">
-            <i class="bi bi-chevron-up font-20"></i>
+        <div class="item">
+            <a href="#" onclick="topFunction()">
+                <i class="bi bi-chevron-up font-20"></i></a>
         </div>
         <div class="item">
-            <a href="index.html">
-                <i class="bi bi-house font-20"></i>
+            <a href="/shop">
+                <i class="bi bi-shop-window font-20"></i>
             </a>
         </div>
         <div class="item item-float">
-            <a href="#offcanvasCart" data-bs-toggle="offcanvas" href="#offcanvasCart" role="button"
+            <a href="/" data-bs-toggle="offcanvas" role="button"
                aria-controls="offcanvasCart">
-                <i class="bi bi-bag font-20"></i>
-            </a>
-        </div>
-        <div class="item ">
-            <a href="index.html">
-                <i class="bi bi-archive"></i>
+                <i class="bi bi-house-door"></i>
             </a>
         </div>
         <div class="item">
-            <a href="index.html">
-                <i class="bi bi-person"></i>
+            <a data-bs-toggle="offcanvas" href="#offcanvasCart" role="button">
+                <i class="bi bi-basket2"></i>
+            </a>
+        </div>
+        <div class="item">
+            <a href="/accounts">
+                <i class="bi bi-person-bounding-box"></i>
             </a>
         </div>
     </div>

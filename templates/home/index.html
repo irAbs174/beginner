@@ -85,6 +85,14 @@
 <script src="{% static 'js/index/index.js' %}"></script>
 
 <script>
+    function internet_connection_error(){
+        Swal.fire({
+          icon: "error",
+          title: "لطفا اتصال اینترنت خود را برسی کنید و مجددا تلاش کنید",
+          showConfirmButton: false,
+        });
+    }; //end function
+
   function load_two_random_products(){
     $.ajax({
         url:'shop_api/get_random_products',
@@ -94,12 +102,7 @@
         },
         success: function (response) {
       if (response.success === false) {
-        Swal.fire({
-          icon: "error",
-          title: response.status,
-          showConfirmButton: false,
-          timer: 3000,
-        });
+        internet_connection_error();
       } else {
         // clear swiper slider :
         $(".two_random_swipre").html('')
@@ -217,15 +220,11 @@
         url:'shop_api/get_random_products',
         type:'POST',
         data: {
-            'random_number' : '5',
+            'random_number' : '3',
           },
           success: function (response) {
       if (response.success === false) {
-        Swal.fire({
-          icon: "error",
-          title: "لطفا اتصال اینترنت خود را برسی کنید و مجددا تلاش کنید",
-          showConfirmButton: false,
-        });
+        internet_connection_error();
       } else {
         $(".five_random_product").html("")
         $(".five_random_product_title").html("")
@@ -321,8 +320,13 @@
     //end ajax
   };// end function
 
+  function load_latest_products(){
+    console.log("=> => => => => => !HELLO_WORLD! <= <= <= <= <= <=")
+  };// end function
+
   load_two_random_products();
   load_five_random_products();
+  load_latest_products();
 </script>
 {% endblock %}
 {% endblock %}
