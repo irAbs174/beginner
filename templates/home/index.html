@@ -47,19 +47,19 @@
 
 {% include 'layout/feature.html' %}
 
-{% include 'layout/offers.html' %}
+{% include 'layout/product-boxs-special.html' %}
 
 {% include 'layout/category.html' %}
 
-{% include 'layout/product-boxs-special.html' %}
-
-{% include 'layout/product-boxs-newst.html' %}
+{% include 'layout/product-boxs.html' %}
 
 {% include 'layout/advert-banner.html' %}
 
-{% include 'layout/product-boxs.html' %}
+{% include 'layout/offers.html' %}
 
 {% include 'layout/advert-banner-big.html' %}
+
+{% include 'layout/product-boxs-newst.html' %}
 
 {% include 'layout/blog.html' %}
 
@@ -320,13 +320,215 @@
     //end ajax
   };// end function
 
-  function load_latest_products(){
-    console.log("=> => => => => => !HELLO_WORLD! <= <= <= <= <= <=")
+  function load_special_products(){
+    $.ajax({
+        url : 'shop_api/load_special_products',
+        type : 'POST',
+        data : {'hello':'world'},
+        success: function (response) {
+      if (response.success === false) {
+        internet_connection_error();
+      } else{
+        $(`.specail_pro`).html(``);
+        for(let i = 0; i <= response.status.length; i++){
+            let percent = Math.round(((response.status[i].price - response.status[i].offer) / response.status[i].price) * 100);
+            $('.specail_pro').append(`
+                    <div class="swiper-slide">
+                        <div class="product-box">
+                            <a href="">
+                                <div class="product-box-image">
+                                    <img src="https://kikpick.com/${response.status[i].image}" alt="">
+                                </div>
+                                <div class="product-box-title">
+                                    <h5 class="text-overflow-2">${response.status[i].title}</h5>
+                                </div>
+                                <div class="product-box-price">
+                                    <div class="product-box-price-discount">
+                                        <span class="d-block badge main-color-one-bg text-white font-14 rounded-pill">%${percent}</span>
+                                        <del>${response.status[i].price}</del>
+                                    </div>
+                                    <div class="product-box-price-price">
+                                        <h5 class="title-font main-color-green-color h2 mb-0">${response.status[i].price}</h5>
+                                        <p class="mb-0 text-muted">تومان</p>
+                                    </div>
+                                </div>
+                                <div class="product-box-hover">
+                                    <nav class="navbar navbar-expand justify-content-center">
+                                        <ul class="navbar-nav align-items-center">
+                                            <li class="nav-item"><a href="/shop/${response.status[i].slug}"
+                                                                    class="nav-item product-box-hover-item me-3">مشاهده
+                                                محصول</a></li>
+                                            <li class="nav-item"><a href=""
+                                                                    class="nav-item product-box-hover-item product-box-hover-item-btn me-1"
+                                                                    data-bs-toggle="tooltip" data-bs-placement="top"
+                                                                    data-bs-title="افزودن به سبد خرید"><i
+                                                    class="bi bi-basket"></i></a></li>
+                                            <li class="nav-item"><a href=""
+                                                                    class="nav-item product-box-hover-item product-box-hover-item-btn"
+                                                                    data-bs-toggle="tooltip" data-bs-placement="top"
+                                                                    data-bs-title="افزودن به علاقه ها"><i
+                                                    class="bi bi-heart"></i></a></li>
+                                        </ul>
+                                    </nav>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+            `);
+        };//endfor
+      }} , //end success
+    });//end ajax
   };// end function
+
+  function load_newest_products(){
+    $.ajax({
+        url:'shop_api/shop_data',
+        type:'POST',
+        data: {
+            'page_number' : '1',
+            'load_filter': 'newest',
+          },
+          success: function (response) {
+      if (response.success === false) {
+        internet_connection_error();
+      } else {
+        $(".newst_products").html("")
+        for(let i = 0; i <= response.context.length; i++){
+            if(response.context[i].offer == 0){
+                $(".newst_products").append(`
+                <div class="col-lg-3 col-sm-6">
+                    <div class="product-row-item">
+                        <a href="">
+                            <div class="row align-items-center">
+                                <div class="col-4">
+                                    <img src="https://kikpick.com/${response.context[i].image}" alt="">
+                                </div>
+                                <div class="col-8">
+                                    <h3 class="text-overflow-1 title-font font-14">
+                                        ${response.context[i].title}
+                                        </h3>
+                                    <div class="cart-canvas-price my-3 d-flex align-items-center">
+                                        <h6 class="title-font main-color-one-color">${response.context[i].price} تومان</h6>
+                                    </div>
+                                    <div class="cart-canvas-foot d-flex align-items-center justify-content-end">
+                                        <div class="cart-canvas-add">
+                                            <button class="btn text-white"><i class="bi bi-basket"></i></button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                `);
+            }else{
+                $(".newst_products").append(`
+                <div class="col-lg-3 col-sm-6">
+                    <div class="product-row-item">
+                        <a href="">
+                            <div class="row align-items-center">
+                                <div class="col-4">
+                                    <img src="https://kikpick.com/${response.context[i].image}" alt="">
+                                </div>
+                                <div class="col-8">
+                                    <h3 class="text-overflow-1 title-font font-14">
+                                        ${response.context[i].title}
+                                        </h3>
+                                    <div class="cart-canvas-price my-3 d-flex align-items-center">
+                                        <p class="mb-0 text-muted me-2 font-16 text-decoration-line-through">${response.context[i].price}</p>
+                                        <h6 class="title-font main-color-one-color">${response.context[i].offer} تومان</h6>
+                                    </div>
+                                    <div class="cart-canvas-foot d-flex align-items-center justify-content-end">
+                                        <div class="cart-canvas-add">
+                                            <button class="btn text-white"><i class="bi bi-basket"></i></button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                `);
+            }//endif
+        } //endfor
+      }//end if
+    } , //end success
+    }) //end error
+    //end ajax
+  };//end function  
+
+  function load_offers_products(){
+    $.ajax({
+        url:'shop_api/shop_data',
+        type:'POST',
+        data: {
+            'page_number' : '1',
+            'load_filter': 'offer_products_list',
+          },
+          success: function (response) {
+      if (response.success === false) {
+        internet_connection_error();
+      } else {
+        $(".offers_products").html("")
+        for(let i = 0; i <= response.context.length; i++){
+            let percent = Math.round(((response.context[i].price - response.context[i].offer) / response.context[i].price) * 100);
+                $(".offers_products").append(`
+                <div class="swiper-slide">
+                    <div class="product-box">
+                        <a href="">
+                            <div class="product-box-image">
+                                <img src="https://kikpick.com/${response.context[i].image}" alt="">
+                            </div>
+                            <div class="product-box-title">
+                                <h5 class="text-overflow-2">
+                                    ${response.context[i].title}
+                                </h5>
+                            </div>
+                            <div class="product-box-price">
+                                <div class="product-box-price-discount">
+                                    <span class="d-block badge main-color-one-bg text-white font-14 rounded-pill">${percent}%</span>
+                                    <del>${response.context[i].price}</del>
+                                </div>
+                                <div class="product-box-price-price">
+                                    <h5 class="title-font main-color-green-color h2 mb-0">${response.context[i].offer}</h5>
+                                    <p class="mb-0 text-muted">تومان</p>
+                                </div>
+                            </div>
+                            <div class="product-box-hover">
+                                <nav class="navbar navbar-expand justify-content-center">
+                                    <ul class="navbar-nav align-items-center">
+                                        <li class="nav-item"><a href="/shop/${response.context[i].slug}"
+                                                                class="nav-item product-box-hover-item me-3">مشاهده
+                                            محصول</a></li>
+                                        <li class="nav-item"><a href=""
+                                                                class="nav-item product-box-hover-item product-box-hover-item-btn me-1"
+                                                                data-bs-toggle="tooltip" data-bs-placement="top"
+                                                                data-bs-title="افزودن به سبد خرید"><i
+                                                class="bi bi-basket"></i></a></li>
+                                        <li class="nav-item"><a href=""
+                                                                class="nav-item product-box-hover-item product-box-hover-item-btn"
+                                                                data-bs-toggle="tooltip" data-bs-placement="top"
+                                                                data-bs-title="افزودن به علاقه ها"><i
+                                                class="bi bi-heart"></i></a></li>
+                                    </ul>
+                                </nav>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                `);
+        } //endfor
+      }//end if
+    } , //end success
+    }) //end error
+    //end ajax
+  };//end function  
 
   load_two_random_products();
   load_five_random_products();
-  load_latest_products();
+  load_special_products();
+  load_newest_products();
+  load_offers_products();
 </script>
 {% endblock %}
 {% endblock %}

@@ -8,6 +8,33 @@ import random
 
 
 @csrf_exempt
+def load_special_products(request):
+    context = []
+    list = [
+        '8020',
+        '6006',
+        '6008',
+        '8017',
+        '8002',
+        '6633',
+        '437',
+        '6501',
+        '7709',
+    ]
+    for i in list:
+        item = {
+            'title': InventoryItem.objects.all().public().live().search(i)[0].title,
+            'slug': InventoryItem.objects.all().public().live().search(i)[0].slug,
+            'price': InventoryItem.objects.all().public().live().search(i)[0].price,
+            'offer': InventoryItem.objects.all().public().live().search(i)[0].PRODUCT_OFFER.values()[0]['value'] if InventoryItem.objects.all().public().live().search(i)[0].PRODUCT_OFFER.values() else 0,
+            'quantity': InventoryItem.objects.all().public().live().search(i)[0].quantity,
+            'brand': InventoryItem.objects.all().public().live().search(i)[0].brand.title,
+            'image': InventoryItem.objects.all().public().live().search(i)[0].image.get_rendition('fill-250x280').url,
+        }
+        context.append(item)
+    return JsonResponse({'status' : context, 'success': True})
+
+@csrf_exempt
 def get_random_products(request):
     random_number = int(request.POST.get('random_number'))
     context = []
@@ -39,7 +66,7 @@ def shop_data(request):
             per_page = 10
             next_pagintage = 'index_products'
         else:
-            per_page = 8
+            per_page = 16
             next_pagintage = int(page_number) + 1
         products = InventoryItem.objects.live().public().order_by('first_published_at')
         paginator = Paginator(products, per_page)
@@ -146,7 +173,7 @@ def shop_data(request):
         products = InventoryItem.objects.live().public().order_by('-first_published_at')
         pagintage_key = ''
     if page_number == 'index':
-        per_page = 10
+        per_page = 16
         next_pagintage = 'index_products'
     else:
         per_page = 8
