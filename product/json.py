@@ -2,10 +2,53 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.views.decorators.csrf import csrf_exempt
 from category.models import CategoryProduct as cat
 from brand.models import BrandPage as brand
+from brand.models import BrandPage
+from category.models import CategoryProduct
 from django.http import JsonResponse
 from .models import InventoryItem
 import random
 
+
+@csrf_exempt
+def load_brand_items(request):
+    context = []
+    list = [
+        'الکسا',
+        'نیلپر',
+        'فوروارد',
+        'فیلا',
+        'کت',
+        'گپ',
+    ]
+    bp = BrandPage.objects.live().public().order_by('first_published_at')
+    for i in list:
+        bps = bp.search(i)[0]
+        item = {
+            'id': bps.id,
+            'title': bps.title,
+            'image': bps.image.get_rendition('fill-75x75').url,
+        }
+        context.append(item)
+
+    return JsonResponse({'status': context, 'success': True})
+
+@csrf_exempt
+def load_category_items(request):
+    cat_list = []
+    for c in CategoryProduct.objects.live().public().order_by('first_published_at'):
+        if c.image:
+            item = {
+                'id': c.id,
+                'title': c.title,
+                'image': c.image.get_rendition('fill-100x100').url,
+                'count': 0,
+            }
+            count = InventoryItem.objects.filter(collection=c.id).count()
+            if count:
+                item['count'] = count
+                cat_list.append(item)
+            context = sorted(cat_list, key=lambda x: x['count'], reverse=True)
+    return JsonResponse({'status': context[0:8], 'success': True})
 
 @csrf_exempt
 def load_special_products(request):

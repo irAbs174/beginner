@@ -235,7 +235,7 @@ STATIC_ROOT = '/var/www/public/kikpick/static'
 STATIC_URL = '/static/'
 
 # Media root Dir configuration
-MEDIA_ROOT = '/var/www/public/kikpick/media'
+MEDIA_ROOT = 'media'
 MEDIA_URL = '/media/'
 
 # SERVER DEVELOPER configuration

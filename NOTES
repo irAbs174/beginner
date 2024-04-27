@@ -17,6 +17,48 @@ from product.models import InventoryItem
 InventoryItem.objects.all().public().live()[4].PRODUCT_OFFER.values()[0]['value']
 >>> 449000
 
+### Load categoery by bigest count:
+from product.models import InventoryItem
+from category.models import CategoryProduct
+
+cat_list = []
+for c in CategoryProduct.objects.live().public().order_by('first_published_at'):
+    item = {
+        'id': c.id,
+        'title': c.title,
+        'image': c.image.get_rendition('fill-250x280').url,
+        'count': 0,
+    }
+    count = InventoryItem.objects.filter(collection=c.id).count()
+    if count:
+        item['count'] = count
+        cat_list.append(item)
+    context = sorted(cat_list, key=lambda x: x['count'], reverse=True)
+
+context[0:8]
+
+
+### Load brand:
+from brand.models import BrandPage
+
+context = []
+list = [
+    'فوروارد',
+    'نشنال',
+    'الکسا',
+    'فیلا',
+    'نیلپر',
+    'کت',
+]
+bp = BrandPage.objects.live().public().order_by('first_published_at')
+for i in list:
+    bps = bp.search(i)[0]
+    item = {
+        'id': bps.id,
+        'title': bps.title,
+        'image': bps.image.get_rendition('fill-250x280').url,
+    }
+    context.append(item)
 
 ### load product brand data :
 from product.models import InventoryItem

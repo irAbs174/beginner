@@ -2,7 +2,7 @@
 {% load static %}
 {% block HEAD %}
     <meta charset="utf-8">
-    <title>کیک پیک</title>
+    <title>کیک پیک | خانه</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -12,8 +12,6 @@
     <meta property="og:image" content="">
 
     <link rel="apple-touch-icon" sizes="180x180" href="{% static 'assets/img/apple-touch-icon.png' %}">
-    <link rel="icon" type="image/png" sizes="32x32" href="{% static 'assets/img/favicon-32x32.png' %}">
-    <link rel="icon" type="image/png" sizes="16x16" href="{% static 'assets/img/favicon-16x16.png' %}">
     <link rel="manifest" href="/site.webmanifest">
     <!-- Place favicon.ico in the root directory -->
 
@@ -43,8 +41,6 @@
 
 {% include 'layout/slider.html' %}
 
-{% include 'layout/slider-brand.html' %}
-
 {% include 'layout/feature.html' %}
 
 {% include 'layout/product-boxs-special.html' %}
@@ -65,7 +61,7 @@
 
 {% include 'layout/about-us.html' %}
 
-{% include 'layout/partners.html' %}
+{% include 'layout/slider-brand.html' %}
 
 {% include 'layout/footer.html' %}
 
@@ -81,8 +77,7 @@
 <script src="{% static 'assets/js/plugin/rasta-contact/script.js' %}"></script>
 <script src="{% static 'assets/js/plugin/bootstrap-touchspin/jquery.bootstrap-touchspin.min.js' %}"></script>
 <script src="{% static 'assets/js/plugins.js' %}"></script>
-<script src="{% static 'assets/js/main.js' %}s"></script>
-<script src="{% static 'js/index/index.js' %}"></script>
+<script src="{% static 'assets/js/main.js' %}"></script>
 
 <script>
     function internet_connection_error(){
@@ -524,11 +519,66 @@
     //end ajax
   };//end function  
 
+  function load_category_items(){
+    $.ajax({
+        url:'shop_api/load_category_items',
+        type:'POST',
+        data : {'hello' : 'world'},
+        success: function(response){
+            if(response.success ===false){
+                internet_connection_error();
+            }else{
+                for(let i = 0; i <= response.status.length; i++){
+                    $(".category_items").append(`
+                    <div class="col-lg-2 col-sm-6">
+                    <div class="site-category-items p-3 shadow-box rounded-3">
+                        <a href="/category/products/${response.status[i].id}">
+                            <div class="site-category-items-icon">
+                                <img src="${response.status[i].image}" alt="">
+                            </div>
+                            <h6 class="text-center">${response.status[i].title}</h6>
+                        </a>
+                    </div>
+                </div>
+                    `);
+                };//endfor
+            }
+        },//end success
+    })//end ajax
+  }
+
+  function load_brand_items(){
+    $.ajax({
+        url:'shop_api/load_brand_items',
+        type: 'POST',
+        data: {'hello':'world'},
+        success: function(response){
+            if(response.success ===false){
+                internet_connection_error();
+            }else{
+                for(let i = 0; i <= response.status.length; i++){
+                    $(`.load_brand_items`).append(`
+                    <div class="col-md-2 col-6">
+                <div class="box">
+                    <a href="/category/brands/${response.status[i].id}">
+                        <img src="${response.status[i].image}" alt="${response.status[i].title}" class="img-fluid">
+                    </a>
+                </div>
+            </div>
+                    `);
+                };//endfor
+            };//endif
+        },// end success
+    });//end ajax
+  };//end function
+
   load_two_random_products();
   load_five_random_products();
   load_special_products();
   load_newest_products();
   load_offers_products();
+  load_category_items();
+  load_brand_items();
 </script>
 {% endblock %}
 {% endblock %}

@@ -1,0 +1,91 @@
+{% extends 'layout/base.html' %}
+{% load static %}
+{% block HEAD %}
+    <meta charset="utf-8">
+    <title>کیک پیک | فروشگاه</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <meta property="og:title" content="">
+    <meta property="og:type" content="">
+    <meta property="og:url" content="">
+    <meta property="og:image" content="">
+
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/img/apple-touch-icon.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <!-- Place favicon.ico in the root directory -->
+
+    <link rel="stylesheet" href="{% static '' %}assets/css/normalize.css">
+    <link rel="stylesheet" href="{% static '' %}assets/font/bootstrap-icon/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="{% static '' %}assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{% static '' %}assets/js/plugin/swiper/swiper-bundle.min.css">
+    <link rel="stylesheet" href="{% static '' %}assets/js/plugin/countdown/countdown.css">
+    <link rel="stylesheet" href="{% static '' %}assets/js/plugin/rasta-contact/style.css">
+    <link rel="stylesheet" href="{% static '' %}assets/js/plugin/bootstrap-touchspin/jquery.bootstrap-touchspin.min.css">
+    <link rel="stylesheet" href="{% static '' %}assets/css/main.css">
+    <link rel="stylesheet" href="{% static '' %}assets/css/responsive.css">
+
+    <!-- ======== range slider -->
+    <link rel="stylesheet" href="assets/js/plugin/bootstrap-slider/bootstrap-slider.min.css">
+    <!-- ======== range slider -->
+
+    <meta name="theme-color" content="#f4f5f9">
+
+    {% endblock %}
+
+<!-- start header code -->
+{% block BODY %}
+
+{% include 'layout/header.html' %}
+
+{% include 'layout/menu.html' %}
+
+<!-- start content -->
+
+<div class="content">
+    <div class="container-fluid">
+        <div class="page-404">
+            <div class="content-box">
+                <div class="container-fluid">
+                    <div class="image-404">
+                        <img src="{% static '' %}assets/img/404.jpg" width="500" alt="">
+                    </div>
+                    <div class="title-404">
+                        <h2 class="text-center title-font">
+                            متاسفیم ! چیزی که به دنبال آن بودید یافت نشد
+                        </h2>
+                        <div class="text-center mt-3">
+                            <a href="" class="btn main-color-one-outline rounded-pill px-4">رفتن به خانه</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</div>
+
+<!-- end content -->
+
+
+<!-- start footer -->
+
+
+
+{% include 'layout/mobile-menu.html' %}{% static '' %}
+
+{% include 'layout/footer.html' %}
+{% block JS %}
+<script src="{% static '' %}assets/js/vendor/modernizr-3.11.2.min.js"></script>
+<script src="{% static '' %}assets/js/vendor/jquery-3.7.1.min.js"></script>
+<script src="{% static '' %}assets/js/vendor/bootstrap.bundle-5.3.2.min.js"></script>
+<script src="{% static '' %}assets/js/plugin/swiper/swiper-bundle.min.js"></script>
+<script src="{% static '' %}assets/js/plugin/countdown/countdown.js"></script>
+<script src="{% static '' %}assets/js/plugin/vanilla-tilt/vanilla-tilt.min.js"></script>
+<script src="{% static '' %}assets/js/plugin/rasta-contact/script.js"></script>
+<script src="{% static '' %}assets/js/plugin/bootstrap-touchspin/jquery.bootstrap-touchspin.min.js"></script>
+<script src="{% static '' %}assets/js/plugins.js"></script>
+<script src="{% static '' %}assets/js/main.js"></script>
+{% endblock %}
+{% endblock %}
