@@ -4,6 +4,29 @@ from category.models import CategoryProduct as cat
 from brand.models import BrandPage as brand
 from django.http import JsonResponse
 from .models import InventoryItem
+import random
+
+
+@csrf_exempt
+def get_random_products(request):
+    random_number = int(request.POST.get('random_number'))
+    context = []
+    for i in range(random_number):
+        random_int = random.randint(1, len(InventoryItem.objects.all().live()) -1)
+        item = {
+            'id': InventoryItem.objects.all().live()[random_int].id,
+            'slug': InventoryItem.objects.all().live()[random_int].slug,
+            'title': InventoryItem.objects.all().live()[random_int].title,
+            'product_title': InventoryItem.objects.all().live()[random_int].product_title,
+            'price': InventoryItem.objects.all().live()[random_int].price,
+            'offer': InventoryItem.objects.all().live()[random_int].PRODUCT_OFFER.values()[0]['value'],
+            'quantity': InventoryItem.objects.all().live()[random_int].quantity,
+            'brand': InventoryItem.objects.all().live()[random_int].brand.title,
+            'image': InventoryItem.objects.all().live()[random_int].image.get_rendition('fill-250x280').url,
+            'is_available': InventoryItem.objects.all().live()[random_int].is_available,
+            }
+        context.append(item)
+    return JsonResponse({'status': context, 'success': True})
 
 @csrf_exempt
 def shop_data(request):

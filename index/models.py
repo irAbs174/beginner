@@ -44,7 +44,7 @@ class Index(Page):
 
     def get_template(self, request, *args, **kwargs):
 
-        return 'index/index.html'
+        return 'home/index.html'
 
     def get_context(self, request, *args, **kwargs):
         context = super().get_context(request, *args, **kwargs)

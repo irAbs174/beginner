@@ -1,4 +1,5 @@
 $(document).ready(function() {
+  console.log("hello world !");
   function loadProducts() {
     data = {
       'page_number': 'index',

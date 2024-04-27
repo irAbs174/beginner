@@ -1,0 +1,328 @@
+{% extends 'layout/base.html' %}
+{% load static %}
+{% block HEAD %}
+    <meta charset="utf-8">
+    <title>کیک پیک</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <meta property="og:title" content="">
+    <meta property="og:type" content="">
+    <meta property="og:url" content="">
+    <meta property="og:image" content="">
+
+    <link rel="apple-touch-icon" sizes="180x180" href="{% static 'assets/img/apple-touch-icon.png' %}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{% static 'assets/img/favicon-32x32.png' %}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{% static 'assets/img/favicon-16x16.png' %}">
+    <link rel="manifest" href="/site.webmanifest">
+    <!-- Place favicon.ico in the root directory -->
+
+    <link rel="stylesheet" href="{% static 'assets/css/normalize.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/font/bootstrap-icon/bootstrap-icons.min.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/js/plugin/swiper/swiper-bundle.min.cs' %}s">
+    <link rel="stylesheet" href="{% static 'assets/js/plugin/countdown/countdown.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/js/plugin/rasta-contact/style.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/main.cs' %}s">
+    <link rel="stylesheet" href="{% static 'assets/css/responsive.css' %}">
+
+    <script src="{% static 'js/jquery/jquery-3.6.0.min.js' %}"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <meta name="theme-color" content="#99ff00">
+
+{% endblock %}
+<!-- start header code -->
+
+{% block BODY %}
+
+{% include 'layout/header.html' %}
+
+{% include 'layout/menu.html' %}
+
+{% include 'layout/slider.html' %}
+
+{% include 'layout/slider-brand.html' %}
+
+{% include 'layout/feature.html' %}
+
+{% include 'layout/offers.html' %}
+
+{% include 'layout/category.html' %}
+
+{% include 'layout/product-boxs-special.html' %}
+
+{% include 'layout/product-boxs-newst.html' %}
+
+{% include 'layout/advert-banner.html' %}
+
+{% include 'layout/product-boxs.html' %}
+
+{% include 'layout/advert-banner-big.html' %}
+
+{% include 'layout/blog.html' %}
+
+{% include 'layout/about-us.html' %}
+
+{% include 'layout/partners.html' %}
+
+{% include 'layout/footer.html' %}
+
+{% include 'layout/mobile-menu.html' %}
+
+{% block JS %}
+<script src="{% static 'assets/js/vendor/modernizr-3.11.2.min.js' %}"></script>
+<script src="{% static 'assets/js/vendor/jquery-3.7.1.min.js' %}"></script>
+<script src="{% static 'assets/js/vendor/bootstrap.bundle-5.3.2.min.js' %}"></script>
+<script src="{% static 'assets/js/plugin/swiper/swiper-bundle.min.js' %}"></script>
+<script src="{% static 'assets/js/plugin/countdown/countdown.js' %}"></script>
+<script src="{% static 'assets/js/plugin/vanilla-tilt/vanilla-tilt.min.j' %}s"></script>
+<script src="{% static 'assets/js/plugin/rasta-contact/script.js' %}"></script>
+<script src="{% static 'assets/js/plugin/bootstrap-touchspin/jquery.bootstrap-touchspin.min.js' %}"></script>
+<script src="{% static 'assets/js/plugins.js' %}"></script>
+<script src="{% static 'assets/js/main.js' %}s"></script>
+<script src="{% static 'js/index/index.js' %}"></script>
+
+<script>
+  function load_two_random_products(){
+    $.ajax({
+        url:'shop_api/get_random_products',
+        type:'POST',
+        data: {
+          'random_number' : '3',
+        },
+        success: function (response) {
+      if (response.success === false) {
+        Swal.fire({
+          icon: "error",
+          title: response.status,
+          showConfirmButton: false,
+          timer: 3000,
+        });
+      } else {
+        // clear swiper slider :
+        $(".two_random_swipre").html('')
+
+        // load two random swiper
+        for(let i = 0; i <= response.status.length; i++) {
+          if(response.status[i].offer == 0){
+            $(".two_random_swipre").append(`
+          <div class="swiper-slide">
+                                <div class="product-box">
+                                    <a href="">
+                                        <div class="product-box-sugget">
+                                            <h6>پیشنهاد لحظه ای</h6>
+                                        </div>
+                                        <div class="product-box-image">
+                                            <img src="${response.status[i].image}" width="30" alt="">
+                                        </div>
+                                        <div class="product-box-title">
+                                            <h5 class="text-overflow-2">${response.status[i].title}</h5>
+                                        </div>
+                                        <div class="product-box-price">
+                                            <div class="product-box-price-price">
+                                                <h5 class="title-font main-color-green-color h2 mb-0">${response.status[i].price}</h5>
+                                                <p class="mb-0 text-muted">تومان</p>
+                                            </div>
+                                        </div>
+                                        <div class="product-box-hover">
+                                            <nav class="navbar navbar-expand justify-content-center">
+                                                <ul class="navbar-nav align-items-center">
+                                                    <li class="nav-item"><a href="/shop/${response.status[i].slug}"
+                                                                            class="nav-item product-box-hover-item me-3">مشاهده
+                                                        محصول</a></li>
+                                                    <li class="nav-item"><a href=""
+                                                                            class="nav-item product-box-hover-item product-box-hover-item-btn me-1"
+                                                                            data-bs-toggle="tooltip"
+                                                                            data-bs-placement="top"
+                                                                            data-bs-title="افزودن به سبد خرید"><i
+                                                            class="bi bi-basket"></i></a></li>
+                                                    <li class="nav-item"><a href=""
+                                                                            class="nav-item product-box-hover-item product-box-hover-item-btn"
+                                                                            data-bs-toggle="tooltip"
+                                                                            data-bs-placement="top"
+                                                                            data-bs-title="افزودن به علاقه ها"><i
+                                                            class="bi bi-heart"></i></a></li>
+                                                </ul>
+                                            </nav>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+          `);//end $jquery$
+          }else{
+            let percent = Math.round(((response.status[i].price - response.status[i].offer) / response.status[i].price) * 100);
+            $(".two_random_swipre").append(`
+          <div class="swiper-slide">
+                                <div class="product-box">
+                                    <a href="">
+                                        <div class="product-box-sugget">
+                                            <h6>پیشنهاد لحظه ای</h6>
+                                        </div>
+                                        <div class="product-box-image">
+                                            <img src="https://kikpick.com/${response.status[i].image}" width="30" alt="">
+                                        </div>
+                                        <div class="product-box-title">
+                                            <h5 class="text-overflow-2">${response.status[i].title}</h5>
+                                        </div>
+                                        <div class="product-box-price">
+                                            <div class="product-box-price-discount">
+                                                <span class="d-block badge main-color-one-bg text-white font-14 rounded-pill">${percent}%</span>
+                                                <del>${response.status[i].price}</del>
+                                            </div>
+                                            <div class="product-box-price-price">
+                                                <h5 class="title-font main-color-green-color h2 mb-0">${response.status[i].offer}</h5>
+                                                <p class="mb-0 text-muted">تومان</p>
+                                            </div>
+                                        </div>
+                                        <div class="product-box-hover">
+                                            <nav class="navbar navbar-expand justify-content-center">
+                                                <ul class="navbar-nav align-items-center">
+                                                    <li class="nav-item"><a href="/shop/${response.status[i].slug}"
+                                                                            class="nav-item product-box-hover-item me-3">مشاهده
+                                                        محصول</a></li>
+                                                    <li class="nav-item"><a href=""
+                                                                            class="nav-item product-box-hover-item product-box-hover-item-btn me-1"
+                                                                            data-bs-toggle="tooltip"
+                                                                            data-bs-placement="top"
+                                                                            data-bs-title="افزودن به سبد خرید"><i
+                                                            class="bi bi-basket"></i></a></li>
+                                                    <li class="nav-item"><a href=""
+                                                                            class="nav-item product-box-hover-item product-box-hover-item-btn"
+                                                                            data-bs-toggle="tooltip"
+                                                                            data-bs-placement="top"
+                                                                            data-bs-title="افزودن به علاقه ها"><i
+                                                            class="bi bi-heart"></i></a></li>
+                                                </ul>
+                                            </nav>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+          `);//end $jquery$
+          }; //endif
+        };// end loop
+      }
+    },
+    error: function (xhr, status, error) {
+      load_two_random_products();
+    }
+    })
+    //end ajax
+  };// end function
+
+  function load_five_random_products(){
+    $.ajax({
+        url:'shop_api/get_random_products',
+        type:'POST',
+        data: {
+            'random_number' : '5',
+          },
+          success: function (response) {
+      if (response.success === false) {
+        Swal.fire({
+          icon: "error",
+          title: "لطفا اتصال اینترنت خود را برسی کنید و مجددا تلاش کنید",
+          showConfirmButton: false,
+        });
+      } else {
+        $(".five_random_product").html("")
+        $(".five_random_product_title").html("")
+        for(let i = 0; i <= response.status.length; i++){
+          if(response.status[i].offer == 0){
+            $(".five_random_product").append(`
+            <div class="swiper-slide">
+                                        <div class="offer-item">
+                                            <div class="row">
+                                                <div class="col-md-5">
+                                                    <div class="offer-img">
+                                                        <img src="https://kikpick.com/${response.status[i].image}" alt=""
+                                                             class="img-fluid">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-7">
+                                                    <div class="offer-content">
+                                                        <div class="offer-desc">
+                                                            <h4>
+                                                                ${response.status[i].title}
+                                                            </h4>
+                                                            </h4>
+                                                            <div class="offer-desc-price">
+                                                                <span class="old">${response.status[i].price} تومان</span>
+                                                            </div>
+                                                        </div>
+                                                        <div class='countdown' data-date="2024-05-01" data-time="18:30">
+                                                        </div>
+
+                                                        <div class="offer-btn">
+                                                            <a href="product.html"><i class="bi bi-basket me-1"></i>
+                                                                بریم واسه
+                                                                خرید!</i></a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+            `)
+          }else{
+            let percent = Math.round(((response.status[i].price - response.status[i].offer) / response.status[i].price) * 100);
+            $(".five_random_product").append(`
+            <div class="swiper-slide">
+                                        <div class="offer-item">
+                                            <div class="row">
+                                                <div class="col-md-5">
+                                                    <div class="offer-discount">
+                                                        <span>٪${percent} تخفیف</span>
+                                                    </div>
+                                                    <div class="offer-img">
+                                                        <img src="https://kikpick.com/${response.status[i].image}" alt=""
+                                                             class="img-fluid">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-7">
+                                                    <div class="offer-content">
+                                                        <div class="offer-title d-md-inline-block d-none">
+                                                            <h4>پیشنهاد <span class="title-font">کیک پیک شگفت انگیز</span></h4>
+                                                        </div>
+                                                        <div class="offer-desc">
+                                                            <h4>
+                                                                ${response.status[i].title}
+                                                            </h4>
+                                                            </h4>
+                                                            <div class="offer-desc-price">
+                                                                <span class="old">${response.status[i].price} تومان</span>
+                                                                <span class="new">${response.status[i].offer} تومان</span>
+                                                            </div>
+                                                        </div>
+                                                        <div class='countdown' data-date="2024-05-01" data-time="18:30">
+                                                        </div>
+
+                                                        <div class="offer-btn">
+                                                            <a href="/shop/${response.status[i].slug}"><i class="bi bi-basket me-1"></i>
+                                                                بریم واسه
+                                                                خرید!</i></a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+            `)
+          }//endif
+        }//end loop
+      }//end if
+    } , //end success
+    error: function (xhr, status, error) {
+      load_five_random_products();
+    }
+    }) //end error
+    //end ajax
+  };// end function
+
+  load_two_random_products();
+  load_five_random_products();
+</script>
+{% endblock %}
+{% endblock %}

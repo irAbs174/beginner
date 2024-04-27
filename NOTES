@@ -1,31 +1,76 @@
-#IMPORTAND NOTES:
-	#1.ASK RIAL OUR TOMAN FOR SEND AMOUNT FOR FADAX
-	#2.REPLACE REAL FADAX TOKEN
+### ### ### ### ### ###  START DOCS ### ### ### ### ### ### ### 
+
+### load product offer data :
+from product.models import InventoryItem
+InventoryItem.objects.all().public().live()[4]
+>>> <InventoryItem: کوله پشتی 55 لیتری فوروارد - 40 in stock>
 
 
-import requests
+### load product main image data :
+from product.models import InventoryItem
+InventoryItem.objects.all().public().live()[4].image.get_rendition('fill-250x280').url
+>>> '/media/images/toosi.2e16d0ba.fill-250x280.jpg'
 
-# Send a GET request to retrieve JSON data
-response = requests.get('https://api.example.com/user/1')
 
-# Check if the request was successful (status code 200)
-if response.status_code == 200:
-    # Parse the JSON response
-    response_data = response.json()
+### load product offer data :
+from product.models import InventoryItem
+InventoryItem.objects.all().public().live()[4].PRODUCT_OFFER.values()[0]['value']
+>>> 449000
 
-    # Access the top-level values
-    name = response_data['name']
-    age = response_data['age']
-    email = response_data['email']
 
-    # Access the nested value
-    data_status = response_data['data']['status']
+### load product brand data :
+from product.models import InventoryItem
+InventoryItem.objects.all().public().live()[4].collection.values()[0]['title']
+>>> 'برند فوروارد'
 
-    # Process the data
-    print('Name:', name)
-    print('Age:', age)
-    print('Email:', email)
-    print('Data Status:', data_status)
-else:
-    # Request was not successful
-    print('Request failed with status code:', response.status_code)
+
+### load product category data :
+from product.models import InventoryItem
+InventoryItem.objects.all().public().live()[4].collection.values()[0]['title']
+>>> 'کوله پشتی'
+
+
+### load product color data :
+from product.models import InventoryItem
+InventoryItem.objects.all().public().live()[4].PRODUCT_COLORS.values()
+>>> <QuerySet [{'id': 128, 'sort_order': 1, 'product_color_id': 132, 'color_title': 'مشکی', 'color': '#0a0a0a', 'pquantity': 20, 'color_des': None, 'collection_id': 3}, {'id': 129, 'sort_order': 0, 'product_color_id': 132, 'color_title': 'سرمه ای', 'color': '#0b022c', 'pquantity': 20, 'color_des': None, 'collection_id': 3}]>
+
+
+### load product slide images data :
+from product.models import InventoryItem
+InventoryItem.objects.all().public().live()[4].PRODUCT_SLIDE.values()
+>>> QuerySet [{'id': 128, 'sort_order': 0, 'product_slide_id': 132, 'slide_title': 'کوله پشتی مشکی', 'image_id': 261, 'slide_desc': None, 'collection_id': 3}, {'id': 129, 'sort_order': 1, 'product_slide_id': 132, 'slide_title': 'کوله پشتی مشکی', 'image_id': 262, 'slide_desc': None, 'collection_id': 3}, {'id': 130, 'sort_order': 2, 'product_slide_id': 132, 'slide_title': 'کوله پشتی مشکی', 'image_id': 263, 'slide_desc': None, 'collection_id': 3}, {'id': 131, 'sort_order': 3, 'product_slide_id': 132, 'slide_title': 'کوله پشتی مشکی', 'image_id': 264, 'slide_desc': None, 'collection_id': 3}, {'id': 132, 'sort_order': 4, 'product_slide_id': 132, 'slide_title': 'کوله پشتی مشکی', 'image_id': 265, 'slide_desc': None, 'collection_id': 3}]>
+
+
+### ### ### ### ### ###  END DOCS ### ### ### ### ### ### ### 
+
+# Get 2 random products
+import random
+context = []
+for i in range(2):
+    random_int = random.randint(1, len(InventoryItem.objects.all().public().live()))
+    item = {
+        'id': InventoryItem.objects.all().public().live()[random_int].id,
+        'slug': InventoryItem.objects.all().public().live()[random_int].slug,
+        'title': InventoryItem.objects.all().public().live()[random_int].title,
+        'product_title': InventoryItem.objects.all().public().live()[random_int].product_title,
+        'price': InventoryItem.objects.all().public().live()[random_int].price,
+        'offer': InventoryItem.objects.all().public().live()[random_int].PRODUCT_OFFER.values()[0]['value'],
+        'quantity': InventoryItem.objects.all().public().live()[random_int].quantity,
+        'brand': InventoryItem.objects.all().public().live()[random_int].brand.title,
+        'colors': [],
+        'image': InventoryItem.objects.all().public().live()[random_int].image.get_rendition('fill-250x280').url,
+        'is_available': InventoryItem.objects.all().public().live()[random_int].is_available,
+        }
+    for j in range(len(InventoryItem.objects.all().public().live()[random_int].PRODUCT_COLORS.values())):
+        color_data = {
+            'name': InventoryItem.objects.all().public().live()[random_int].PRODUCT_COLORS.values()[j]['color_title'],
+            'code': InventoryItem.objects.all().public().live()[random_int].PRODUCT_COLORS.values()[j]['color']
+        }
+        item['colors'].append(color_data)
+    context.append(item)
+    
+
+Tasks :
+1. Write product load
+2. Write menu load (Category)
