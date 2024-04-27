@@ -51,21 +51,21 @@
 
 {% include 'layout/category.html' %}
 
-{% include 'layout/advert-banner.html' %}
-
-{% include 'layout/partners.html' %}
-
 {% include 'layout/product-boxs-special.html' %}
-
-{% include 'layout/advert-banner-big.html' %}
-
-{% include 'layout/product-boxs.html' %}
 
 {% include 'layout/product-boxs-newst.html' %}
 
-{% include 'layout/about-us.html' %}
+{% include 'layout/advert-banner.html' %}
+
+{% include 'layout/product-boxs.html' %}
+
+{% include 'layout/advert-banner-big.html' %}
 
 {% include 'layout/blog.html' %}
+
+{% include 'layout/about-us.html' %}
+
+{% include 'layout/partners.html' %}
 
 {% include 'layout/footer.html' %}
 
@@ -227,16 +227,99 @@
           showConfirmButton: false,
         });
       } else {
-        Swal.fire({
-          icon: "success",
-          title: "محصولات با موفقیت بارگذاری شدند",
-          showConfirmButton: false,
-        });
-        $
-      }
-    } 
-  });// end ajax
-  };//end function
+        $(".five_random_product").html("")
+        $(".five_random_product_title").html("")
+        for(let i = 0; i <= response.status.length; i++){
+          if(response.status[i].offer == 0){
+            $(".five_random_product").append(`
+            <div class="swiper-slide">
+                                        <div class="offer-item">
+                                            <div class="row">
+                                                <div class="col-md-5">
+                                                    <div class="offer-img">
+                                                        <img src="https://kikpick.com/${response.status[i].image}" alt=""
+                                                             class="img-fluid">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-7">
+                                                    <div class="offer-content">
+                                                        <div class="offer-desc">
+                                                            <h4>
+                                                                ${response.status[i].title}
+                                                            </h4>
+                                                            </h4>
+                                                            <div class="offer-desc-price">
+                                                                <span class="old">${response.status[i].price} تومان</span>
+                                                            </div>
+                                                        </div>
+                                                        <div class='countdown' data-date="2024-05-01" data-time="18:30">
+                                                        </div>
+
+                                                        <div class="offer-btn">
+                                                            <a href="product.html"><i class="bi bi-basket me-1"></i>
+                                                                بریم واسه
+                                                                خرید!</i></a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+            `)
+          }else{
+            let percent = Math.round(((response.status[i].price - response.status[i].offer) / response.status[i].price) * 100);
+            $(".five_random_product").append(`
+            <div class="swiper-slide">
+                                        <div class="offer-item">
+                                            <div class="row">
+                                                <div class="col-md-5">
+                                                    <div class="offer-discount">
+                                                        <span>٪${percent} تخفیف</span>
+                                                    </div>
+                                                    <div class="offer-img">
+                                                        <img src="https://kikpick.com/${response.status[i].image}" alt=""
+                                                             class="img-fluid">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-7">
+                                                    <div class="offer-content">
+                                                        <div class="offer-title d-md-inline-block d-none">
+                                                            <h4>پیشنهاد <span class="title-font">کیک پیک شگفت انگیز</span></h4>
+                                                        </div>
+                                                        <div class="offer-desc">
+                                                            <h4>
+                                                                ${response.status[i].title}
+                                                            </h4>
+                                                            </h4>
+                                                            <div class="offer-desc-price">
+                                                                <span class="old">${response.status[i].price} تومان</span>
+                                                                <span class="new">${response.status[i].offer} تومان</span>
+                                                            </div>
+                                                        </div>
+                                                        <div class='countdown' data-date="2024-05-01" data-time="18:30">
+                                                        </div>
+
+                                                        <div class="offer-btn">
+                                                            <a href="/shop/${response.status[i].slug}"><i class="bi bi-basket me-1"></i>
+                                                                بریم واسه
+                                                                خرید!</i></a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+            `)
+          }//endif
+        }//end loop
+      }//end if
+    } , //end success
+    error: function (xhr, status, error) {
+      load_five_random_products();
+    }
+    }) //end error
+    //end ajax
+  };// end function
 
   load_two_random_products();
   load_five_random_products();
