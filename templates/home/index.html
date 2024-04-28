@@ -18,10 +18,10 @@
     <link rel="stylesheet" href="{% static 'assets/css/normalize.css' %}">
     <link rel="stylesheet" href="{% static 'assets/font/bootstrap-icon/bootstrap-icons.min.css' %}">
     <link rel="stylesheet" href="{% static 'assets/css/bootstrap.min.css' %}">
-    <link rel="stylesheet" href="{% static 'assets/js/plugin/swiper/swiper-bundle.min.cs' %}s">
+    <link rel="stylesheet" href="{% static 'assets/js/plugin/swiper/swiper-bundle.min.css' %}">
     <link rel="stylesheet" href="{% static 'assets/js/plugin/countdown/countdown.css' %}">
     <link rel="stylesheet" href="{% static 'assets/js/plugin/rasta-contact/style.css' %}">
-    <link rel="stylesheet" href="{% static 'assets/css/main.cs' %}s">
+    <link rel="stylesheet" href="{% static 'assets/css/main.css' %}">
     <link rel="stylesheet" href="{% static 'assets/css/responsive.css' %}">
 
     <script src="{% static 'js/jquery/jquery-3.6.0.min.js' %}"></script>
@@ -47,11 +47,11 @@
 
 {% include 'layout/category.html' %}
 
+{% include 'layout/offers.html' %}
+
 {% include 'layout/product-boxs.html' %}
 
 {% include 'layout/advert-banner.html' %}
-
-{% include 'layout/offers.html' %}
 
 {% include 'layout/advert-banner-big.html' %}
 
@@ -80,6 +80,30 @@
 <script src="{% static 'assets/js/main.js' %}"></script>
 
 <script>
+    function separateDigitsWithComma(number) {
+    // Convert the number to a string
+    var numberString = String(number);
+  
+    // Split the string into an array of characters
+    var digitsArray = numberString.split('');
+  
+    // Reverse the array to process digits from right to left
+    digitsArray.reverse();
+  
+    // Iterate over the array and insert commas after every third digit
+    for (var i = 3; i < digitsArray.length; i += 4) {
+      digitsArray.splice(i, 0, ',');
+    }
+  
+    // Reverse the array again to get the original order
+    digitsArray.reverse();
+  
+    // Join the array into a string
+    var result = digitsArray.join('');
+  
+    return result;
+  }
+    console.log(separateDigitsWithComma(234324234));
     function internet_connection_error(){
         Swal.fire({
           icon: "error",
@@ -120,7 +144,7 @@
                                         </div>
                                         <div class="product-box-price">
                                             <div class="product-box-price-price">
-                                                <h5 class="title-font main-color-green-color h2 mb-0">${response.status[i].price}</h5>
+                                                <h5 class="title-font main-color-green-color h2 mb-0">${separateDigitsWithComma(response.status[i].price)}</h5>
                                                 <p class="mb-0 text-muted">تومان</p>
                                             </div>
                                         </div>
@@ -167,10 +191,10 @@
                                         <div class="product-box-price">
                                             <div class="product-box-price-discount">
                                                 <span class="d-block badge main-color-one-bg text-white font-14 rounded-pill">${percent}%</span>
-                                                <del>${response.status[i].price}</del>
+                                                <del>${separateDigitsWithComma(response.status[i].price)}</del>
                                             </div>
                                             <div class="product-box-price-price">
-                                                <h5 class="title-font main-color-green-color h2 mb-0">${response.status[i].offer}</h5>
+                                                <h5 class="title-font main-color-green-color h2 mb-0">${separateDigitsWithComma(response.status[i].offer)}</h5>
                                                 <p class="mb-0 text-muted">تومان</p>
                                             </div>
                                         </div>
@@ -243,7 +267,7 @@
                                                             </h4>
                                                             </h4>
                                                             <div class="offer-desc-price">
-                                                                <span class="old">${response.status[i].price} تومان</span>
+                                                                <span class="old">${separateDigitsWithComma(response.status[i].price)} تومان</span>
                                                             </div>
                                                         </div>
                                                         <div class='countdown' data-date="2024-05-01" data-time="18:30">
@@ -262,55 +286,59 @@
             `)
           }else{
             let percent = Math.round(((response.status[i].price - response.status[i].offer) / response.status[i].price) * 100);
-            $(".five_random_product").append(`
-            <div class="swiper-slide">
-                                        <div class="offer-item">
-                                            <div class="row">
-                                                <div class="col-md-5">
-                                                    <div class="offer-discount">
-                                                        <span>٪${percent} تخفیف</span>
-                                                    </div>
-                                                    <div class="offer-img">
-                                                        <img src="https://kikpick.com/${response.status[i].image}" alt=""
-                                                             class="img-fluid">
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-7">
-                                                    <div class="offer-content">
-                                                        <div class="offer-title d-md-inline-block d-none">
-                                                            <h4>پیشنهاد <span class="title-font">کیک پیک شگفت انگیز</span></h4>
-                                                        </div>
-                                                        <div class="offer-desc">
-                                                            <h4>
-                                                                ${response.status[i].title}
-                                                            </h4>
-                                                            </h4>
-                                                            <div class="offer-desc-price">
-                                                                <span class="old">${response.status[i].price} تومان</span>
-                                                                <span class="new">${response.status[i].offer} تومان</span>
-                                                            </div>
-                                                        </div>
-                                                        <div class='countdown' data-date="2024-05-01" data-time="18:30">
-                                                        </div>
-
-                                                        <div class="offer-btn">
-                                                            <a href="/shop/${response.status[i].slug}"><i class="bi bi-basket me-1"></i>
-                                                                بریم واسه
-                                                                خرید!</i></a>
-                                                        </div>
-                                                    </div>
-                                                </div>
+            $(".five_random_product").append(`<div class="swiper-slide">
+                                <div class="product-box ">
+                                    <a href="">
+                                        <div class="product-box-sugget">
+                                            <h6>پیشنهاد لحظه ای</h6>
+                                        </div>
+                                        <div class="product-box-image">
+                                            <img src="https://kikpick.com/${response.status[i].image}" alt="${response.status[i].title}">
+                                        </div>
+                                        <div class="product-box-title">
+                                            <h5 class="text-overflow-2">
+                                                ${response.status[i].title}
+                                            </h5>
+                                        </div>
+                                        <div class="product-box-price">
+                                            <div class="product-box-price-discount">
+                                                <span class="d-block badge main-color-one-bg text-white font-14 rounded-pill">${percent}%</span>
+                                                <del>${separateDigitsWithComma(response.status[i].price)}</del>
+                                            </div>
+                                            <div class="product-box-price-price">
+                                                <p class="mb-0 text-center font-18">فقط</p>
+                                                <h5 class="title-font main-color-green-color h2 mb-0">${separateDigitsWithComma(response.status[i].offer)}</h5>
+                                                <p class="mb-0 text-muted">تومان</p>
                                             </div>
                                         </div>
-                                    </div>
-            `)
+                                        <div class="product-box-hover">
+                                            <nav class="navbar navbar-expand justify-content-center">
+                                                <ul class="navbar-nav align-items-center">
+                                                    <li class="nav-item"><a href="/shop/${response.status[i].slug}"
+                                                                            class="nav-item product-box-hover-item me-3">مشاهده
+                                                        محصول</a></li>
+                                                    <li class="nav-item"><a href=""
+                                                                            class="nav-item product-box-hover-item product-box-hover-item-btn me-1"
+                                                                            data-bs-toggle="tooltip"
+                                                                            data-bs-placement="top"
+                                                                            data-bs-title="افزودن به سبد خرید"><i
+                                                            class="bi bi-basket"></i></a></li>
+                                                    <li class="nav-item"><a href=""
+                                                                            class="nav-item product-box-hover-item product-box-hover-item-btn"
+                                                                            data-bs-toggle="tooltip"
+                                                                            data-bs-placement="top"
+                                                                            data-bs-title="افزودن به علاقه ها"><i
+                                                            class="bi bi-heart"></i></a></li>
+                                                </ul>
+                                            </nav>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>`)
           }//endif
         }//end loop
       }//end if
     } , //end success
-    error: function (xhr, status, error) {
-      load_five_random_products();
-    }
     }) //end error
     //end ajax
   };// end function
@@ -340,10 +368,10 @@
                                 <div class="product-box-price">
                                     <div class="product-box-price-discount">
                                         <span class="d-block badge main-color-one-bg text-white font-14 rounded-pill">%${percent}</span>
-                                        <del>${response.status[i].price}</del>
+                                        <del>${separateDigitsWithComma(response.status[i].price)}</del>
                                     </div>
                                     <div class="product-box-price-price">
-                                        <h5 class="title-font main-color-green-color h2 mb-0">${response.status[i].price}</h5>
+                                        <h5 class="title-font main-color-green-color h2 mb-0">${separateDigitsWithComma(response.status[i].offer)}</h5>
                                         <p class="mb-0 text-muted">تومان</p>
                                     </div>
                                 </div>
@@ -430,8 +458,8 @@
                                         ${response.context[i].title}
                                         </h3>
                                     <div class="cart-canvas-price my-3 d-flex align-items-center">
-                                        <p class="mb-0 text-muted me-2 font-16 text-decoration-line-through">${response.context[i].price}</p>
-                                        <h6 class="title-font main-color-one-color">${response.context[i].offer} تومان</h6>
+                                        <p class="mb-0 text-muted me-2 font-16 text-decoration-line-through">${separateDigitsWithComma(response.context[i].price)}</p>
+                                        <h6 class="title-font main-color-one-color">${separateDigitsWithComma(response.context[i].offer)} تومان</h6>
                                     </div>
                                     <div class="cart-canvas-foot d-flex align-items-center justify-content-end">
                                         <div class="cart-canvas-add">
@@ -485,7 +513,8 @@
                                     <del>${response.context[i].price}</del>
                                 </div>
                                 <div class="product-box-price-price">
-                                    <h5 class="title-font main-color-green-color h2 mb-0">${response.context[i].offer}</h5>
+                                    
+                                    <h5 class="title-font main-color-green-color h2 mb-0 font-20">${separateDigitsWithComma(response.context[i].offer)}</h5>
                                     <p class="mb-0 text-muted">تومان</p>
                                 </div>
                             </div>
