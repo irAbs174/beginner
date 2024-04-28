@@ -610,10 +610,7 @@
         data: {'Hello':'world!'},
         success: function(response){
             if(response.success === false){
-                Swal.fire({
-                    icon: 'error',
-                    title: 'لطفا اتصال اینترنت خود را برسی کرده و مجددا تلاش کنید',
-                });
+                console.log(response.status);
             }else{
                 if(response.status.length > 0){
                     $('.cart_title').html(`

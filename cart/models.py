@@ -29,6 +29,8 @@ class Cart(models.Model):
     image = models.CharField(max_length=100, verbose_name='تصویر محصول', null=True, blank=True)
     color = models.CharField(max_length=30, verbose_name='رنگ محصول', null=True, blank=True)
     color_quantity = models.PositiveIntegerField(verbose_name='تعداد رنگ بندی موجود', null=True)
+    offer_code = models.CharField(max_length=30, db_index=True, null=True, blank=True, verbose_name='کد تخفیف')
+    offer_code_value = models.PositiveIntegerField(verbose_name='مبلغ کد تخفیف', blank=True, null=True)
     total_price = models.PositiveIntegerField(verbose_name='جمع کل', blank=True, null=True)
     
     def calculate_item_price(self):
@@ -43,7 +45,7 @@ class Cart(models.Model):
         cart_items = Cart.objects.filter(user=user)
         for cart_item in cart_items:
             total_price += cart_item.calculate_item_price()
-        Cart.total_price = total_price
+            Cart.total_price = total_price
         return total_price
 
     @classmethod
@@ -52,7 +54,10 @@ class Cart(models.Model):
         cart_items = Cart.objects.filter(user=user)
         for cart_item in cart_items:
             total_price += cart_item.calculate_item_price()
+        if Cart.objects.all().filter(user=user)[0].offer_code_value:
+            total_price = total_price - Cart.objects.all().filter(user=user)[0].offer_code_value
         Cart.objects.filter(user = user).update(total_price = total_price)
+        return total_price
 
     class Meta:
         verbose_name = 'آیتم سبد خرید'

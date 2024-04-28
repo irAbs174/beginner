@@ -98,13 +98,13 @@
                                                             <div class="item d-flex align-items-center mt-2">
                                                                 <div class="icon"><i class="bi bi-shield-check"></i>
                                                                 </div>
-                                                                <div class="saller-name mx-2">گارانتی:</div>
-                                                                <div class="saller-name text-muted">تعویض و مرجوع کالا در صورت عدم رضایت تا یک هفته</div>
+                                                                <div class="saller-name mx-2">قیمت کالا:</div>
+                                                                <div class="saller-name text-muted">{{product.price}}</div>
                                                             </div>
                                                             <div class="item d-flex align-items-center mt-3">
                                                                 <div class="counter">
                                                                     <input type="text" name="count" class="counter"
-                                                                           value="1">
+                                                                           value="{{product.quantity}}">
                                                                 </div>
                                                                 <div class="remove danger-label ms-3">
                                                                     <a href="" class="">
@@ -150,12 +150,12 @@
                             <div class="factor">
                                 <div class="d-flex factor-item mb-3 align-items-center justify-content-between">
                                     <h5 class="title-font mb-0 h6">قیمت کالا ها</h5>
-                                    <p class="mb-0 font-17">1,228,000 تومان</p>
+                                    <p class="mb-0 font-17">{{cart_total}}</p>
                                 </div>
 
                                 <div class="d-flex factor-item mb-3 align-items-center justify-content-between">
                                     <h5 class="title-font mb-0 h6">تخفیف کالا ها</h5>
-                                    <p class="mb-0 font-18">0 تومان</p>
+                                    <p class="mb-0 font-18 cart_offer">در حال محاسبه</p>
                                 </div>
 
                                 <div class="d-flex factor-item flex-column mb-3 align-items-start justify-content-between">
@@ -185,13 +185,12 @@
 
                                 <div class="d-flex factor-item mb-3 align-items-center justify-content-between">
                                     <h5 class="title-font mb-0 h6">مجموع</h5>
-                                    <p class="mb-0 font-18">1,308,000 تومان</p>
+                                    <p class="mb-0 font-18 CART_P_TOTAL">{{update_total}}</p>
                                 </div>
 
                                 <div class="action mt-3 d-flex align-items-center justify-content-center">
                                     <a href="#"
-                                       class="btn main-color-one-outline py-2 rounded-pill rounded-3 d-block w-100">تسویه
-                                        حساب</a>
+                                       class="btn main-color-one-outline py-2 rounded-pill rounded-3 d-block w-100">تکمیل سفارش</a>
                                 </div>
                             </div>
                         </div>
@@ -292,10 +291,7 @@
         data: {'Hello':'world!'},
         success: function(response){
             if(response.success === false){
-                Swal.fire({
-                    icon: 'error',
-                    title: 'لطفا اتصال اینترنت خود را برسی کرده و مجددا تلاش کنید',
-                });
+                console.log('REGESTER FIRST')
             }else{
                 if(response.status.length > 0){
                     $('.cart_title').html(`
@@ -310,6 +306,12 @@
                     <a href="/cart" class="btn border-0 main-color-green text-white"><i
                                 class="bi bi-arrow-left me-1"></i>تکمیل خرید</a>
                     `);
+                    $('.CART_P_TOTAL').text(separateDigitsWithComma(response.status[0].total_price))
+                    if (response.status[0].offer_code_value){
+                        $('.cart_offer').text(separateDigitsWithComma(response.status[0].offer_code_value))
+                    }else{
+                        $('.cart_offer').text('0')
+                    }//endif
                     for(let i = 0; i <= response.status.length; i++){
                         $('.cart_body').append(`
                         <li class="nav-item">
@@ -365,6 +367,8 @@
         },//end suncces
     })//endajax
   }//end function
+
+
   load_cart_data();
 </script>
 <script src="{% static '' %}assets/js/vendor/modernizr-3.11.2.min.js"></script>

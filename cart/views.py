@@ -36,19 +36,24 @@ class SupportViewSet(generics.ListCreateAPIView):
 @csrf_exempt
 def load_cart_data(request):
     context = []
-    for i in Cart.objects.all().filter(user = request.user.phoneNumber):
-        item = {
-            'id': i.product_id,
-            'title': i.product_title,
-            'image': i.image,
-            'number': i.quantity,
-            'price': i.price,
-            'sub_total': i.quantity * i.price,
-            'color_quantity': i.color_quantity,
-            'total_price': i.total_price,
-        }
-        context.append(item)
-    return JsonResponse({'status': context, 'success': True})
+    if request.user.is_authenticated:
+        for i in Cart.objects.all().filter(user = request.user.phoneNumber):
+            item = {
+                'id': i.product_id,
+                'title': i.product_title,
+                'image': i.image,
+                'number': i.quantity,
+                'price': i.price,
+                'sub_total': i.quantity * i.price,
+                'color_quantity': i.color_quantity,
+                'offer_code_value': i.offer_code_value,
+                'total_price': i.total_price,
+            }
+            context.append(item)
+        return JsonResponse({'status': context, 'success': True})
+    else:
+        return JsonResponse({'status': 'لطفا ابتدا در سایت ثبت نام کنید', 'success':  False})
+    
     
 @csrf_exempt
 def support_index(request):

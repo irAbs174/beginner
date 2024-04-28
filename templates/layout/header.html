@@ -25,14 +25,25 @@
             </div>
             <div class="col-xl-4 col-6">
                 <div class="header-btn">
+                    {% if user.is_authenticated %}
                     <div class="header-cart d-lg-block d-none">
                         <a data-bs-toggle="offcanvas" href="#offcanvasCart" role="button" aria-controls="offcanvasCart"
+                           class="btn main-color-one-bg">
+                            <i class="bi bi-basket-fill"></i>
+                            <span>سبد خرید</span>
+                            <span id="cartCounter" class="cart-counter">{{cart_count}}</span>
+                        </a>
+                    </div>
+                    {% else %}
+                    <div class="header-cart d-lg-block d-none">
+                        <a href="/accounts" role="button" aria-controls="offcanvasCart"
                            class="btn main-color-one-bg">
                             <i class="bi bi-basket-fill"></i>
                             <span>سبد خرید</span>
                             <span id="cartCounter" class="cart-counter">0</span>
                         </a>
                     </div>
+                    {% endif %}
                     {% if user.is_authenticated %}
                     <div class="header-btn-login d-lg-block d-none">
                         <a href="/accounts/dashboard" class="btn"><i class="bi bi-person-fill"></i>پنل کاربری</a>
