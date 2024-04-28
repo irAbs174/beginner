@@ -1,87 +1,347 @@
-{% extends 'base.html' %}
+{% extends 'layout/base.html' %}
 {% load static %}
-{% block HEADING %}
-<meta name="description" content="" />
-<meta name="keywords" content="" />
-{% endblock %}
-{% block TITLE %}سبد خرید{% endblock %}
-{% block CSS %}
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
-{% endblock %}
-{% block CONTENT %}
-{% csrf_token %}
-<header class="headerblog">
-  <div class="h1divhead">
-    <h1 class="blogh1 white-color">سبد خرید</h1>
-  </div>
-</header>
-<input type="hidden" name="user" value="{{ request.user.phoneNumber }}">
-<div class="container-fluid">
-  <div class="row product_data">
-    <div class="col-xxl-8 col-xl-8 col-lg-8 col-md-8 col-sm-12">
-      <table class="cardtable">
-        <tr>
-          <th>رنگ</th>
-          <th>محصول</th>
-          <th>تصویر محصول</th>
-          <th>قیمت (تومان)</th>
-          <th>تعداد</th>
-          <th>جمع جزء</th>
-          <th>عملیات</th>
-        </tr>
-        {% for product in cart_items %}
-        <tr>
-          <td>
-            <div class="selected-color" style="background-color: {{product.color}};"></div>
-          </td>
-          <td class="product_title" value="{{product_title}}">{{ product.product_title}}</td>
-          <td>
-            <img src="{{product.image}}" width="80px" alt="{{ product.product_title}}">
-          </td>
-          <td class="product_price" value="">{{product.price}}</td>
-          <td>
-            <input type="number" id="{{product.product_id}}" class="quantity" value="{{ product.quantity }}" min="0">
-            <button type="button" class="btn btn-outline-danger update_quantity" onclick="updateCart('{{product.product_title}}', '{{product.product_id}}', '{{ product.color_quantity }}');">به‌روزرسانی</button></td>
-          <td>{{ product.calculate_item_price }}</td>
-          <td>
-              <button type="button" class="btn btn-outline-danger remove_from_cart" onclick="removeItem('{{product.product_title}}');">حذف</button>
-          </td>
-        </tr>
-        {% empty %}
-        <tr>
-          <td colspan="5">سبد خرید شما خالی است.</td>
-        </tr>
-        {% endfor %}
-      </table>
+{% block HEAD %}
+    <meta charset="utf-8">
+    <title>کیک پیک | سبد خرید</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <meta property="og:title" content="">
+    <meta property="og:type" content="">
+    <meta property="og:url" content="">
+    <meta property="og:image" content="">
+
+    <link rel="apple-touch-icon" sizes="180x180" href="{% static '' %}assets/img/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="{% static '' %}assets/img/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="{% static '' %}assets/img/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <!-- Place favicon.ico in the root directory -->
+
+    <link rel="stylesheet" href="{% static '' %}assets/css/normalize.css">
+    <link rel="stylesheet" href="{% static '' %}assets/font/bootstrap-icon/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="{% static '' %}assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{% static '' %}assets/js/plugin/swiper/swiper-bundle.min.css">
+    <link rel="stylesheet" href="{% static '' %}assets/js/plugin/countdown/countdown.css">
+    <link rel="stylesheet" href="{% static '' %}assets/js/plugin/rasta-contact/style.css">
+    <link rel="stylesheet" href="{% static '' %}assets/js/plugin/bootstrap-touchspin/jquery.bootstrap-touchspin.min.css">
+    <link rel="stylesheet" href="{% static '' %}assets/css/main.css">
+    <link rel="stylesheet" href="{% static '' %}assets/css/responsive.css">
+
+    <meta name="theme-color" content="#f4f5f9">
+    {% endblock %}
+<!-- start content -->
+{% block BODY %}
+
+{% include 'layout/header.html' %}
+
+{% include 'layout/menu.html' %}
+<div class="content">
+    <div class="container-fluid">
+
+        <div class="payment_navigtions">
+            <div class="checkout-headers cart">
+                <ul>
+                    <li class="nav active">
+                            <i class="bi bi-cart"></i>
+                            <p>سبد خرید</p>
+                    </li>
+                    <li class="nav">
+                            <i class="bi bi-truck"></i>
+                            <p>صورتحساب</p>
+                    </li>
+                    <li class="nav">
+                        <i class="bi bi-card-list"></i>
+                        <p>نتیجه تراکنش</p>
+                    </li>
+                    <!--li class="nav">
+                        <i class="bi bi-card-list"></i>
+                        <p>فاکتور</p>
+                    </li-->
+                </ul>
+            </div>
+
+        </div>
+
     </div>
 
-    <div class="col-xxl-4 col-xl-4 col-lg-4 col-md-4 col-sm-12">
-      <table class="cardtableaside">
-        <tr>
-          <td class="h4">جمع کل سبد خرید (تومان)</td>
-        </tr>
-        <tr>
-          <div class="input-group">
-            <input type="text" class="form-control" placeholder="افزودن کد تخفیف">
-            <button type="submit" class="btn btn-danger">اعمال</button>
+    <div class="container-fluid">
+        <div class="cart-product">
+            <div class="row gy-4">
+                <div class="col-lg-9">
+                  {% for product in cart_items %}
+                    <div class="cart-product-item mt-3">
+                        <div class="content-box">
+                            <div class="container-fluid">
+                                <div class="cart-items">
+                                    <div class="item">
+                                        <div class="row gy-2">
+                                            <div class="col-md-2 w-100-in-400">
+                                                <div class="image">
+                                                    <img src="https://kikpick.com/{{product.image}}" alt="{{product.title}}"
+                                                         class="img-fluid">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-10 w-100-in-400">
+                                                <div class="d-flex justify-content-between align-items-md-start align-items-end flex-wrap">
+                                                    <div class="d-flex align-items-start flex-column me-2">
+                                                        <div class="title d-flex align-items-center flex-wrap">
+                                                            <h6 class="font-16">
+                                                              PRODUCT TITLE
+                                                            </h6>
+                                                        </div>
+                                                        <div class="cart-item-feature d-flex flex-column align-items-start flex-wrap mt-3">
+                                                            <div class="item d-flex align-items-center">
+                                                                <div class="icon"><i class="bi bi-shop"></i></div>
+                                                                <div class="saller-name mx-2">فروشنده:</div>
+                                                                <div class="saller-name text-muted">کیک پیک</div>
+                                                            </div>
+                                                            <div class="item d-flex align-items-center mt-2">
+                                                                <div class="icon"><i class="bi bi-shield-check"></i>
+                                                                </div>
+                                                                <div class="saller-name mx-2">گارانتی:</div>
+                                                                <div class="saller-name text-muted">تعویض و مرجوع کالا در صورت عدم رضایت تا یک هفته</div>
+                                                            </div>
+                                                            <div class="item d-flex align-items-center mt-3">
+                                                                <div class="counter">
+                                                                    <input type="text" name="count" class="counter"
+                                                                           value="1">
+                                                                </div>
+                                                                <div class="remove danger-label ms-3">
+                                                                    <a href="" class="">
+                                                                        <i class="bi bi-trash-fill"></i>
+                                                                    </a>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="action d-flex flex-wrap flex-column justify-content-sm-end justify-content-center align-items-center">
+                                                        <div class="mt-2">
+                                                          <div class="product-box-price-price d-flex">
+                                                            <h5 class="title-font main-color-green-color h2 mb-2">
+                                                                {{ product.calculate_item_price }}</h5>
+                                                            <p class="mb-0 text-muted-two ms-1 ">تومان</p>
+                                                        </div>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% empty %}
+                    <div class="cart-empty-title">
+                      <h2 class="text-center title-font">
+                          سبد خرید شما خالی میباشد
+                      </h2>
+                      <div class="text-center mt-3">
+                          <a href="/shop" class="btn main-color-one-outline rounded-pill px-4">بازگشت به فروشگاه</a>
+                      </div>
+                  </div>
+                    {% endfor %}
+                </div>
+                <div class="col-lg-3">
+                    <div class="cart-canvases position-sticky top-0">
+                        <div class="item">
+                            <div class="factor">
+                                <div class="d-flex factor-item mb-3 align-items-center justify-content-between">
+                                    <h5 class="title-font mb-0 h6">قیمت کالا ها</h5>
+                                    <p class="mb-0 font-17">1,228,000 تومان</p>
+                                </div>
+
+                                <div class="d-flex factor-item mb-3 align-items-center justify-content-between">
+                                    <h5 class="title-font mb-0 h6">تخفیف کالا ها</h5>
+                                    <p class="mb-0 font-18">0 تومان</p>
+                                </div>
+
+                                <div class="d-flex factor-item flex-column mb-3 align-items-start justify-content-between">
+                                    <h5 class="title-font mb-0 h6">حمل و نقل</h5>
+                                    <form action="">
+                                        <div class="form-check mt-3">
+                                            <input type="radio" checked class="form-check-input" name="post"
+                                                   id="post-1">
+                                            <label for="post-1" class="form-check-label">
+                                                (مخصوص تهران)ارسال فوری با پیک به صورت پس کرایه
+                                            </label>
+                                        </div>
+                                        <div class="form-check mt-3">
+                                            <input type="radio" class="form-check-input" name="post" id="post-2">
+                                            <label for="post-2" class="form-check-label">
+                                                تیپاکس به صورت پس کرایه(۱ تا ۴ روز کاری)
+                                            </label>
+                                        </div>
+                                        <div class="form-check mt-3">
+                                          <input type="radio" class="form-check-input" name="post" id="post-3">
+                                          <label for="post-3" class="form-check-label">
+                                            ارسال با پست ویژه 50 هزار تومان
+                                          </label>
+                                      </div>
+                                    </form>
+                                </div>
+
+                                <div class="d-flex factor-item mb-3 align-items-center justify-content-between">
+                                    <h5 class="title-font mb-0 h6">مجموع</h5>
+                                    <p class="mb-0 font-18">1,308,000 تومان</p>
+                                </div>
+
+                                <div class="action mt-3 d-flex align-items-center justify-content-center">
+                                    <a href="#"
+                                       class="btn main-color-one-outline py-2 rounded-pill rounded-3 d-block w-100">تسویه
+                                        حساب</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-      </tr>
-      <tr>
-            <td>
-              <button type="button" class="btn btn-outline-danger order" onclick="checkout();">ثبت سفارش و پرداخت</button></td>
-            </td>
-            <td>
-              <button type="button" class="btn btn-outline-danger clear_cart" onclick="clearCart();">خالی کردن سبد خرید</button>
-          </td></tr>
-        <tr>
-          <td>جمع کل</td>
-          <td id="CART_P_TOTAL">در حال بارگیری</td>
-        </tr>
-      </table>
     </div>
-  </div>
+
+    <div class="container-fluid">
+        <div class="show-discount-modal pointer py-3 mb-3" data-bs-toggle="modal" data-bs-target="#discountModal">
+            <i class="bi bi-patch-exclamation main-color-one-color me-2" style="font-size: 45px;"></i>
+            کوپن تخفیف دارید برای نوشتن کد اینجا کلیک
+            کنید
+        </div>
+    </div>
+
 </div>
+
+<!-- end content -->
+
+<!-- modal discount -->
+
+<div class="discount-modal">
+    <div class="modal fade" id="discountModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-md modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h6 class="modal-title" id="exampleModalLabel">کد تخفیف</h6>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <h4 class="font-16 mb-3">
+                        اگر شما کد تخفیف دارید ، برای ثبت آن از طریق زیر اقدام کنید.
+                    </h4>
+                    <form action="">
+                        <div class="form-group">
+                            <label for="discount" class="form-label">کد تخفیف:</label>
+                            <input type="text" class="form-control" placeholder="برای مثال eyd1402"
+                                   id="discount">
+                        </div>
+                        <button class="btn main-color-one-bg border-0">ثبت کد
+                            تخفیف</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--end modal discount-->
+
+<!--start cart canvas-->
+
+<div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasCart" aria-labelledby="offcanvasCartLabel">
+    <div class="offcanvas-header shadow-md">
+        <h5 class="offcanvas-title title-font" id="offcanvasCartLabel">سبد خرید <small class="text-muted font-14 ms-1">(1
+            مورد)</small></h5>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+
+    <div class="offcanvas-body">
+        <ul class="navbar-nav cart-canvas-parent">
+          {% for product in cart_items %}
+          <li class="nav-item">
+            <div class="cart-canvas">
+                <div class="row align-items-center">
+                    <div class="col-4 ps-0">
+                        <img src="{{product.image}}" alt="{{ product.title }}">
+                    </div>
+                    <div class="col-8">
+                        <a href="">
+                            <h3 class="text-overflow-1 title-font font-14">
+                              {{ product.title }}
+                            </h3>
+                            <div class="cart-canvas-price my-3 d-flex align-items-center">
+                                <h6 class="title-font main-color-one-color">{{product.price}} تومان</h6>
+                            </div>
+                        </a>
+                        <div class="cart-canvas-foot d-flex align-items-center justify-content-between">
+                            <div class="cart-canvas-count">
+                                <span>تعداد:</span>
+                                <span class="fw-bold main-color-one-color">{{ product.quantity }}</span>
+                            </div>
+                            <div class="cart-canvas-delete">
+                                <a href="" class="btn"><i class="bi bi-x"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </li>
+        {% empty %}
+        <div class="cart-empty-title">
+          <h2 class="text-center title-font">
+              سبد خرید شما خالی میباشد
+          </h2>
+          <div class="text-center mt-3">
+              <a href="/shop" class="btn main-color-one-outline rounded-pill px-4">بازگشت به فروشگاه</a>
+          </div>
+      </div>
+          {% endfor %}
+        </ul>
+
+        <div class="cart-canvas-foots bg-white shadow-md">
+            <div class="row align-items-center">
+                <div class="col-6">
+                    <div class="cart-canvas-foot-sum">
+                        <p class="text-muted mb-2">جمع کل</p>
+                        <h5 class="title-font">11,000,000 تومان</h5>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="cart-canvas-foot-link text-end">
+                        <a href="" class="btn border-0 main-color-green text-white"><i
+                                class="bi bi-arrow-left me-1"></i> تکمیل خرید</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<!--end cart canvas-->
+
+<div class="float-btn">
+    <div class="container-fluid">
+        <!-- contact us floating -->
+        <div id="btncollapzion" class=" btn_collapzion"></div>
+        <div class="" id="contactOverlay"></div>
+        <!-- end contact us floating -->
+    </div>
+</div>
+
+
+{% include 'layout/footer.html' %}
+
+{% include 'layout/mobile-menu.html' %}
+
 {% block JS %}
-<script src="{% static 'js/product/cart.js' %}"></script>
+<script src="{% static '' %}assets/js/vendor/modernizr-3.11.2.min.js"></script>
+<script src="{% static '' %}assets/js/vendor/jquery-3.7.1.min.js"></script>
+<script src="{% static '' %}assets/js/vendor/bootstrap.bundle-5.3.2.min.js"></script>
+<script src="{% static '' %}assets/js/plugin/swiper/swiper-bundle.min.js"></script>
+<script src="{% static '' %}assets/js/plugin/countdown/countdown.js"></script>
+<script src="{% static '' %}assets/js/plugin/vanilla-tilt/vanilla-tilt.min.js"></script>
+<script src="{% static '' %}assets/js/plugin/rasta-contact/script.js"></script>
+<script src="{% static '' %}assets/js/plugin/bootstrap-touchspin/jquery.bootstrap-touchspin.min.js"></script>
+<script src="{% static '' %}assets/js/plugins.js"></script>
+<script src="{% static '' %}assets/js/main.js"></script>
 {% endblock %}
 {% endblock %}
