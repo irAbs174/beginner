@@ -34,6 +34,23 @@ class SupportViewSet(generics.ListCreateAPIView):
     filter_backends = [filters.OrderingFilter, filters.SearchFilter]
 
 @csrf_exempt
+def load_cart_data(request):
+    context = []
+    for i in Cart.objects.all().filter(user = request.user.phoneNumber):
+        item = {
+            'id': i.product_id,
+            'title': i.product_title,
+            'image': i.image,
+            'number': i.quantity,
+            'price': i.price,
+            'sub_total': i.quantity * i.price,
+            'color_quantity': i.color_quantity,
+            'total_price': i.total_price,
+        }
+        context.append(item)
+    return JsonResponse({'status': context, 'success': True})
+    
+@csrf_exempt
 def support_index(request):
     return render(request, 'support/index.html')
 

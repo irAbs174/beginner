@@ -104,10 +104,10 @@ function set_page_data(url, data) {
                   <span class="red-color">${separateDigitsWithComma(product.offer)}<span>تومان</span></span>
                   <hr />
                   <div id="TOOLS" class="tolspro">
-                  <span class="bi bi-heart black-color"onclick="add_favourite('${product.id}','slug','${product.product_title}','${product.image}','FV','SV','0')"></span>
+                  <span class="bi bi-heart black-color"onclick="add_favourite('${product.id}','slug','${product.title}','${product.image}','FV','SV','0')"></span>
                     <span class="price"></span></a>
                     <a href="/shop/${product.slug}"><button class="btn btn-danger addtocard" type="submit">مشاهده و خرید</button></a>
-                    <span class="bi bi-arrow-left-right" onclick="add_comparison('${product.id}','slug','${product.product_title}','${product.image}','FV','SV','1','0')"></span>
+                    <span class="bi bi-arrow-left-right" onclick="add_comparison('${product.id}','slug','${product.title}','${product.image}','FV','SV','1','0')"></span>
                   </div>
                 </div>
               </div>
