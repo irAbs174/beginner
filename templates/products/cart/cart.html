@@ -68,7 +68,8 @@
         <div class="cart-product">
             <div class="row gy-4">
                 <div class="col-lg-9">
-                  {% for product in cart_items %}
+                    {%if cart_items %}
+                    {% for product in cart_items %}
                     <div class="cart-product-item mt-3">
                         <div class="content-box">
                             <div class="container-fluid">
@@ -143,6 +144,16 @@
                       </div>
                   </div>
                     {% endfor %}
+                    {% else %}
+                    <div class="cart-empty-title">
+                        <h2 class="text-center title-font">
+                            سبد خرید شما خالی میباشد
+                        </h2>
+                        <div class="text-center mt-3">
+                            <a href="/shop" class="btn main-color-one-outline rounded-pill px-4">بازگشت به فروشگاه</a>
+                        </div>
+                    </div>
+                    {% endif %}
                 </div>
                 <div class="col-lg-3">
                     <div class="cart-canvases position-sticky top-0">

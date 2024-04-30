@@ -7,7 +7,9 @@ from django.shortcuts import render, redirect, reverse, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from allauth.account.views import SignupView, LoginView
 from .forms import LoginForm, CustomUserCreationForm
+from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth import login, authenticate
+from django.http import JsonResponse
 from .forms import UserAccountsForm
 from .models import user_accounts
 from django.views import View
@@ -20,7 +22,7 @@ def dashboardView(request):
         if form.is_valid():
             form.save()
             return redirect('dashboardView')
-    return render(request, 'accounts/dashboard.html',)
+    return render(request, 'accounts/dashboard.html')
 
 
 @login_required
@@ -81,5 +83,13 @@ class CusSignupView(SignupView):
 class CusLoginView(LoginView):
     template_name = 'accounts/login.html'
 
+@csrf_exempt
 def otp_sms(request):
-    return render(request, 'accounts/otp-sms.html')
+    if request.method == 'POST':
+        phone_number = request.POST.get('phone_number')
+        if phone_number and len(phone_number) == 11 and phone_number.startswith('09'):
+            return JsonResponse({'status': '200', 'success': True})
+        else:
+            return JsonResponse({'status': 'شماره وارد شده صحیح نیست', 'success': False})
+    else:
+        return JsonResponse({'status': 'درخواست معتبر نیست', 'success': False})

@@ -93,6 +93,7 @@ INSTALLED_APPS = [
     'blog',
     'cart',
     'home',
+    'sms_login',
 ]
 
 # REST FRAMEWORK CONF
@@ -116,7 +117,6 @@ MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'user_visit.middleware.UserVisitMiddleware',
     'index.middleware.OnlineVisitorsMiddleware',
-    'index.middleware.UniqueVisitsMiddleware',
 
     'wagtail.contrib.redirects.middleware.RedirectMiddleware',
 ]
