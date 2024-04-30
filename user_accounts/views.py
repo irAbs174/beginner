@@ -80,3 +80,6 @@ class CusSignupView(SignupView):
 
 class CusLoginView(LoginView):
     template_name = 'accounts/login.html'
+
+def otp_sms(request):
+    return render(request, 'accounts/otp-sms.html')

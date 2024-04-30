@@ -34,7 +34,6 @@ class CustomBackend(ModelBackend):
                 return user
         return None
 
-
 @login_required
 def update_user(request):
     if request.method == 'POST':
