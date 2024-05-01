@@ -195,7 +195,7 @@
     
                                 <div class="col-12">
                                     <div class="form-group">
-                                        <button type="submit" class="btn product-meta-add-to-cart-btn main-color-one-bg rounded-pill">
+                                        <button onclick="test();" class="btn product-meta-add-to-cart-btn main-color-one-bg rounded-pill">
                                             ثبت سفارش
                                         </button>
                                     </div>
@@ -243,6 +243,31 @@
 <script src="{% static '' %}assets/js/plugins.js"></script>
 <script src="{% static '' %}assets/js/main.js"></script>
 <script>
+    function test() {
+        $.ajax({
+            url: '/cart/test',
+            type: 'POST',
+            data: { 'task': 'recive_payment_token', },
+            success: function (response) {
+                if (response.success === false) {
+                    Swal.fire({
+                        icon: "error",
+                        title: response.status,
+                        showConfirmButton: false,
+                        timer: 3000,
+                    });
+                } else {
+                    Swal.fire({
+                        icon: "success",
+                        title: 'در حال انتقال به درگاخ فدکس',
+                        showConfirmButton: false,
+                        timer: 4000,
+                    });
+                    window.location.href = response.status;
+                }
+            },
+        });
+    };//end function
     function separateDigitsWithComma(number) {
         // Convert the number to a string
         var numberString = String(number);
