@@ -228,6 +228,20 @@
                         $('.zone').html(`
                     <div class="content">
     <div class="container-fluid">
+        <div class="col-xl-5 d-xl-block d-none">
+                <div class="header-form">
+                        <input type="search" id="search_input" class="form-control input-search" placeholder="جستجوی محصول">
+                        <button class="btn input-btn-search " onclick="search(document.getElementById('search_input').value)"><i class="bi bi-search"></i></button>
+                </div>
+            </div>
+<div class="col-sm-11 col-10 d-xl-none d-block">
+                <div class="d-flex">
+                    <div class="header-form w-100">
+                            <input type="search" id="mobile_rSearch" class="form-control input-search" placeholder="جستجوی کالا">
+                            <button class="btn input-btn-search " onclick="search(document.getElementById('mobile_rSearch').value)"><i class="bi bi-search"></i></button>
+                    </div>
+                </div>
+            </div>
         <div class="content-box">
             <div class="container-fluid">
                 <div class="panel-header mb-5">
