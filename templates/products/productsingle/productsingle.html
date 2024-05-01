@@ -5,7 +5,8 @@
 <meta charset="utf-8">
 
 <title>کیک پیک | {{page.title}}</title>
-<meta name="description" content="">
+<meta name="description" content="{{page.description}}" />
+<meta name="keywords" content="{{page.keywords}}" />
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <meta property="og:title" content="">
@@ -104,48 +105,17 @@
                                         <i class="bi bi-check-circle me-1"></i>
                                         موجود در انبار
                                     </div>
+                                    <div class="label-site label-success rounded-pill">
+                                        آماده ارسال
+                                        <i class="bi bi-truck ms-2"></i>
+                                    </div>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="d-flex align-items-center">
                                         <span class="text-muted-two me-2">دسته بندی</span>
-                                        <div class="label-site rounded-pill">
-                                            لپتاپ
+                                        <div class="label-site rounded-pill product_cat">
                                         </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-4">
-                                    <span class="text-muted-two me-2">کد محصول</span>
-                                    <span>sku-10006</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="product-meta-feature bottom-border">
-                            <div class="row gy-3">
-                                <div class="col-lg-8">
-                                    <div class="product-meta-feature-items">
-                                        <h5 class="title font-16 mb-2">ویژگی های کالا</h5>
-                                        <ul class="navbar-nav">
-                                            <li class="nav item"><span>نوع اتصال:</span><strong>با سیم</strong></li>
-                                            <li class="nav item"><span>رابط ها:</span><strong>3.5 میلیمتری</strong></li>
-                                            <li class="nav item"><span>مقدار رم :</span><strong>8 گیگابایت</strong></li>
-                                            <li class="nav item"><span>نوع گوشی:</span><strong>دوگوشی</strong></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4">
-                                    <div class="product-meta-rating text-lg-end text-start">
-                                        <div class="label-site label-waring rounded-pill">
-                                            <span class="product-meta-rating-comment-count me-1">0</span>
-                                            <span class="product-meta-rating-comment-count-text me-3">نظر</span>
-                                            <span class="product-meta-rating-rating-count me-1">0</span>
-                                            <span class="product-meta-rating-rating-count-text"><i
-                                                    class="bi bi-star-fill"></i></span>
-                                        </div>
-                                    </div>
-                                    <div class="product-meta-rating mt-2 text-lg-end text-start">
-                                        <div class="label-site label-success rounded-pill">
-                                            آماده ارسال
-                                            <i class="bi bi-truck ms-2"></i>
+                                        <div class="col-md-4 product_brand">
                                         </div>
                                     </div>
                                 </div>
@@ -155,42 +125,15 @@
                             <h5 class="font-16">
                                 انتخاب رنگ کالا
                             </h5>
-                            <div class="product-meta-color-items">
-                                <input type="radio" class="btn-check" name="options" id="option1" autocomplete="off"
-                                       checked>
-                                <label class="btn " for="option1">
-                                    <span style="background-color: #c00;"></span>
-                                    قرمز
-                                </label>
+                            <div class="product-meta-color-items product_color_select">
 
-                                <input type="radio" class="btn-check" name="options" id="option2" autocomplete="off">
-                                <label class="btn " for="option2">
-                                    <span style="background-color: #111;"></span>
-                                    مشکی
-                                </label>
-
-                                <input type="radio" class="btn-check" name="options" id="option3" autocomplete="off"
-                                       disabled>
-                                <label class="btn " for="option3">
-                                    <span style="background-color: #00cc5f;"></span>
-                                    سبز
-                                </label>
-
-                                <input type="radio" class="btn-check" name="options" id="option4" autocomplete="off">
-                                <label class="btn " for="option4">
-                                    <span style="background-color: #1b69f0;"></span>
-                                    آبی
-                                </label>
                             </div>
                         </div>
                         <div class="product-meta-action mt-4 bottom-border">
                             <div class="row align-items-center gy-3">
                                 <div class="col-sm-6">
-                                    <div class="d-flex align-items-center justify-content-sm-start justify-content-center">
-                                        <p class="mb-0 old-price font-22 text-muted-two text-decoration-line-through me-3">
-                                            1,500,000</p>
-                                        <h6 class="font-30 title-font new-price main-color-one-color">1,200,000
-                                            تومان</h6>
+                                    <div class="d-flex align-items-center justify-content-sm-start justify-content-center product_price">
+                                        
                                     </div>
                                 </div>
                                 <div class="col-sm-6 text-center">
@@ -1568,67 +1511,78 @@
 <script src="{% static '' %}assets/js/main.js"></script>
 <script>
     $(function(){
-        let sku = $('input[name=sku]').val();
+    let sku = $('input[name=sku]').val();
     $.ajax({
-      url: '/shop_api/single_product_data',
-      type: 'POST',
-      data: {'sku': sku},
-      success: function(data){
-        if (data.success === false){
-          Swal.fire({
-            icon: 'error',
-            title: 'خطای اتصال به اینترنت',
-        })
-    }else{
-        if(data.status.colors.length.length < 1){
-            $('.quantity_status').html(`
-            <div class="label-site rounded-pill label-error">
-        <i class="bi bi-check-circle me-1"></i>
-        فاقد موجودی
-    </div>
-            `);
-        };// end if
-        Swal.fire({icon:'info', title:data.status.colors.length});
-        /* LOAD BREAD_CRUMP */
-        $('.bread_crump').html(`
-        <li class="breadcrumb-item"><a href="/" class="font-14 text-muted-two">خانه</a></li>
-        <li class="breadcrumb-item"><a href="/shop" class="font-14 text-muted-two">فروشگاه</a></li>
-        <li class="breadcrumb-item category_brd"><a href="/category/products/${data.status.collection[0].slug}" class="font-14 text-muted-two">${data.status.collection[0].title}</a></li>
-        `);
-        /* LOAD PRODUCT MAIN IMAGE */
-        $('.product_slider').append(`
-        <div class="swiper-slide">
-            <div class="swiper-zoom-container">
-                <img class="img-fluid" src="https://kikpick.com/${data.status.image}" alt="${data.status.title}"/>
-                </div>
-                </div>
-                `);
-        /* product main image thumb */
-        $('.product_slide_thumb').append(`
-    <div class="swiper-slide">
-        <img class="img-fluid" src="https://kikpick.com/${data.status.image}" alt="${data.status.product_title}" loading="lazy"/>
-    </div>
-    `);
-    /* LOAD PRODUCT SLIDER */
-    for(let i = 0; i <= data.status.slider.length; i++){
-        $('.product_slider').append(`
-        <div class="swiper-slide">
-            <div class="swiper-zoom-container">
-                <img class="img-fluid" src="https://kikpick.com/${data.status.slider[i].url}" alt="${data.status.slider[i].alt}"/>
-            </div>
-        </div>
-        `)
-        /* product slider thumb */
-    $('.product_slide_thumb').append(`
-    <div class="swiper-slide">
-        <img class="img-fluid" src="https://kikpick.com/${data.status.slider[i].url}" alt="${data.status.slider[i].alt}"/>
-    </div>
-    `)
-    };// endfor
-        }; //end if
-      } // end sunccess,
-    });// end ajax
-    }); // end DOM
+        url: '/shop_api/single_product_data',
+        type: 'POST',
+        data: {'sku': sku},
+        success: function(data){
+            if (data.success === false){
+                Swal.fire({
+                    icon: 'error',
+                    title: 'خطای اتصال به اینترنت',
+                });
+            } else {
+                if(data.status.offer){
+                    $('.product_price').append(`<p class="mb-0 old-price font-22 text-muted-two text-decoration-line-through me-3">
+                                                ${data.status.price}</p>
+                                            <h6 class="font-30 title-font new-price main-color-one-color">${data.status.offer} تومان</h6>`);
+                }else{
+                    $('.product_price').append(`<h6 class="font-30 title-font new-price main-color-one-color">${data.status.price} تومان</h6>`);
+                } //endif
+                // Check if collection exists
+                if(data.status.collection && data.status.collection.length > 0) {
+                    $('.product_cat').append(`${data.status.collection[0]['title']}`);
+                    $('.bread_crump').html(`
+                        <li class="breadcrumb-item"><a href="/" class="font-14 text-muted-two">خانه</a></li>
+                        <li class="breadcrumb-item"><a href="/shop" class="font-14 text-muted-two">فروشگاه</a></li>
+                        <li class="breadcrumb-item category_brd"><a href="/category/products/${data.status.collection[0]['slug']}" class="font-14 text-muted-two">${data.status.collection[0]['title']}</a></li>
+                    `);
+                }
+
+                $('.product_brand').html(`<span class="text-muted-two me-2">برند</span><span>${data.status.brand}</span>`);
+
+                if(data.status.colors && data.status.colors.length > 0) {
+                    for(let i = 0; i < data.status.colors.length; i++){
+                        $('.product_color_select').append(`
+                            <input type="radio" class="btn-check" name="options" id="option${i}" autocomplete="off" checked>
+                            <label class="btn" for="option${i}">
+                                <span style="background-color: ${data.status.colors[i]['code']}"></span>
+                                ${data.status.colors[i]['title']}
+                            </label>`);
+                    }
+                }
+
+                if(data.status.slider && data.status.slider.length > 0) {
+                    for(let i = 0; i < data.status.slider.length; i++){
+                        $('.product_slider').append(`
+                            <div class="swiper-slide">
+                                <div class="swiper-zoom-container">
+                                    <img class="img-fluid" src="https://kikpick.com/${data.status.slider[i]['url']}" alt="${data.status.slider[i]['alt']}"/>
+                                </div>
+                            </div>
+                        `);
+                        $('.product_slide_thumb').append(`
+                            <div class="swiper-slide">
+                                <img class="img-fluid" src="https://kikpick.com/${data.status.slider[i]['url']}" alt="${data.status.slider[i]['alt']}"/>
+                            </div>
+                        `);
+                    }
+                }
+
+                if(data.status.colors && data.status.colors.length < 1){
+                    $('.quantity_status').html(`
+                        <div class="label-site rounded-pill label-error">
+                            <i class="bi bi-check-circle me-1"></i>
+                            فاقد موجودی
+                        </div>
+                    `);
+                }
+            }
+        }
+    });
+});
+ // end DOM
 
       function separateDigitsWithComma(number) {
     // Convert the number to a string

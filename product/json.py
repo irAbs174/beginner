@@ -30,15 +30,17 @@ def single_product_data(request):
     # Send product colors
     colors = []
     for i in pq[0].PRODUCT_COLORS.values():
-        if i['pquantity']:
+        if not i['pquantity']:
+            colors = []
+        else:
             color_item = {
                 'id': i['id'],
                 'title': i['color_title'],
                 'code': i['color'],
                 'quantity': i['pquantity'],
                 }
-        colors.append(color_item)
-
+            colors.append(color_item)
+            
     item['colors'] = colors
     # Send product slider images
     slider = []
@@ -306,7 +308,7 @@ def shop_data(request):
         per_page = 16
         next_pagintage = 'index_products'
     else:
-        per_page = 8
+        per_page = 32
         next_pagintage = int(page_number) + 1
     paginator = Paginator(products, per_page)
     try:
