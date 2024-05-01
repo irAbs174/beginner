@@ -17,10 +17,8 @@
             </div>
             <div class="col-xl-5 d-xl-block d-none">
                 <div class="header-form">
-                    <form action="">
-                        <input type="search" class="form-control input-search" placeholder="جستجوی محصول">
-                        <button type="submit" class="btn input-btn-search"><i class="bi bi-search"></i></button>
-                    </form>
+                        <input type="search" id="search_input" class="form-control input-search" placeholder="جستجوی محصول">
+                        <button class="btn input-btn-search " onclick="search(document.getElementById('search_input').value)"><i class="bi bi-search"></i></button>
                 </div>
             </div>
             <div class="col-xl-4 col-6">
@@ -153,10 +151,8 @@
             <div class="col-sm-11 col-10 d-xl-none d-block">
                 <div class="d-flex">
                     <div class="header-form w-100">
-                        <form action="">
-                            <input type="search" class="form-control input-search" placeholder="جستجوی کالا">
-                            <button type="submit" class="btn input-btn-search"><i class="bi bi-search"></i></button>
-                        </form>
+                            <input type="search" id="mobile_rSearch" class="form-control input-search" placeholder="جستجوی کالا">
+                            <button class="btn input-btn-search " onclick="search(document.getElementById('mobile_rSearch').value)"><i class="bi bi-search"></i></button>
                     </div>
                     <div class="text-end ms-lg-4 ms-2">
                         <a data-bs-toggle="offcanvas" href="#offcanvasCart" role="button" aria-controls="offcanvasCart"
@@ -167,3 +163,187 @@
         </div>
     </div>
 </header>
+<script>
+    const inputField = document.getElementById("search_input");
+    const clickButton = document.getElementById("search_product");
+    inputField.addEventListener("keydown", (event) => {
+      if (event.key === "Enter") {
+        search();
+      }
+    });
+    function separateDigitsWithComma(number) {
+    // Convert the number to a string
+    var numberString = String(number);
+  
+    // Split the string into an array of characters
+    var digitsArray = numberString.split('');
+  
+    // Reverse the array to process digits from right to left
+    digitsArray.reverse();
+  
+    // Iterate over the array and insert commas after every third digit
+    for (var i = 3; i < digitsArray.length; i += 4) {
+      digitsArray.splice(i, 0, ',');
+    }
+  
+    // Reverse the array again to get the original order
+    digitsArray.reverse();
+  
+    // Join the array into a string
+    var result = digitsArray.join('');
+  
+    return result;
+  }
+    
+
+    function search(search_text){
+      if(search_text == ''){
+        Swal.fire({
+          icon: "info",
+          title: 'لطفا یک مقدار برای جستجو وارد نمایید',
+          showConfirmButton: false,
+        });
+        return;
+      }else{
+         $.ajax({
+            url:'/shop_api/search',
+            type:'POST',
+            data:{'search_text':search_text},
+            success:function(response){
+                if(response.success === false){
+                    Swal.fire({
+                        icon: "error",
+                        title: response.context[0],
+                        showConfirmButton: false,
+                    });
+                }else{
+                    if (!response.context[0]){
+                        Swal.fire({
+                        icon: "error",
+                        title: 'موردی یافت نشد',
+                        showConfirmButton: false,
+                    });
+                        
+                    }else{
+                        $('.zone').html(`
+                    <div class="content">
+    <div class="container-fluid">
+        <div class="content-box">
+            <div class="container-fluid">
+                <div class="panel-header mb-5">
+            <div class="content-box">
+                <div class="container-fluid">
+                    <div class="d-flex py-2 align-items-center flex-wrap justify-content-sm-between">
+                        <h5>جستجو برای <span>"${search_text}"</span></h5>
+                        <h5 class="main-color-one-color">${response.context.length} نتیجه پیدا شد</h5>
+                    </div>
+                    <div class="row g-4 searcch-result"><a href="${window.location.href}"><button class="btn btn-success"><i class="bi bi-arrow-left"> بازگشت به فروشگاه </i></button></a></div>
+                    
+                </div>
+            </div>
+        </div>
+            </div>
+        </div>
+    </div>
+</div>
+                    `);
+                    for(let i = 0; i <= response.context.length; i++){
+                        if(response.context[i].offer < 1){
+                            $('.searcch-result').append(`
+                            <div class="col-lg-4 col-sm-6">
+                        <div class="product-box pro-shadow">
+                            <a href="">
+                                <div class="product-box-image">
+                                    <img src="https://kikpick.com/${response.context[i].image}" alt="${response.context[i].title}">
+                                </div>
+                                <div class="product-box-title">
+                                    <h5 class="text-overflow-2">
+                                        ${response.context[i].title}
+                                    </h5>
+                                </div>
+                                <div class="product-box-price">
+                                    <div class="product-box-price-price">
+                                        <h5 class="title-font main-color-green-color h2 mb-0">${separateDigitsWithComma(response.context[i].price)}</h5>
+                                        <p class="mb-0 text-muted">تومان</p>
+                                    </div>
+                                </div>
+                                <div class="product-box-hover">
+                                    <nav class="navbar navbar-expand justify-content-center">
+                                        <ul class="navbar-nav align-items-center">
+                                            <li class="nav-item"><a href="/shop/${response.context[i].title}"
+                                                                    class="nav-item product-box-hover-item me-3">مشاهده
+                                                محصول</a></li>
+                                            <li class="nav-item"><a href=""
+                                                                    class="nav-item product-box-hover-item product-box-hover-item-btn me-1"
+                                                                    data-bs-toggle="tooltip" data-bs-placement="top"
+                                                                    data-bs-title="افزودن به سبد خرید"><i
+                                                    class="bi bi-basket"></i></a></li>
+                                            <li class="nav-item"><a href=""
+                                                                    class="nav-item product-box-hover-item product-box-hover-item-btn"
+                                                                    data-bs-toggle="tooltip" data-bs-placement="top"
+                                                                    data-bs-title="افزودن به علاقه ها"><i
+                                                    class="bi bi-heart"></i></a></li>
+                                        </ul>
+                                    </nav>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                            `)
+                        }else{
+                            let percent = Math.round(((response.context[i].price - response.context[i].offer) / response.context[i].price) * 100);
+                            $('.searcch-result').append(`
+                            <div class="col-lg-4 col-sm-6">
+                        <div class="product-box pro-shadow">
+                            <a href="">
+                                <div class="product-box-image">
+                                    <img src="https://kikpick.com/${response.context[i].image}" alt="${response.context[i].title}">
+                                </div>
+                                <div class="product-box-title">
+                                    <h5 class="text-overflow-2">
+                                        ${response.context[i].title}
+                                    </h5>
+                                </div>
+                                <div class="product-box-price">
+                                    <div class="product-box-price-discount">
+                                        <span class="d-block badge main-color-one-bg text-white font-14 rounded-pill">${percent}%</span>
+                                        <del>${separateDigitsWithComma(response.context[i].price)}</del>
+                                    </div>
+                                    <div class="product-box-price-price">
+                                        <h5 class="title-font main-color-green-color h2 mb-0">${separateDigitsWithComma(response.context[i].offer)}</h5>
+                                        <p class="mb-0 text-muted">تومان</p>
+                                    </div>
+                                </div>
+                                <div class="product-box-hover">
+                                    <nav class="navbar navbar-expand justify-content-center">
+                                        <ul class="navbar-nav align-items-center">
+                                            <li class="nav-item"><a href="/shop/${response.context[i].slug}"
+                                                                    class="nav-item product-box-hover-item me-3">مشاهده
+                                                محصول</a></li>
+                                            <li class="nav-item"><a href=""
+                                                                    class="nav-item product-box-hover-item product-box-hover-item-btn me-1"
+                                                                    data-bs-toggle="tooltip" data-bs-placement="top"
+                                                                    data-bs-title="افزودن به سبد خرید"><i
+                                                    class="bi bi-basket"></i></a></li>
+                                            <li class="nav-item"><a href=""
+                                                                    class="nav-item product-box-hover-item product-box-hover-item-btn"
+                                                                    data-bs-toggle="tooltip" data-bs-placement="top"
+                                                                    data-bs-title="افزودن به علاقه ها"><i
+                                                    class="bi bi-heart"></i></a></li>
+                                        </ul>
+                                    </nav>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                            `);
+                        };
+                    }//end for
+                    };
+                }
+            },
+         });
+      }//endif
+      
+    };// end func
+  </script>

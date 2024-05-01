@@ -8,6 +8,32 @@ from django.http import JsonResponse
 from .models import InventoryItem
 import random
 
+@csrf_exempt
+def search(request):
+    search_text = request.POST.get('search_text')
+    context = []
+    if search_text:
+        query = InventoryItem.objects.all().public().live().search(search_text)
+        if query:
+            for i in query:
+                status = {                  
+                    'id':i.id,
+                    'slug':i.slug,
+                    'title':i.title,
+                    'price' :i.price,
+                    'offer':i.PRODUCT_OFFER.values()[0]['value'] if i.PRODUCT_OFFER.values() else 0,
+                    'quantity':i.quantity,
+                    'image':i.image.get_rendition('fill-250x280').url,
+                }
+                context.append(status)
+        else:
+            status = ''
+            context.append(status)
+    else:
+        status = ''
+        context.append(status)
+    return JsonResponse({'context': context, 'success': True})
+
 
 @csrf_exempt
 def load_brand_items(request):

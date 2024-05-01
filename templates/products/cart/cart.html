@@ -161,7 +161,7 @@
                             <div class="factor">
                                 <div class="d-flex factor-item mb-3 align-items-center justify-content-between">
                                     <h5 class="title-font mb-0 h6">قیمت کالا ها</h5>
-                                    <p class="mb-0 font-17">{{cart_total}}</p>
+                                    <p class="mb-0 font-17">{{cart_total}} تومان</p>
                                 </div>
 
                                 <div class="d-flex factor-item mb-3 align-items-center justify-content-between">
@@ -196,7 +196,7 @@
 
                                 <div class="d-flex factor-item mb-3 align-items-center justify-content-between">
                                     <h5 class="title-font mb-0 h6">مجموع</h5>
-                                    <p class="mb-0 font-18 CART_P_TOTAL">{{update_total}}</p>
+                                    <p class="mb-0 font-18 CART_P_TOTAL">{{update_total}} تومان</p>
                                 </div>
 
                                 <div class="action mt-3 d-flex align-items-center justify-content-center">
@@ -317,7 +317,7 @@
                     <a href="/cart" class="btn border-0 main-color-green text-white"><i
                                 class="bi bi-arrow-left me-1"></i>تکمیل خرید</a>
                     `);
-                    $('.CART_P_TOTAL').text(separateDigitsWithComma(response.status[0].total_price))
+                    $('.CART_P_TOTAL').text(‍‍‍‍‍‍‍‍`${separateDigitsWithComma(response.status[0].total_price)} تومان`)
                     if (response.status[0].offer_code_value){
                         $('.cart_offer').text(separateDigitsWithComma(response.status[0].offer_code_value))
                     }else{

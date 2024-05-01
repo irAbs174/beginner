@@ -1,5 +1,5 @@
 :root {
-  --red: #ee655a;
+  --red: #9e19ec;
   --textBold: #444444;
   --graytext: #747474;
   --white: #ffffff;
@@ -42,7 +42,7 @@
   color: var(--graytext);
 }
 .bred-color {
-  color: #ff0000;
+  color: #5f6fff;
 }
 .icon2 {
   color: var(--icon2);

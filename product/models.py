@@ -537,6 +537,12 @@ class Orders(models.Model):
     def jpub(self):
         return jConvert(self.date)
 
+    def calculate_item_price(self):
+        item_price = 0
+        if self.quantity and self.price:
+            item_price = self.quantity * self.price
+        return item_price
+
     class Meta:
         ordering = ["-date"]
         verbose_name = 'سفارش ثبت شده'
