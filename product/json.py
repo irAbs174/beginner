@@ -19,20 +19,52 @@ def single_product_data(request):
         'title': pq[0].title,
         'product_title': pq[0].product_title,
         'price': pq[0].price,
-        'offer': pq[0].PRODUCT_OFFER.values()[0]['value'] if i.PRODUCT_OFFER.values() else 0,
+        'offer': pq[0].PRODUCT_OFFER.values()[0]['value'] if pq[0].PRODUCT_OFFER.values() else 0,
         'quantity': pq[0].quantity,
         'brand': pq[0].brand.title,
-        'color': [],
-        'image': pq[0].image.get_rendition('fill-250x280').url,
-        'is_available': pq[0].is_available,
-        'slider': pg[0].PRODUCT_SLIDE.values()
+        'colors': [],
+        'collection' : [],
+        'image': pq[0].image.get_rendition('max-550x450').url,
+        'slider': [],
     }
-    for color in colors:
-        color_data = {
-            'name': color['color_title'],
-            'code': color['color']
-    }
-    item['color'].append(color_data)
+    # Send product colors
+    colors = []
+    for i in pq[0].PRODUCT_COLORS.values():
+        if not i['pquantity']:
+            colors = []
+        else:
+            color_item = {
+                'id': i['id'],
+                'title': i['color_title'],
+                'code': i['color'],
+                'quantity': i['pquantity'],
+                }
+            colors.append(color_item)
+            
+    item['colors'] = colors
+    # Send product slider images
+    slider = []
+    product_slide_id = pq[0].PRODUCT_SLIDE.values()[0]['product_slide_id']
+    for i in pq[0].PRODUCT_SLIDE.model.objects.filter(product_slide = product_slide_id):
+        slide_item = {
+            'url': i.image.file.url,
+            'alt': i.image.default_alt_text,
+        }
+        slider.append(slide_item)
+
+    item['slider'] = slider
+
+    # Send product collection
+    collection = []
+    for i in pq[0].collection.values():
+        collection_item = {
+            'id': i['id'],
+            'slug': i['slug'],
+            'title': i['title'],
+        }
+        collection.append(collection_item)
+
+    item['collection'] = collection
     return JsonResponse({
         'status': item,
         'success': True
@@ -276,7 +308,7 @@ def shop_data(request):
         per_page = 16
         next_pagintage = 'index_products'
     else:
-        per_page = 8
+        per_page = 32
         next_pagintage = int(page_number) + 1
     paginator = Paginator(products, per_page)
     try:

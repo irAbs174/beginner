@@ -326,6 +326,30 @@
 <script src="{% static '' %}assets/js/main.js"></script>
 
 <script>
+        function separateDigitsWithComma(number) {
+    // Convert the number to a string
+    var numberString = String(number);
+  
+    // Split the string into an array of characters
+    var digitsArray = numberString.split('');
+  
+    // Reverse the array to process digits from right to left
+    digitsArray.reverse();
+  
+    // Iterate over the array and insert commas after every third digit
+    for (var i = 3; i < digitsArray.length; i += 4) {
+      digitsArray.splice(i, 0, ',');
+    }
+  
+    // Reverse the array again to get the original order
+    digitsArray.reverse();
+  
+    // Join the array into a string
+    var result = digitsArray.join('');
+  
+    return result;
+  }
+
   function favourite_items(menu){
     $(`.zone`).html(`
     <div class="slider-title mt-4">
@@ -443,6 +467,84 @@
                       </div>
     `);
   };//end func
+  function load_cart_data(){
+    $.ajax({
+        url:'/cart/load_cart_data',
+        type: 'POST',
+        data: {'Hello':'world!'},
+        success: function(response){
+            if(response.success === false){
+                console.log(response.status);
+            }else{
+                if(response.status.length > 0){
+                    $('.cart_title').html(`
+                    <h5 class="offcanvas-title title-font" id="offcanvasCartLabel">سبد خرید <small class="text-muted font-14 ms-1">${response.status.length} مورد</small></h5>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                    `);
+                    $('.cart_total').html(`
+                    <p class="text-muted mb-2">جمع کل</p>
+                        <h5 class="title-font">${separateDigitsWithComma(response.status[0].total_price)} تومان</h5>
+                    `);
+                    $('.checkout_button').html(`
+                    <a href="/cart" class="btn border-0 main-color-green text-white"><i
+                                class="bi bi-arrow-left me-1"></i>تکمیل خرید</a>
+                    `);
+                    for(let i = 0; i <= response.status.length; i++){
+                        $('.cart_body').append(`
+                        <li class="nav-item">
+                <div class="cart-canvas">
+                    <div class="row align-items-center">
+                        <div class="col-4 ps-0">
+                            <img src="https://kikpick.com/${response.status[i].image}" alt="${response.status[i].title}">
+                        </div>
+                        <div class="col-8">
+                            <a href="">
+                                <h3 class="text-overflow-1 title-font font-14">
+                                    ${response.status[i].title}
+                                </h3>
+                                <div class="cart-canvas-price my-3 d-flex align-items-center">
+                                    <h6 class="title-font main-color-one-color">${separateDigitsWithComma(response.status[i].price)} تومان</h6>
+                                </div>
+                            </a>
+                            <div class="cart-canvas-foot d-flex align-items-center justify-content-between">
+                                <div class="cart-canvas-count">
+                                    <span>تعداد:</span>
+                                    <span class="fw-bold main-color-one-color">${response.status[i].number}</span>
+                                </div>
+                                <div class="cart-canvas-delete">
+                                    <a href="" class="btn"><i class="bi bi-x"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </li>`);
+                    }//endfor
+                }else{
+                    $('.cart_title').html(`
+                    <h5 class="offcanvas-title title-font" id="offcanvasCartLabel">سبد خرید <small class="text-muted font-14 ms-1">خالی است</small></h5>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                    `);
+                    $('.checkout_button').html('')
+                    $('.cart_total').html(`
+                    <p class="text-muted mb-2">جمع کل</p>
+                        <h5 class="title-font">0 تومان</h5>
+                    `);
+                    $('.cart_body').html(`
+                    <div class="cart-empty-title">
+          <h2 class="text-center title-font">
+              سبد خرید شما خالی میباشد
+          </h2>
+          <div class="text-center mt-3">
+              <a href="/shop" class="btn main-color-one-outline rounded-pill px-4">برای شروع فرصت زیادی نیست</a>
+          </div>
+      </div>`);
+                }//endif
+            }//endif
+        },//end suncces
+    })//endajax
+  }//end function
+  load_cart_data();
 </script>
 
 {% endblock %}

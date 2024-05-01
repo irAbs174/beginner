@@ -106,7 +106,7 @@ function set_page_data(url, data) {
                   <div id="TOOLS" class="tolspro">
                   <span class="bi bi-heart black-color"onclick="add_favourite('${product.id}','slug','${product.title}','https://kikpick.com/${product.image}','FV','SV','0')"></span>
                     <span class="price"></span></a>
-                    <a href="/shop/${product.slug}"><button class="btn btn-danger addtocard" type="submit">مشاهده و خرید</button></a>
+                    <a href="/shop/${product.slug}"><button class="btn btn-success addtocard" type="submit">مشاهده و خرید</button></a>
                     <span class="bi bi-arrow-left-right" onclick="add_comparison('${product.id}','slug','${product.title}','${product.image}','FV','SV','1','0')"></span>
                   </div>
                 </div>
@@ -126,7 +126,7 @@ function set_page_data(url, data) {
                   <div id="TOOLS" class="tolspro">
                   <span class="bi bi-heart black-color"onclick="add_favourite('${product.id}', 'slug', '${product.product_title}','https://kikpick.com/${product.image}','FV','SV','0')"></span>
                   <span class="price"></span>
-                    <a href="${product.slug}"><button class="btn btn-danger addtocard" type="submit">مشاهده و خرید</button></a>
+                    <a href="${product.slug}"><button class="btn btn-success addtocard" type="submit">مشاهده و خرید</button></a>
                     <span class="bi bi-arrow-left-right" onclick="add_comparison('${product.id}','slug','${product.product_title}','${product.image}','FV','SV','1','0')"></span>
                     </div>
                 </div>
@@ -211,20 +211,21 @@ $('#rangePriceFilter').click(function (e) {
   };;//ENDIF
 }); //end expensive filter
 
-$('.load-more').click(function (e) {
-  e.preventDefault();
-  let page_number = $('input[name=page_number]').val();
-  let pagintage_key = $('input[name=pagintage_key]').val();
-  let minPrice = document.getElementById("min-price").value;
-  let maxPrice = document.getElementById("max-price").value;
-  data = {
-    'page_number': page_number,
-    'load_filter': pagintage_key,
-    'minPrice': minPrice,
-    'maxPrice': maxPrice,
-  };
-  set_page_data('/shop_api/shop_data', data);
-}); //end cheapest_filter filter
+$(window).scroll(function() {
+  if($(window).scrollTop() + $(window).height() == $(document).height()) {
+    let page_number = $('input[name=page_number]').val();
+    let pagintage_key = $('input[name=pagintage_key]').val();
+    let minPrice = document.getElementById("min-price").value;
+    let maxPrice = document.getElementById("max-price").value;
+    data = {
+      'page_number': page_number,
+      'load_filter': pagintage_key,
+      'minPrice': minPrice,
+      'maxPrice': maxPrice,
+    };
+    set_page_data('/shop_api/shop_data', data);
+  }
+});
 
 function add_favourite(product_id, product_slug, product_title, product_image, product_quantity, product_color, product_add_cart_date) {
   // Data to be sent with the POST request

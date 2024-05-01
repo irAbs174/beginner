@@ -8,13 +8,16 @@
             {% endblock %}
         </head>
      
-<body class="zone">
-     {% block BODY %}
-        
-            
+<body>
+{% include 'layout/header.html' %}
+     <div class="zone">
+               {% block BODY %}
             {% block JS %}
 
             {% endblock %}
      {% endblock %}
+     </div>
+     {% include 'layout/cart-convas.html' %}
+
 </body>
 </html>

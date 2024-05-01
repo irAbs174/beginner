@@ -167,7 +167,7 @@ class BlogPage(Page, RoutablePageMixin):
         APIField('jpub'),
         APIField('description'),
         APIField('collection'),
-        APIField('image', serializer=ImageRenditionField('fill-250x150')),
+        APIField('image', serializer=ImageRenditionField('max-550x400')),
     ]
 
     search_fields = Page.search_fields + [

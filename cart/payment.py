@@ -28,18 +28,18 @@ def fadax_pay(request):
                     "Content-Type": "application/json"
                     }
                 for item in cart:
-                    amount = item.total_price
+                    amount = item.total_price * 10
                     item_list = {
                         'title': item.product_title,
-                        'fee': item.price,
+                        'fee': item.price * 10,
                         'count': item.quantity,
-                        'subtotal': item.price * item.quantity,
+                        'subtotal': (item.price * item.quantity) * 10,
                     }
                     cart_item.append(item_list)
                     data = {
                         "cartItems": cart_item,
                         "mobile": phone,
-                        "cartTotal": 1100000,
+                        "cartTotal": item.total_price * 10,
                         "discountAmount": 0,
                         "shippingCost": 0,
                         "taxAmount": 0,
@@ -255,18 +255,18 @@ def test(request):
                     "Content-Type": "application/json"
                     }
                 for item in cart:
-                    amount = item.total_price
+                    amount = item.total_price * 10
                     item_list = {
                         'title': item.product_title,
-                        'fee': item.price,
+                        'fee': item.price * 10,
                         'count': item.quantity,
-                        'subtotal': item.price * item.quantity,
+                        'subtotal': (item.price * item.quantity) * 10,
                     }
                     cart_item.append(item_list)
                     data = {
                         "cartItems": cart_item,
                         "mobile": phone,
-                        "cartTotal": 1100000,
+                        "cartTotal": amount,
                         "discountAmount": 0,
                         "shippingCost": 0,
                         "taxAmount": 0,
