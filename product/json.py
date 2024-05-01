@@ -8,6 +8,36 @@ from django.http import JsonResponse
 from .models import InventoryItem
 import random
 
+
+@csrf_exempt
+def single_product_data(request):
+    sku = request.POST.get('sku')
+    pq = InventoryItem.objects.all().public().live().search(sku)
+    item = {
+        'id': pq[0].id,
+        'slug': pq[0].slug,
+        'title': pq[0].title,
+        'product_title': pq[0].product_title,
+        'price': pq[0].price,
+        'offer': pq[0].PRODUCT_OFFER.values()[0]['value'] if i.PRODUCT_OFFER.values() else 0,
+        'quantity': pq[0].quantity,
+        'brand': pq[0].brand.title,
+        'color': [],
+        'image': pq[0].image.get_rendition('fill-250x280').url,
+        'is_available': pq[0].is_available,
+        'slider': pg[0].PRODUCT_SLIDE.values()
+    }
+    for color in colors:
+        color_data = {
+            'name': color['color_title'],
+            'code': color['color']
+    }
+    item['color'].append(color_data)
+    return JsonResponse({
+        'status': item,
+        'success': True
+    })
+
 @csrf_exempt
 def search(request):
     search_text = request.POST.get('search_text')

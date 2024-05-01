@@ -11,27 +11,27 @@
     <meta property="og:url" content="">
     <meta property="og:image" content="">
 
-    <link rel="apple-touch-icon" sizes="180x180" href="{% static '' %}assets/img/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="{% static '' %}assets/img/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="{% static '' %}assets/img/favicon-16x16.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="{% static 'assets/img/apple-touch-icon.png' %}">
     <link rel="manifest" href="/site.webmanifest">
     <!-- Place favicon.ico in the root directory -->
 
-    <link rel="stylesheet" href="{% static '' %}assets/css/normalize.css">
-    <link rel="stylesheet" href="{% static '' %}assets/font/bootstrap-icon/bootstrap-icons.min.css">
-    <link rel="stylesheet" href="{% static '' %}assets/css/bootstrap.min.css">
-    <link rel="stylesheet" href="{% static '' %}assets/js/plugin/swiper/swiper-bundle.min.css">
-    <link rel="stylesheet" href="{% static '' %}assets/js/plugin/countdown/countdown.css">
-    <link rel="stylesheet" href="{% static '' %}assets/js/plugin/rasta-contact/style.css">
-    <link rel="stylesheet" href="{% static '' %}assets/js/plugin/bootstrap-touchspin/jquery.bootstrap-touchspin.min.css">
-    <link rel="stylesheet" href="{% static '' %}assets/css/main.css">
-    <link rel="stylesheet" href="{% static '' %}assets/css/responsive.css">
+    <link rel="stylesheet" href="{% static 'assets/css/normalize.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/font/bootstrap-icon/bootstrap-icons.min.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/js/plugin/swiper/swiper-bundle.min.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/js/plugin/countdown/countdown.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/js/plugin/rasta-contact/style.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/main.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/responsive.css' %}">
 
-    <meta name="theme-color" content="#f4f5f9">
-    {% endblock %}
-<!-- start content -->
+    <script src="{% static 'js/jquery/jquery-3.6.0.min.js' %}"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <meta name="theme-color" content="#99ff00">
+
+{% endblock %}
 {% block BODY %}
-
 {% include 'layout/header.html' %}
 
 {% include 'layout/menu.html' %}
@@ -47,7 +47,7 @@
                     </li>
                     <li class="nav">
                             <i class="bi bi-truck"></i>
-                            <p>صورتحساب</p>
+                            <p>پرداخت نهایی</p>
                     </li>
                     <li class="nav">
                         <i class="bi bi-card-list"></i>
@@ -169,31 +169,6 @@
                                     <p class="mb-0 font-18 cart_offer">در حال محاسبه</p>
                                 </div>
 
-                                <div class="d-flex factor-item flex-column mb-3 align-items-start justify-content-between">
-                                    <h5 class="title-font mb-0 h6">حمل و نقل</h5>
-                                    <form action="">
-                                        <div class="form-check mt-3">
-                                            <input type="radio" checked class="form-check-input" name="post"
-                                                   id="post-1">
-                                            <label for="post-1" class="form-check-label">
-                                                (مخصوص تهران)ارسال فوری با پیک به صورت پس کرایه
-                                            </label>
-                                        </div>
-                                        <div class="form-check mt-3">
-                                            <input type="radio" class="form-check-input" name="post" id="post-2">
-                                            <label for="post-2" class="form-check-label">
-                                                تیپاکس به صورت پس کرایه(۱ تا ۴ روز کاری)
-                                            </label>
-                                        </div>
-                                        <div class="form-check mt-3">
-                                          <input type="radio" class="form-check-input" name="post" id="post-3">
-                                          <label for="post-3" class="form-check-label">
-                                            ارسال با پست ویژه 50 هزار تومان
-                                          </label>
-                                      </div>
-                                    </form>
-                                </div>
-
                                 <div class="d-flex factor-item mb-3 align-items-center justify-content-between">
                                     <h5 class="title-font mb-0 h6">مجموع</h5>
                                     <p class="mb-0 font-18 CART_P_TOTAL">{{update_total}} تومان</p>
@@ -218,7 +193,7 @@
             کنید
         </div>
     </div>
-
+    
 </div>
 
 <!-- end content -->
@@ -241,15 +216,15 @@
                         <div class="form-group">
                             <label for="discount" class="form-label">کد تخفیف:</label>
                             <input type="text" class="form-control" placeholder="برای مثال eyd1402"
-                                   id="discount">
+                            id="discount">
                         </div>
                         <button class="btn main-color-one-bg border-0">ثبت کد
                             تخفیف</button>
-                    </form>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
 </div>
 
 <!--end modal discount-->
@@ -271,6 +246,18 @@
 {% include 'layout/cart-convas.html' %}
 
 {% block JS %}
+</script>
+<script src="{% static '' %}assets/js/vendor/modernizr-3.11.2.min.js"></script>
+<script src="{% static '' %}assets/js/vendor/jquery-3.7.1.min.js"></script>
+<script src="{% static '' %}assets/js/vendor/bootstrap.bundle-5.3.2.min.js"></script>
+<script src="{% static '' %}assets/js/plugin/swiper/swiper-bundle.min.js"></script>
+<script src="{% static '' %}assets/js/plugin/countdown/countdown.js"></script>
+<script src="{% static '' %}assets/js/plugin/vanilla-tilt/vanilla-tilt.min.js"></script>
+<script src="{% static '' %}assets/js/plugin/rasta-contact/script.js"></script>
+<script src="{% static '' %}assets/js/plugin/bootstrap-touchspin/jquery.bootstrap-touchspin.min.js"></script>
+<script src="{% static '' %}assets/js/plugins.js"></script>
+<script src="{% static '' %}assets/js/main.js"></script>
+
 <script>
     function separateDigitsWithComma(number) {
     // Convert the number to a string
@@ -295,14 +282,14 @@
   
     return result;
   }
-    function load_cart_data(){
+  function load_cart_data(){
     $.ajax({
         url:'/cart/load_cart_data',
         type: 'POST',
         data: {'Hello':'world!'},
         success: function(response){
             if(response.success === false){
-                console.log('REGESTER FIRST')
+                console.log(response.status);
             }else{
                 if(response.status.length > 0){
                     $('.cart_title').html(`
@@ -317,12 +304,6 @@
                     <a href="/cart" class="btn border-0 main-color-green text-white"><i
                                 class="bi bi-arrow-left me-1"></i>تکمیل خرید</a>
                     `);
-                    $('.CART_P_TOTAL').text(‍‍‍‍‍‍‍‍`${separateDigitsWithComma(response.status[0].total_price)} تومان`)
-                    if (response.status[0].offer_code_value){
-                        $('.cart_offer').text(separateDigitsWithComma(response.status[0].offer_code_value))
-                    }else{
-                        $('.cart_offer').text('0')
-                    }//endif
                     for(let i = 0; i <= response.status.length; i++){
                         $('.cart_body').append(`
                         <li class="nav-item">
@@ -379,18 +360,7 @@
     })//endajax
   }//end function
 
-
   load_cart_data();
 </script>
-<script src="{% static '' %}assets/js/vendor/modernizr-3.11.2.min.js"></script>
-<script src="{% static '' %}assets/js/vendor/jquery-3.7.1.min.js"></script>
-<script src="{% static '' %}assets/js/vendor/bootstrap.bundle-5.3.2.min.js"></script>
-<script src="{% static '' %}assets/js/plugin/swiper/swiper-bundle.min.js"></script>
-<script src="{% static '' %}assets/js/plugin/countdown/countdown.js"></script>
-<script src="{% static '' %}assets/js/plugin/vanilla-tilt/vanilla-tilt.min.js"></script>
-<script src="{% static '' %}assets/js/plugin/rasta-contact/script.js"></script>
-<script src="{% static '' %}assets/js/plugin/bootstrap-touchspin/jquery.bootstrap-touchspin.min.js"></script>
-<script src="{% static '' %}assets/js/plugins.js"></script>
-<script src="{% static '' %}assets/js/main.js"></script>
 {% endblock %}
 {% endblock %}

@@ -274,7 +274,7 @@ def checkout_view(request):
     if Cart.objects.filter(user = request.user.phoneNumber):
         # fadax payment possible check:
         phone = request.user.phoneNumber
-        list_cart = Cart.objects.filter(user=phone)
+        '''list_cart = Cart.objects.filter(user=phone)
         for i in list_cart:
             total_price = i.total_price
         url = f"https://gateway.fadax.ir/supplier/v1/eligible?amount={total_price}&mobile=0{int(phone)}"
@@ -286,26 +286,13 @@ def checkout_view(request):
 
         response_recived = requests.get(url, headers=headers)
         response = response_recived.json()
-        if response['success']:
-            data = response['response']
-            if data['status'] == 1001:
-                Fadax_payment.objects.create(
-                    customer = request.user.phoneNumber,
-                )
-                UserModel.objects.filter(phoneNumber=phone).update(
-                    fadax_payment_possible = True
-                )
-                print("=> USER CAN PAY WITH FADAX => status : 1001")
-            elif data['status'] == 1002:
-                UserModel.objects.filter(phoneNumber=phone).update(
-                    fadax_payment_possible = False
-                )
-                print("=> USER CAN NOT PAY WITH FADAX status : 1002")
-            else:
-                print("=> USER CAN NOT PAY WITH FADAX")
-        else:
-            print("=> USER CAN NOT PAY WITH FADAX")
-
+        '''
+        Fadax_payment.objects.create(
+            customer = request.user.phoneNumber,
+        )
+        UserModel.objects.filter(phoneNumber=phone).update(
+            fadax_payment_possible = True
+        )
         return render(request, 'products/checkout/checkout.html')
     else:
         return render(request, 'products/cart/cart.html')

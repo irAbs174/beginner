@@ -95,7 +95,7 @@ function set_page_data(url, data) {
           if (product.offer > 0) {
             let postHTML = `
               <div id="PRODUCT_BODY" class="cardpro" style="width: 18rem">
-                <img src="${product.image}" class="card-img-top" alt="${product.title}" />
+                <img src="https://kikpick.com/${product.image}" class="card-img-top" alt="${product.title}" />
                 <div class="card-body">
                   <h3 class="card-title h4">
                     <a href="" class="black-color">${product.title}</a>
@@ -104,7 +104,7 @@ function set_page_data(url, data) {
                   <span class="red-color">${separateDigitsWithComma(product.offer)}<span>تومان</span></span>
                   <hr />
                   <div id="TOOLS" class="tolspro">
-                  <span class="bi bi-heart black-color"onclick="add_favourite('${product.id}','slug','${product.title}','${product.image}','FV','SV','0')"></span>
+                  <span class="bi bi-heart black-color"onclick="add_favourite('${product.id}','slug','${product.title}','https://kikpick.com/${product.image}','FV','SV','0')"></span>
                     <span class="price"></span></a>
                     <a href="/shop/${product.slug}"><button class="btn btn-danger addtocard" type="submit">مشاهده و خرید</button></a>
                     <span class="bi bi-arrow-left-right" onclick="add_comparison('${product.id}','slug','${product.title}','${product.image}','FV','SV','1','0')"></span>
@@ -124,7 +124,7 @@ function set_page_data(url, data) {
                   <span class="red-color">${separateDigitsWithComma(product.price)}<span>تومان</span></span>
                   <hr />
                   <div id="TOOLS" class="tolspro">
-                  <span class="bi bi-heart black-color"onclick="add_favourite('${product.id}', 'slug', '${product.product_title}','${product.image}','FV','SV','0')"></span>
+                  <span class="bi bi-heart black-color"onclick="add_favourite('${product.id}', 'slug', '${product.product_title}','https://kikpick.com/${product.image}','FV','SV','0')"></span>
                   <span class="price"></span>
                     <a href="${product.slug}"><button class="btn btn-danger addtocard" type="submit">مشاهده و خرید</button></a>
                     <span class="bi bi-arrow-left-right" onclick="add_comparison('${product.id}','slug','${product.product_title}','${product.image}','FV','SV','1','0')"></span>
@@ -349,7 +349,7 @@ specialdiscount.addEventListener("change", function () {
             let product = products[i];
               let postHTML = `
             <div class="cardpro border d-inline-block">
-            <img src="${product.image}" class="card-img-top" alt="${product.title}" />
+            <img src="https://kikpick.com/${product.image}" class="card-img-top" alt="${product.title}" />
             <div class="card-body">
               <h3 class="card-title h4">
                 <a href="" class="black-color">${product.title}</a>
