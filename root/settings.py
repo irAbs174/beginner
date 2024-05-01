@@ -93,6 +93,7 @@ INSTALLED_APPS = [
     'blog',
     'cart',
     'home',
+    'sms_login',
 ]
 
 # REST FRAMEWORK CONF
@@ -116,7 +117,6 @@ MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'user_visit.middleware.UserVisitMiddleware',
     'index.middleware.OnlineVisitorsMiddleware',
-    'index.middleware.UniqueVisitsMiddleware',
 
     'wagtail.contrib.redirects.middleware.RedirectMiddleware',
 ]
@@ -147,6 +147,7 @@ TEMPLATES = [
                 'cart.context_processors.cart_items',
                 'cart.context_processors.comparison_items',
                 'cart.context_processors.cart_total',
+                'cart.context_processors.update_total',
                 'cart.context_processors.support_requests',
                 'cart.context_processors.cart_count',
                 'user_accounts.context_processors.user_items',
@@ -235,7 +236,7 @@ STATIC_ROOT = '/var/www/public/kikpick/static'
 STATIC_URL = '/static/'
 
 # Media root Dir configuration
-MEDIA_ROOT = '/var/www/public/kikpick/media'
+MEDIA_ROOT = 'media'
 MEDIA_URL = '/media/'
 
 # SERVER DEVELOPER configuration

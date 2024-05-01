@@ -5,10 +5,11 @@ Accounts urls configuration
 # Import all requirements
 from django.urls import path
 from allauth.account.views import LogoutView, PasswordSetView, PasswordChangeView, PasswordResetView
-from .views import login_signup, CusLoginView, CusSignupView, dashboardView, update_user
+from .views import otp_sms, login_signup, CusLoginView, CusSignupView, dashboardView, update_user
 from .backends import update_user as UPDATE_DETAIL, costomer_detail, add_comment, like
 
 urlpatterns = [
+    path('otp_sms', otp_sms),
     path('', login_signup, name='login_or_signup'),
     path('dashboard', dashboardView, name='dashboard'),
     path('login/', CusLoginView.as_view(), name='login'),

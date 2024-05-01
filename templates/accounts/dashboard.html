@@ -1,453 +1,449 @@
-{% extends 'base.html' %}
+{% extends 'layout/base.html' %}
 {% load static %}
-{% block HEADING %}
-<meta name="description" content="" />
-<meta name="keywords" content="" />
+{% block HEAD %}
+<meta charset="utf-8">
+<title>کیک پیک | پنل کاربری</title>
+<meta name="description" content="">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<meta property="og:title" content="">
+<meta property="og:type" content="">
+<meta property="og:url" content="">
+<meta property="og:image" content="">
+
+<link rel="apple-touch-icon" sizes="180x180" href="{% static '' %}assets/img/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="{% static '' %}assets/img/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="{% static '' %}assets/img/favicon-16x16.png">
+<link rel="manifest" href="/site.webmanifest">
+<!-- Place favicon.ico in the root directory -->
+
+<link rel="stylesheet" href="{% static '' %}assets/css/normalize.css">
+<link rel="stylesheet" href="{% static '' %}assets/font/bootstrap-icon/bootstrap-icons.min.css">
+<link rel="stylesheet" href="{% static '' %}assets/css/bootstrap.min.css">
+<link rel="stylesheet" href="{% static '' %}assets/js/plugin/swiper/swiper-bundle.min.css">
+<link rel="stylesheet" href="{% static '' %}assets/js/plugin/countdown/countdown.css">
+<link rel="stylesheet" href="{% static '' %}assets/js/plugin/rasta-contact/style.css">
+<link rel="stylesheet" href="{% static '' %}assets/js/plugin/bootstrap-touchspin/jquery.bootstrap-touchspin.min.css">
+<link rel="stylesheet" href="{% static '' %}assets/css/main.css">
+<link rel="stylesheet" href="{% static '' %}assets/css/responsive.css">
+
+<meta name="theme-color" content="#f4f5f9">
 {% endblock %}
-{% block TITLE %}پنل کاربری{% endblock %}
-{% block CSS %}
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
-{% endblock %}
-{% block CONTENT %}
+    
+{% block BODY %}
 {% csrf_token %}
-<header class="headerblog">
-  <div class="h1divhead">
-    <h1 class="blogh1 white-color">پنل کاربری</h1>
+
+<div class="content">
+  <div class="container-fluid">
+
+      <div class="custom-filter d-lg-none d-block">
+          <button class="btn btn-filter-float border-0 main-color-two-bg shadow-box px-4 rounded-3 position-fixed" style="z-index: 999;bottom:80px;" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">
+              <i class="bi bi-list font-20 fw-bold text-white"></i>
+              <span class="d-block font-14 text-white">منو</span>
+          </button>
+
+          <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
+              <div class="offcanvas-header">
+                  <h5 class="offcanvas-title">منو</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+              </div>
+              <div class="offcanvas-body">
+                <div class="auth-logo text-center">
+                  <a href="/">
+                    <h6 class="font-20 title-font">فروشگاه کیک پیک</h6>
+                    <p class="mb-0 mt-1 text-muted">فروشگاهی برای همه سلیقه ها</p>
+                  </a>
+              </div>
+                  <div class="penel-nav penel-nav-mobile">
+                      <div class="panel-nav-nav">
+                          <nav class="navbar profile-box-nav">
+                              <ul class="navbar-nav flex-column">
+                                  <li class="nav-item active"><a href="" class="nav-link">
+                                      <i class="bi bi-house-door"></i>پروفایل</a>
+                                  </li>
+                                  <li class="nav-item"><a href="" class="nav-link">
+                                      <i class="bi bi-cart-check"></i>سفارش های من <span class="badge rounded-pill badge-spn">{{ order_items.count }}</span></a>
+                                  </li>
+                                  <li class="nav-item"><a href="" class="nav-link">
+                                      <i class="bi bi-pin-map"></i>آدرس های من</a>
+                                  </li>
+                                  <li class="nav-item"><a href="" class="nav-link">
+                                      <i class="bi bi-bell"></i>پیام ها و اطلاعیه ها</a>
+                                  </li>
+                                  <li class="nav-item"><a href="" class="nav-link">
+                                      <i class="bi bi-chat-dots"></i>نظرات من</a>
+                                  </li>
+                                  <li class="nav-item"><a href="" class="nav-link">
+                                      <i class="bi bi-question-circle"></i>درخواست پشتیبانی</a>
+                                  </li>
+                                  <li class="nav-item"><a onclick="favourite_items();"class="nav-link">
+                                    <i class="bi bi-question-circle"></i>علاقه مندی ها</a>
+                                </li>
+                                  <li class="nav-item"><a href="" class="nav-link">
+                                      <i class="bi bi-gift"></i>کد های تخفیف من</a>
+                                  </li>
+                                  <li class="nav-item"><a href="" class="nav-link">
+                                      <i class="bi bi-arrow-right-square"></i>خروج از حساب کاربری</a>
+                                  </li>
+                              </ul>
+                          </nav>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+
+      <div class="panel position-relative">
+          <div class="row gy-4">
+              <div class="col-lg-3 d-lg-block d-none">
+                <div class="auth-logo text-center">
+                  <a href="/">
+                    <h6 class="font-20 title-font">فروشگاه کیک پیک</h6>
+                    <p class="mb-0 mt-1 text-muted">فروشگاهی برای همه سلیقه ها</p>
+                  </a>
+              </div>
+                  <div class="penel-nav penel-nav-desktop">
+                      <div class="panel-nav-nav">
+                          <nav class="navbar profile-box-nav">
+                              <ul class="navbar-nav flex-column">
+                                  <li class="nav-item active"><a href="" class="nav-link">
+                                      <i class="bi bi-house-door"></i>پروفایل</a>
+                                  </li>
+                                  <li class="nav-item"><a href="" class="nav-link">
+                                      <i class="bi bi-cart-check"></i>سفارش های من <span class="badge rounded-pill badge-spn">{{ order_items.count }}</span></a>
+                                  </li>
+                                  <li class="nav-item"><a href="" class="nav-link">
+                                      <i class="bi bi-pin-map"></i>آدرس های من</a>
+                                  </li>
+                                  <li class="nav-item"><a href="" class="nav-link">
+                                      <i class="bi bi-bell"></i>پیام ها و اطلاعیه ها</a>
+                                  </li>
+                                  <li class="nav-item"><a href="" class="nav-link">
+                                      <i class="bi bi-chat-dots"></i>نظرات من</a>
+                                  </li>
+                                  <li class="nav-item"><a href="" class="nav-link">
+                                      <i class="bi bi-question-circle"></i>درخواست پشتیبانی</a>
+                                  </li>
+                                  <li class="nav-item"><a onclick="favourite_items();" class="nav-link">
+                                      <i class="bi bi-heart"></i>محصولات مورد علاقه</a>
+                                  </li>
+                                  <li class="nav-item"><a href="" class="nav-link">
+                                      <i class="bi bi-gift"></i>کد های تخفیف من</a>
+                                  </li>
+                                  <li class="nav-item"><a href="{% url 'logout' %}" class="nav-link">
+                                      <i class="bi bi-arrow-right-square"></i>خروج از حساب کاربری</a>
+                                  </li>
+                              </ul>
+                          </nav>
+                      </div>
+                  </div>
+              </div>
+              <div class="col-lg-9">
+                  <div class="position-sticky top-0">
+                      <div class="panel-header">
+                          <div class="content-box">
+                              <div class="container-fluid">
+                                  {% if request.user.first_name %}
+                                  <div class="row gy-5 align-items-center">
+                                      <div class="col-md-6 col-8">
+                                          <div class="d-flex align-items-center">
+                                              <h6> {{request.user.first_name}} عزیز به پنل کاربری خوش آمدید</h6>
+                                          </div>
+                                      </div>
+                                      <!--div class="col-md-3 col-4">
+                                          <div class="panel-alert d-flex justify-content-end">
+                                              <i class="bi bi-bell pointer"></i>
+                                              <span class="count-item rounded-circle">0</span>
+                                          </div>
+                                      </div-->
+                                      <div class="col-md-3">
+                                          <div class="d-flex align-items-center panel-profile">
+                                              <img src="{% static '' %}assets/img/user.png" class="img-fluid img-profile-panel rounded-circle me-3 shadow-md" alt="">
+                                              <div class="d-grid gap-2">
+                                                  <h6 class="font-14 main-color-one-color">حساب کاربری من</h6>
+                                                  <div class="d-flex align-items-center">
+                                                      <h6 class="font-14">
+                                                          {% if request.user.first_name %}{{request.user.first_name}}{% endif %} {% if request.user.last_name %}{{request.user.last_name}}{% endif %}</h6>
+                                                      <a href="" class="ms-2"><i class="bi bi-pencil-square"></i></a>
+                                                  </div>
+                                              </div>
+                                          </div>
+                                      </div>
+                                  </div>
+                                  {% else %}
+                                  <div class="row gy-5 align-items-center">
+                                      <div class="col-md-6 col-8">
+                                          <div class="d-flex align-items-center">
+                                              <h6>با تکمیل حساب کاربری کد تخفیف دریافت کنید !</h6>
+                                          </div>
+                                      </div>
+                                      <div class="col-md-3 col-4">
+                                          <div class="panel-alert d-flex justify-content-end">
+                                              <i class="bi bi-bell pointer"></i>
+                                              <span class="count-item rounded-circle">0</span>
+                                          </div>
+                                      </div>
+                                      <div class="col-md-3">
+                                          <div class="d-flex align-items-center panel-profile">
+                                              <img src="{% static '' %}assets/img/user.png" class="img-fluid img-profile-panel rounded-circle me-3 shadow-md" alt="">
+                                              <div class="d-grid gap-2">
+                                                  <h6 class="font-14 main-color-one-color">حساب کاربری من</h6>
+                                                  <div class="d-flex align-items-center">
+                                                      <h6 class="font-14">
+                                                          {{request.user.phoneNumber}}</h6>
+                                                      <a href="" class="ms-2"><i class="bi bi-pencil-square"></i></a>
+                                                  </div>
+                                              </div>
+                                          </div>
+                                      </div>
+                                  </div>
+                                  {% endif %}
+                              </div>
+                          </div>
+                      </div>
+                      <div class="panel-meta my-5">
+                          <div class="row g-3">
+                              <div class="col-md-3 col-sm-6">
+                                  <a href="">
+                                      <div class="panel-meta-item d-flex align-items-center">
+                                          <div class="panel-meta-item-icon">
+                                              <i class="bi bi bi-bag-check"></i>
+                                          </div>
+                                          <div class="panel-meta-title d-flex flex-column">
+                                              <h6 class="h6">سفارشات تکمیل شده</h6>
+                                          </div>
+                                      </div>
+                                  </a>
+                              </div>
+                              <div class="col-md-3 col-sm-6">
+                                  <a href="">
+                                      <div class="panel-meta-item d-flex align-items-center">
+                                          <div class="panel-meta-item-icon bg-danger">
+                                              <i class="bi bi bi-heart-fill"></i>
+                                          </div>
+                                          <div class="panel-meta-title d-flex flex-column">
+                                              <h6 class="h6">محصولات مورد علاقه</h6>
+                                              <h5 class="title-font h3">{{favourite_items.count}}</h5>
+                                          </div>
+                                      </div>
+                                  </a>
+                              </div>
+                              <div class="col-md-3 col-sm-6">
+                                  <a href="">
+                                      <div class="panel-meta-item d-flex align-items-center">
+                                          <div class="panel-meta-item-icon bg-primary">
+                                              <i class="bi bi bi-send"></i>
+                                          </div>
+                                          <div class="panel-meta-title d-flex flex-column">
+                                              <h6 class="h6">نظرات</h6>
+                                              <!--h5 class="title-font h3">13</h5-->
+                                          </div>
+                                      </div>
+                                  </a>
+                              </div>
+                              <div class="col-md-3 col-sm-6">
+                                  <a href="">
+                                      <div class="panel-meta-item d-flex align-items-center">
+                                          <div class="panel-meta-item-icon bg-secondary">
+                                              <i class="bi bi-repeat"></i>
+                                          </div>
+                                          <div class="panel-meta-title d-flex flex-column">
+                                              <h6 class="h6">سفارشات مرجوعی</h6>
+
+                                          </div>
+                                      </div>
+                                  </a>
+                              </div>
+                          </div>
+                      </div>
+                      <div class="panel-latest-order zone">
+                          <div class="table-responsive shadow-box roundedTable p-0">
+                              {% if order_items %}
+                              <table class="table  main-table rounded-0">
+                                  <thead class="text-center">
+                                  <tr>
+                                      <th class="title-font">ردیف</th>
+                                      <th class="title-font">شماره سفارش</th>
+                                      <th class="title-font">تاریخ ثبت سفارش</th>
+                                      <th class="title-font">مبلغ پرداختی</th>
+                                      <th class="title-font">وضعیت سفارش</th>
+                                      <th class="title-font">فاکتور</th>
+                                  </tr>
+                                  </thead>
+                                  <tbody class="text-center">
+                                      {% for item in order_items %}
+                                  <tr>
+                                      <td class="font-14">{{forloop.counter}}</td>
+                                      <td class="font-14">{{ item.shenase }}</td>
+                                      <td class="font-14">{{ item.jpub }}</td>
+                                      <td class="font-14">{{item.price}} تومان</td>
+                                      <td class="font-14"><a href="" class="title-font">{% if item.status == 0 %}در حال پردازش{% elif item.status == 1 %}تکمیل شده{% elif item.status == 2 %}استرداد{% elif item.status == 3 %}لغو شده{% elif item.status == 4 %}در انتظار پرداخت{% endif %}</a></td>
+                                      <td class="font-14">
+                                          <a href="" class="btn border-0 main-color-one-bg waves-effect waves-light"><i class="bi bi-chevron-left"></i></a>
+                                      </td>
+                                  </tr>
+                                  {% endfor %}
+                                  </tbody>
+                              </table>
+                              {% else %}
+                              <div class="cart-empty-title">
+                                  <h2 class="text-center title-font">
+                                      تخفیف ویژه برای خرید اول !
+                                  </h2>
+                                  <div class="text-center mt-3">
+                                      <a href="/shop" class="btn main-color-one-outline rounded-pill px-4">هرگز برای شروع دیر نیست !</a>
+                                  </div>
+                              </div>
+                              {% endif %}
+                          </div>
+                      </div>
+                  </div>
+
+              </div>
+          </div>
+      </div>
   </div>
-</header>
-<div class="container-fluid">
-  <section>
-    <div class="row">
-      <div
-        class="col-xxl-3 col-xl-3 col-lg-3 col-md-3 col-sm-4 col-12 mb-3"
-      >
-        <div class="dropdown text-center">
-          {% if request.user.first_name %}
-          <span>سلام</span>
-          <span class="bi bi-heart-fill text-danger"></span>
-          <strong>{{request.user.first_name}}</strong>
-          <span>عزیز</span>
-          {% else %}
-          <script>
-            Swal.fire({
-              icon: "info",
-              title: 'کاربر گرامی لطفا اطلاعات حساب کاربری خود را تکمیل کنید',
-              showConfirmButton: false,
-              timer: 3000,
-            });
-          </script>
-          {% endif %}
-        </div>
-        <hr />
-        <div class="list-group" id="list-tab" role="tablist">
-          <a
-            class="list-group-item list-group-item-action active"
-            id="list-counter-list"
-            data-bs-toggle="list"
-            href="#list-counter"
-            role="tab"
-            aria-controls="list-counter"
-            >پیشخوان</a
-          >
-          <a
-            class="list-group-item list-group-item-action"
-            id="list-orders-list"
-            data-bs-toggle="list"
-            href="#list-orders"
-            role="tab"
-            aria-controls="list-orders"
-            >سفارش ها</a
-          >
-          <a
-            class="list-group-item list-group-item-action"
-            id="list-addresses-list"
-            data-bs-toggle="list"
-            href="#list-addresses"
-            role="tab"
-            aria-controls="list-addresses"
-            >آدرس ها</a
-          >
-          <a
-            class="list-group-item list-group-item-action"
-            id="list-details-list"
-            data-bs-toggle="list"
-            href="#list-details"
-            role="tab"
-            aria-controls="list-details"
-            >جزئیات حساب</a
-          >
-          <a
-            class="list-group-item list-group-item-action"
-            id="list-favorites1-list"
-            data-bs-toggle="list"
-            href="#list-favorites1"
-            role="tab"
-            aria-controls="list-favorites1"
-            >علاقه مندی ها</a
-          >
-          <a
-            href="{% url 'logout' %}"
-            class="nav-link link-body-emphasis text-danger list-group-item"
-          >
-            خروج
-          </a>
-        </div>
-      </div>
 
-      <div class="col-xxl-9 col-xl-9 col-lg-9 col-md-9 col-sm-8 col-12">
-        <div class="tab-content" id="nav-tabContent">
-          <div
-            class="tab-pane fade show active"
-            id="list-counter"
-            role="tabpanel"
-            aria-labelledby="list-counter-list"
-          >
-            <div class="row">
-              <div class="boxpanel">
-                <a href="#list-orders" class="link-body-emphasis">
-                  <span class="bi bi-cart-check"> </span>
-                  <h3 class="h5">سفارش ها</h3>
-                </a>
-              </div>
-              <div class="boxpanel">
-                <a href="#list-addresses" class="link-body-emphasis">
-                  <span class="bi bi-geo-alt"> </span>
-                  <h3 class="h5">آدرس ها</h3>
-                </a>
-              </div>
-              <div class="boxpanel">
-                <a href="#list-favorites1" class="link-body-emphasis">
-                  <span class="bi bi-heart"> </span>
-                  <h3 class="h5">علاقه مندی ها</h3>
-                </a>
-              </div>
-              <div class="boxpanel">
-                <a href="/shop" class="link-body-emphasis">
-                  <span class="bi bi-basket"> </span>
-                  <h3 class="h5">فروشگاه</h3>
-                </a>
-              </div>
-              <div class="boxpanel">
-                <a href="/blog" class="link-body-emphasis">
-                  <span class="bi bi-journal-bookmark"> </span>
-                  <h3 class="h5">وبلاگ</h3>
-                </a>
-              </div>
-              <div class="boxpanel">
-                <a href="{% url 'logout' %}" class="link-body-emphasis">
-                  <span class="bi bi-box-arrow-left"> </span>
-                  <h3 class="h5">خروج</h3>
-                </a>
-              </div>
-            </div>
-          </div>
-          <div
-            class="tab-pane fade"
-            id="list-orders"
-            role="tabpanel"
-            aria-labelledby="list-orders-list"
-          >
-            <!-- <div class="row">
-
-            </div> -->
-            <div class="bd-example-snippet bd-code-snippet text-center">
-              <div class="bd-example m-0 border-0">
-                {% if order_items %}
-                <table class="table table-striped">
-                  <thead>
-                    <tr>
-                      <th scope="col">محصول</th>
-                      <th scope="col">تعداد</th>
-                      <th scope="col">رنگ</th>
-                      <th scope="col">تاریخ ثبت</th>
-                      <th scope="col">وضعیت پرداخت</th>
-                      <th scope="col">استرداد محصول</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {% for item in order_items %}
-                    <tr>
-                      <td>{{ item.product }}</td>
-                      <td>{{ item.number }}</td>
-                      <td><div class="selected-color" style="background-color: {{item.color}};"></div></td>
-                      <td>{{ item.jpub }}</td>
-                      <td>{% if item.status == 0 %}در حال پردازش{% elif item.status == 1 %}تکمیل شده{% elif item.status == 2 %}استرداد{% elif item.status == 3 %}لغو شده{% elif item.status == 4 %}در انتظار پرداخت{% endif %}</td>
-                      <td><a href="tel:09906686338">تماس مستقیم</a></td>
-                    </tr>
-                    {% endfor %}
-                  </tbody>
-                </table>
-                {% else %}
-                <a href="/shop"><h4 style="text-align: center;">هم اکنون اولین سفارش خود را ثبت کنید !</h4></a>
-                {% endif %}
-              </div>
-            </div>
-          </div>
-          <div
-            class="tab-pane fade"
-            id="list-addresses"
-            role="tabpanel"
-            aria-labelledby="list-addresses-list"
-          >
-            <h4 class="mb-3">آدرس خود را وارد کنید</h4>
-            <div class="needs-validation" novalidate="">
-              <div class="row g-3">
-                <div class="col-sm-6">
-                  <label for="firstName" class="form-label">نام</label>
-                  <input
-                    type="text"
-                    class="form-control"
-                    id="firstName"
-                    placeholder="{% if request.user.first_name %}{{request.user.first_name}}{% endif %}"
-                    required
-                  />
-                  <div div class="invalid-feedback">
-                    يرجى إدخال اسم أول صحيح.
-                  </div>
-                </div>
-                <div class="col-sm-6">
-                  <label for="lastName" class="form-label"
-                    >نام خانوادگی</label
-                  >
-                  <input
-                    type="text"
-                    class="form-control"
-                    id="lastName"
-                    placeholder="{% if request.user.last_name %}{{request.user.last_name}}{% endif %}"
-                    required
-                  />
-                  <div class="invalid-feedback">
-                    يرجى إدخال اسم عائلة صحيح.
-                  </div>
-                </div>
-                <div class="col-sm-6">
-                  <label for="telnum" class="form-label">شماره تماس</label>
-                  <div class="input-group has-validation">
-                    <input
-                      type="text"
-                      class="form-control"
-                      id="telnum"
-                      placeholder="{{request.user.phoneNumber}}"
-                      required
-                    />
-                    <div class="invalid-feedback">
-                      اسم المستخدم الخاص بك مطلوب.
-                    </div>
-                  </div>
-                </div>
-                <div class="col-sm-6">
-                  <label for="address" class="form-label">آدرس دقیق</label>
-                  <input
-                    type="text"
-                    class="form-control"
-                    id="address"
-                    placeholder="{% for customer in customer_items %}{% if customer.address %}{{customer.address}}{% endif %}{% endfor %}"
-                    required
-                  />
-                  <div class="invalid-feedback">
-                    يرجى إدخال عنوان الشحن الخاص بك.
-                  </div>
-                </div>
-                <div class="col-sm-6">
-                  <label for="address2" class="form-label">
-                    زنگ ، پلاک
-                    <span class="text-body-secondary"
-                      >(اختياري)</span
-                    ></label
-                  >
-                  <input type="text" class="form-control" id="address2" placeholder="{% for customer in customer_items %}{% if customer.pelak %}{{customer.pelak}}{% endif %}{% endfor %}" />
-                </div>
-                <div class="col-sm-6">
-                  <label for="ostan" class="form-label">استان</label>
-                  <input type="text" class="form-control" id="ostan" placeholder="{% for customer in customer_items %}{% if customer.ostan %}{{customer.ostan}}{% endif %}{% endfor %}" />
-                  <div class="invalid-feedback">يرجى اختيار بلد صحيح.</div>
-                </div>
-                <div class="col-sm-6">
-                  <label for="shahr" class="form-label">شهر/شهرستان</label>
-                  <input
-                    type="text"
-                    class="form-control"
-                    id="shahr"
-                    placeholder="{% for customer in customer_items %}{% if customer.city %}{{customer.city}}{% endif %}{% endfor %}"
-                    required
-                  />
-                  <div class="invalid-feedback">
-                    يرجى اختيار اسم منطقة صحيح.
-                  </div>
-                </div>
-                <div class="col-sm-6">
-                  <label for="zip" class="form-label">کدپستی</label>
-                  <input
-                    type="text"
-                    class="form-control"
-                    id="zip"
-                    placeholder="{% for customer in customer_items %}{% if customer.zip_zode %}{{customer.zip_zode}}{% endif %}{% endfor %}"
-                    required
-                  />
-                  <div class="invalid-feedback">الرمز البريدي مطلوب.</div>
-                </div>
-              </div>
-              <br />
-              <button class="btn red-b-color white-color" type="submit" onclick="get_address()">
-                بروزرسانی اطلاعات
-              </button>
-            </div>
-          </div>
-          <div
-            class="tab-pane fade"
-            id="list-details"
-            role="tabpanel"
-            aria-labelledby="list-details-list"
-          >
-            <div class="row g-3 needs-validation" novalidate>
-              <div class="col-sm-6">
-                <label for="validationCustom01" class="form-label"
-                  >نام
-                </label>
-                <input
-                  type="text"
-                  class="form-control"
-                  id="validationCustom01"
-                  placeholder="{% if request.user.first_name %}{{request.user.first_name}}{% endif %}"
-                  required
-                />
-                <div class="valid-feedback">Looks good!</div>
-              </div>
-              <div class="col-sm-6">
-                <label for="validationCustom02" class="form-label"
-                  >نام خانوادگی
-                </label>
-                <input
-                  type="text"
-                  class="form-control"
-                  id="validationCustom02"
-                  placeholder="{% if request.user.last_name %}{{request.user.last_name}}{% endif %}"
-                  required
-                />
-                <div class="valid-feedback">Looks good!</div>
-              </div>
-              <div class="col-sm-6">
-                <label for="validationCustom03" class="form-label">
-                  شماره تماس
-                </label>
-                <input
-                  type="text"
-                  class="form-control"
-                  id="validationCustom03"
-                  placeholder="{{request.user.phoneNumber}}"
-                  readonly
-                />
-                <div class="valid-feedback">Looks good!</div>
-              </div>
-              <div class="col-sm-6">
-                <label for="validationCustom04" class="form-label"
-                  >پست الکترونیک
-                  <span class="text-body-secondary"
-                  >(اختياري)</span
-                ></label>
-                <input
-                  type="email"
-                  class="form-control"
-                  id="validationCustom04"
-                  placeholder="{% if request.user.email%}{{request.user.email}}{% endif %}"
-                  required
-                />
-                <div class="invalid-feedback">
-                  Please provide a valid city.
-                </div>
-              </div>
-              <div class="col-sm-4">
-                <label for="validationCustom07" class="form-label"
-                  >رمزعبور فعلی</label
-                >
-                <input
-                  type="password"
-                  class="form-control"
-                  id="validationCustom07"
-                />
-                <div class="invalid-feedback">
-                  Please provide a valid city.
-                </div>
-              </div>
-              <div class="col-sm-4">
-                <label for="validationCustom08" class="form-label"
-                  >رمزعبور جدید</label
-                >
-                <input
-                  type="password"
-                  class="form-control"
-                  id="validationCustom08"
-                />
-                <div class="invalid-feedback">
-                  Please provide a valid city.
-                </div>
-              </div>
-              <div class="col-sm-4">
-                <label for="validationCustom09" class="form-label">
-                  تکرار رمزعبور جدید</label
-                >
-
-                <input
-                  type="password"
-                  class="form-control"
-                  id="validationCustom09"
-                />
-                <div class="invalid-feedback">
-                  Please provide a valid city.
-                </div>
-              </div>
-              <div class="col-12">
-                <button class="btn red-b-color white-color" onclick="update_user()">
-                  بروزرسانی اطلاعات
-                </button>
-              </div>
-            </div>
-          </div>
-          <div
-            class="tab-pane fade"
-            id="list-favorites1"
-            role="tabpanel"
-            aria-labelledby="list-favorites1-list"
-          >
-            <div class="row">
-            {% for item in favourite_items %}
-              <div class="cardpro" style="width: 18rem">
-                <img
-                  src="{{ item.image }}"
-                  class="card-img-top"
-                  alt="{{ item.product_title }}"
-                />
-                <div class="card-body">
-                  <h3 class="card-title h4">
-                    <a href="" class="black-color">{{ item.product_title }}</a>
-                  </h3>
-                  <span class="red-color">{{ item.price }}<span>تومان</span></span>
-                  <hr />
-                  <div class="tolspro">
-                    <span onclick="add_favourite('{{item.product_id}}','{{item.slug}}','{{item.product_title}}','{{item.image}}','0', '0', '0');location.reload(true)" class="bi bi-heart"></span>
-                    <a href="/shop/{{ item.slug }}"><button type="submit" class="btn btn-danger addtocard">
-                      مشاهده و خرید
-                    </button></a>
-                    <span class="bi bi-arrow-left-right" onclick="add_comparison('{{item.product_id}}','{{item.slug}}','{{item.product_title}}','{{item.image}}','0', '0', '0', '0')"></span>
-                  </div>
-                </div>
-              </div>
-              {% endfor %}
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
 </div>
+
+{% include 'layout/footer.html' %}
+
+{% include 'layout/mobile-menu.html' %}
+
+{% include 'layout/cart-convas.html' %}
+
 {% block JS %}
-<script src="{% static 'js/accounts/dashboard.js' %}"></script>
-<script
-  src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
-  integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
-  crossorigin="anonymous"
-></script>
+
+<script src="{% static '' %}assets/js/vendor/modernizr-3.11.2.min.js"></script>
+<script src="{% static '' %}assets/js/vendor/jquery-3.7.1.min.js"></script>
+<script src="{% static '' %}assets/js/vendor/bootstrap.bundle-5.3.2.min.js"></script>
+<script src="{% static '' %}assets/js/plugin/swiper/swiper-bundle.min.js"></script>
+<script src="{% static '' %}assets/js/plugin/countdown/countdown.js"></script>
+<script src="{% static '' %}assets/js/plugin/vanilla-tilt/vanilla-tilt.min.js"></script>
+<script src="{% static '' %}assets/js/plugin/rasta-contact/script.js"></script>
+<script src="{% static '' %}assets/js/plugin/bootstrap-touchspin/jquery.bootstrap-touchspin.min.js"></script>
+<script src="{% static '' %}assets/js/plugins.js"></script>
+<script src="{% static '' %}assets/js/main.js"></script>
+
+<script>
+  function favourite_items(menu){
+    $(`.zone`).html(`
+    <div class="slider-title mt-4">
+                            <div class="slider-title-desc">
+                                <div class="slider-title-title pb-4">
+                                    <h2 class="h1"><span class="title-font main-color-one-color">محصولات</span> مورد علاقه </h2>
+                                </div>
+                            </div>
+                        </div>
+    `);
+    $(`.zone`).append(`
+    <div class="penel-form">
+                            <div class="content-box">
+                                <div class="container-fluid">
+                                    <div class="row g-3">
+                                      {% for item in favourite_items %}
+                                        <div class="col-lg-4 col-md-6">
+                                            <div class="cart-canvas border p-3">
+                                                <div class="row align-items-center">
+                                                    <div class="col-4 ps-0">
+                                                        <img src="https://kikpick.com/{{item.image}}" alt="">
+                                                    </div>
+                                                    <div class="col-8">
+                                                        <a href="/shop/{{item.slug}}">
+                                                            <h3 class="text-overflow-1 title-font font-14">
+                                                              {{item.product_title}}                              
+                                                            </h3>
+                                                        </a>
+                                                        <div class="cart-canvas-price my-3 d-flex align-items-center">
+                                                            <h6 class="title-font main-color-one-color">{{item.price}} تومان</h6>
+                                                        </div>
+                                                        <div class="cart-canvas-foot d-flex align-items-center justify-content-end">
+                                                            <div class="cart-canvas-delete">
+                                                                <a href="" class="btn"><i class="bi bi-x"></i></a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+    `);
+    $(`.penel-nav-mobile`).html(`
+    <div class="panel-nav-nav">
+                          <nav class="navbar profile-box-nav">
+                              <ul class="navbar-nav flex-column">
+                                  <li class="nav-item"><a href="" class="nav-link">
+                                      <i class="bi bi-house-door"></i>پروفایل</a>
+                                  </li>
+                                  <li class="nav-item"><a href="" class="nav-link">
+                                      <i class="bi bi-cart-check"></i>سفارش های من <span class="badge rounded-pill badge-spn">{{ order_items.count }}</span></a>
+                                  </li>
+                                  <li class="nav-item"><a href="" class="nav-link">
+                                      <i class="bi bi-pin-map"></i>آدرس های من</a>
+                                  </li>
+                                  <li class="nav-item"><a href="" class="nav-link">
+                                      <i class="bi bi-bell"></i>پیام ها و اطلاعیه ها</a>
+                                  </li>
+                                  <li class="nav-item"><a href="" class="nav-link">
+                                      <i class="bi bi-chat-dots"></i>نظرات من</a>
+                                  </li>
+                                  <li class="nav-item"><a href="" class="nav-link">
+                                      <i class="bi bi-question-circle"></i>درخواست پشتیبانی</a>
+                                  </li>
+                                  <li class="nav-item active">
+                                  <a onclick="favourite_items();"><i class="bi bi-cart-check "></i>علاقه مندی ها</a>
+                                  </li>
+                                  <li class="nav-item"><a href="" class="nav-link">
+                                      <i class="bi bi-gift"></i>کد های تخفیف من</a>
+                                  </li>
+                                  <li class="nav-item"><a href="" class="nav-link">
+                                      <i class="bi bi-arrow-right-square"></i>خروج از حساب کاربری</a>
+                                  </li>
+                              </ul>
+                          </nav>
+                      </div>
+    `);
+    $(`.penel-nav-desktop`).html(`
+    <div class="panel-nav-nav">
+                          <nav class="navbar profile-box-nav">
+                              <ul class="navbar-nav flex-column">
+                                  <li class="nav-item"><a href="" class="nav-link">
+                                      <i class="bi bi-house-door"></i>پروفایل</a>
+                                  </li>
+                                  <li class="nav-item"><a href="" class="nav-link">
+                                      <i class="bi bi-cart-check"></i>سفارش های من <span class="badge rounded-pill badge-spn">{{ order_items.count }}</span></a>
+                                  </li>
+                                  <li class="nav-item"><a href="" class="nav-link">
+                                      <i class="bi bi-pin-map"></i>آدرس های من</a>
+                                  </li>
+                                  <li class="nav-item"><a href="" class="nav-link">
+                                      <i class="bi bi-bell"></i>پیام ها و اطلاعیه ها</a>
+                                  </li>
+                                  <li class="nav-item"><a href="" class="nav-link">
+                                      <i class="bi bi-chat-dots"></i>نظرات من</a>
+                                  </li>
+                                  <li class="nav-item"><a href="" class="nav-link">
+                                      <i class="bi bi-question-circle"></i>درخواست پشتیبانی</a>
+                                  </li>
+                                  <li class="nav-item active"><a onclick="favourite_items();" class="nav-link">
+                                      <i class="bi bi-heart "></i>محصولات مورد علاقه</a>
+                                  </li>
+                                  <li class="nav-item"><a href="" class="nav-link">
+                                      <i class="bi bi-gift"></i>کد های تخفیف من</a>
+                                  </li>
+                                  <li class="nav-item"><a href="{% url 'logout' %}" class="nav-link">
+                                      <i class="bi bi-arrow-right-square"></i>خروج از حساب کاربری</a>
+                                  </li>
+                              </ul>
+                          </nav>
+                      </div>
+    `);
+  };//end func
+</script>
+
 {% endblock %}
 {% endblock %}

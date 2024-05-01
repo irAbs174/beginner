@@ -9,21 +9,53 @@ def support_requests(request):
 
 def cart_items(request):
     if request.user.is_authenticated:
-        cart = Cart.objects.filter(user=request.user.phoneNumber)
-    else:
+        if Cart.objects.filter(user=request.user.phoneNumber):
+            if (Cart.objects.filter(user=request.user.phoneNumber)[0].price == 0):
+                cart = 0
+            else:
+                cart = Cart.objects.filter(user=request.user.phoneNumber)
+        else:
+            cart = 0
+    else:   
         cart = 0
     return {'cart_items': cart}
 
 def cart_total(request):
     if request.user.is_authenticated:
-        get_total = Cart.calculate_total_price(request.user.phoneNumber)
+        if Cart.objects.filter(user=request.user.phoneNumber):
+            if (Cart.objects.filter(user=request.user.phoneNumber)[0].price == 0):
+                get_total = 0
+            else:
+                get_total = Cart.calculate_total_price(request.user.phoneNumber)
+        else:
+            get_total = 0
     else:
         get_total = 0
     return {'cart_total': get_total}
 
+def update_total(request):
+    if request.user.is_authenticated:
+        if Cart.objects.filter(user=request.user.phoneNumber):
+            if (Cart.objects.filter(user=request.user.phoneNumber)[0].price == 0):
+                get_total = 0
+            else:
+                get_total = Cart.update_total(request.user.phoneNumber)
+        else:
+            get_total = 0
+    else:
+        get_total = 0
+    return {'update_total': get_total}
+
+
 def cart_count(request):
     if request.user.is_authenticated:
-        cart_count = Cart.objects.filter(user=request.user.phoneNumber).count
+        if Cart.objects.filter(user=request.user.phoneNumber):
+            if Cart.objects.filter(user=request.user.phoneNumber)[0].price < 1:
+                cart_count = 0
+            else:
+                cart_count = Cart.objects.filter(user=request.user.phoneNumber).count
+        else:
+            cart_count = 0
     else:
         cart_count = 0
     return {'cart_count': cart_count}

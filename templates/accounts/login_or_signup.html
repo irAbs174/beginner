@@ -1,124 +1,230 @@
-{% extends 'base.html' %}
+{% extends 'layout/base.html' %}
 {% load static %}
-{% block HEADING %}
-<meta name="description" content="" />
-<meta name="keywords" content="" />
-{% endblock %}
-{%block TITLE%}ورود به حساب کاربری{% endblock %}
-{% block CSS %}
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
-    <link rel="stylesheet" href="{% static 'css/accounts/stylelogin.css' %}" />
-<link rel="stylesheet" href="{% static 'css/accounts/dashboard.css' %}" />
-<link rel="stylesheet" href="{% static 'css/accounts/userpanel.css' %}" />
-{% endblock %}
-{% block CONTENT %}
-{% if user.is_authenticated %}
-<h3 style="color: red;"> Error : you are now Login ! </h3>
-<button onclick="window.history.back();">Go Back</button>
-<a href="{% url 'logout' %}"><button>logout</button></a>
-{% else %}
-    <!--<div class="container-fluid">-->
-    <!--  <div class="row">-->
-    <!--    <div class="col asidelogform">-->
-    <!--      <div class="container">-->
-    <!--        <section class="main">-->
-    <!--          <form class="form-3" method="POST">-->
-    <!--            -->
-    <!--            {{ login_form.as_p }}-->
-    <!--            <input type="checkbox" name="remember" id="remember" />-->
-    <!--            <label for="remember">مرا به خاطر بسپار</label>-->
-    <!--            <input-->
-    <!--              type="submit"-->
-    <!--              name="submit"-->
-    <!--              value="ورود به حساب کاربری"-->
-    <!--            />-->
-    <!--          </form>-->
-    <!--        </section>-->
-    <!--      </div>-->
-    <!--      <div class="container">-->
-    <!--        <section class="main">-->
-    <!--          <form class="form-3" method="POST">-->
-    <!--            {% csrf_token %}-->
-    <!--            <label for="{{ signup_form.phoneNumber.id_for_label }}">شماره تماس</label>-->
-    <!--            {{ signup_form.phoneNumber }}-->
-    <!--            <label for="signup_form.password1.id_for_label">رمزعبور</label>-->
-    <!--            {{ signup_form.password1 }}-->
-    <!--            <label for="signup_form.password2.id_for_label">تکرار رمزعبور</label>-->
-    <!--            {{ signup_form.password2 }}-->
-    <!--            <input type="checkbox" name="remember" id="remember" />-->
-    <!--            <label for="remember">مرا به خاطر بسپار</label>-->
-    <!--            <input type="submit" name="submit" value="ساخت حساب کاربری" />-->
-    <!--          </form>-->
-    <!--        </section>-->
-    <!--      </div>-->
-    <!--    </div>-->
-    <!--    <div class="col asidelogimg">-->
-    <!--      <div></div>-->
-    <!--    </div>-->
-    <!--  </div>-->
-    <!--</div>-->
-    <section class="container-fluid logsec">
-    <h2 class="m-5">وارد حساب کاربری خود شوید و یا ثبت نام کنید</h2>
-    <div class="container" id="container">
-      <div class="form-container sign-up-container">
-        <form method="POST">
-            {% csrf_token %}
-          <a href="#">
-            <img src="http://kikpick.com/media/images/kikpick.original.png" alt="لوگو سایت فروشگاه اینترنتی کیک پیک"
-              class="text-center" width="100%" /></a>
-          <h3>ثبت نام در سایت</h3>
+{% block HEAD %}
+    <meta charset="utf-8">
+    <title>کیک پیک | ورود</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-          <span> برای ثبت نام از شماره تماس استفاده کنید</span>
-          <input id="id_phoneNumber" type="text" name="phoneNumber" placeholder="شماره تماس" required />
-          <input id="id_password1" type="password" name="password1" placeholder="رمزعبور" required />
-          <input id="id_password2" type="password" name="password2" placeholder="تکرار رمزعبور" required />
-          <input class="sflog" type="submit" name="submit" value="ثبت نام" />
-        </form>
-      </div>
-      <div class="form-container sign-in-container">
-        <form method="POST">
-            {% csrf_token %}
-          <a href="#">
-            <img src="http://kikpick.com/media/images/kikpick.original.png" alt="لوگو سایت فروشگاه اینترنتی کیک پیک"
-              class="text-center" width="100%" /></a>
-          <h3> ورود به حساب </h3>
+    <meta property="og:title" content="">
+    <meta property="og:type" content="">
+    <meta property="og:url" content="">
+    <meta property="og:image" content="">
 
-          <span> برای ورود از شماره تماس استفاده کنید</span>
-          <input id="id_username" type="text" name="username" placeholder="شماره تماس" autocapitalize="none"
-            autocomplete="username" maxlength="20" required />
-          <input id="id_password" type="password" name="password" placeholder="رمزعبور"
-            autocomplete="current-password required " />
-          <a href="#"><span class="black-color">رمزعبور را فراموش کردید؟</span> <u>کلیک کنید</u></a>
-          <input class="sflog" type="submit" name="submit" value="ورود" />
-        </form>
-      </div>
-      <div class="overlay-container">
-        <div class="overlay">
-          <div class="overlay-panel overlay-left">
-            <h3>!سلام دوست عزیز</h3>
-            <p>
-              جهت ثبت نام در سایت کیک پیک لطفا از شماره تماس خود استفاده کنید
-            </p>
-            <button class="ghost" id="signIn">حساب دارید؟ وارد شوید</button>
-          </div>
-          <div class="overlay-panel overlay-right">
-            <h1>!خوش آمدید</h1>
-            <p>
-              جهت ورود پنل کاربری کیک پیک لطفا از شماره تماس خود استفاده کنید
-            </p>
-            <button class="ghost" id="signUp">حساب ندارید؟ ثبت نام کنید</button>
-          </div>
-        </div>
-      </div>
-    </div>
-        <script>
-            const signUpButton = document.getElementById("signUp");
-            const signInButton = document.getElementById("signIn");
-            const container = document.getElementById("container");
-            signUpButton.addEventListener("click", () => {container.classList.add("right-panel-active");});
-            signInButton.addEventListener("click", () => {container.classList.remove("right-panel-active");});
+    <link rel="apple-touch-icon" sizes="180x180" href="{% static '' %}assets/img/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="{% static '' %}assets/img/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="{% static '' %}assets/img/favicon-16x16.png">
+    <link rel="manifest" href="/site.we{% static '' %}bmanifest">
+    <!-- Place favicon.ico in the root directory -->
 
-        </script>
-  </section>
+    <link rel="stylesheet" href="{% static '' %}assets/css/normalize.css">
+    <link rel="stylesheet" href="{% static '' %}assets/font/bootstrap-icon/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="{% static '' %}assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{% static '' %}assets/js/plugin/swiper/swiper-bundle.min.css">
+    <link rel="stylesheet" href="{% static '' %}assets/js/plugin/countdown/countdown.css">
+    <link rel="stylesheet" href="{% static '' %}assets/js/plugin/rasta-contact/style.css">
+    <link rel="stylesheet" href="{% static '' %}assets/js/plugin/bootstrap-touchspin/jquery.bootstrap-touchspin.min.css">
+    <link rel="stylesheet" href="{% static '' %}assets/css/main.css">
+    <link rel="stylesheet" href="{% static '' %}assets/css/responsive.css">
+
+    <meta name="theme-color" content="#f4f5f9">
+    {% endblock %}
+    
+    {% block BODY %}
+
+    {% if user.is_authenticated %}
+<script>
+    window.location.href = '/accounts/dashboard'
+</script>
 {% endif %}
+
+    {% if status %}
+    <script>
+        Swal.fire({
+            icon: 'info',
+            title: "{{status}}",
+            showConfirmButton: false,
+        })
+    </script>
+    {% endif %}
+
+    {% csrf_token %}
+
+    <input type="hidden" id="phone_hidden" value="">
+
+    {% include 'layout/header.html' %}
+    
+    {% include 'layout/menu.html' %}
+
+<div class="content vh-100" style="background: url('{% static '' %}assets/img/bg-auth.jpg');background-repeat: no-repeat;background-size: cover">
+    <div class="container-fluid h-100">
+        <div class="auth h-100 d-flex align-items-center">
+            <div class="container-fluid">
+                <div class="auth-items">{# !!! #}
+                    <div class="row justify-content-center">
+                        <div class="col-lg-4">
+
+                            <div class="auth-logo text-center">
+                                <a href="/">
+                                  <h6 class="font-20 title-font">فروشگاه کیک پیک</h6>
+                                  <p class="mb-0 mt-1 text-muted">فروشگاهی برای همه سلیقه ها</p>
+                                </a>
+                            </div>
+                            <div class="auth-form shadow-xl rounded-3  mt-5 bg-white">
+                                <div class="auth-form-title mb-4 slider-title-desc-center">
+                                    <h2 class="text-center h4 text-muted title-font">ورود / ثبت نام </h2>
+                                </div>
+                                    <div class="comment-item mb-3">
+                                        <input type="number" class="form-control" id="phone_number" placeholder="شماره تماس با صفر مانند : 09121234567">
+                                        <label for="phone_number" class="form-label label-float">شماره تماس</label>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <button class="btn btn-success w-100 mt-4 btn-login submit">
+                                          ارسال کد تایید
+                                        </button>
+                                    </div>
+                            </div>
+
+                            <p class="loginTermsDesc">با ورود و یا ثبت نام در کیک پیک شما <a class="underlined main-color-one-color fw-bold"
+                                                                                              href="/rules/">شرایط و
+                                قوانین</a> استفاده از سرویس‌های سایت کیک پیک و <a class="underlined main-color-one-color fw-bold"
+                                                                                   href="/privacy-polices/">قوانین حریم
+                                خصوصی</a> آن را می‌پذیرید.</p>
+
+
+                        </div>
+                    </div>
+                </div>{# !!! #}
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+{% include 'layout/footer.html' %}
+
+{% include 'layout/mobile-menu.html' %}
+
+{% include 'layout/cart-convas.html' %}
+
+{% block JS %}
+<script src="{% static '' %}assets/js/vendor/modernizr-3.11.2.min.js"></script>
+<script src="{% static '' %}assets/js/vendor/jquery-3.7.1.min.js"></script>
+<script src="{% static '' %}assets/js/vendor/bootstrap.bundle-5.3.2.min.js"></script>
+<script src="{% static '' %}assets/js/plugin/swiper/swiper-bundle.min.js"></script>
+<script src="{% static '' %}assets/js/plugin/countdown/countdown.js"></script>
+<script src="{% static '' %}assets/js/plugin/vanilla-tilt/vanilla-tilt.min.js"></script>
+<script src="{% static '' %}assets/js/plugin/rasta-contact/script.js"></script>
+<script src="{% static '' %}assets/js/plugin/bootstrap-touchspin/jquery.bootstrap-touchspin.min.js"></script>
+<script src="{% static '' %}assets/js/plugins.js"></script>
+<script src="{% static '' %}assets/js/main.js"></script>
+<script>
+    function verfy(){
+        let code = document.getElementById('code').value;
+        let phone_number = $('#phone_hidden').val();
+        if (code){
+            let token = $('input[name=csrfmiddlewaretoken]').val();
+            $.ajax({
+                url:'/login_api/verify',
+                type:'POST',
+                data:{
+                    csrfmiddlewaretoken: token,
+                    'phone_number':phone_number,
+                    'code': code,
+                },
+                success:function(response){
+                    if (response.success === false){
+                       Swal.fire({icon: 'info',title: response.status,showConfirmButton: false})
+                    }else{
+                        window.location.href = `/login_api/auth?meta=${response.status}`
+                    } // endif
+                },
+            });
+        };
+    };
+    const submit_form = document.querySelector(".submit");
+    submit_form.addEventListener("click", (e) => {
+        let token = $('input[name=csrfmiddlewaretoken]').val();
+        let phone_number = document.getElementById('phone_number').value;
+        let phone_hidden = document.getElementById('phone_hidden').value;
+        if( phone_number ){
+            $('#phone_hidden').val(phone_number);
+            $.ajax({
+            url: '/login_api/create',
+            type: 'POST',
+            data : {
+                csrfmiddlewaretoken: token,
+                'phone_number': phone_number,
+            },
+            success: function(response){
+                if( response.success === false ){
+                    Swal.fire({
+                        icon: 'info',
+                        title: response.status,
+                        showConfirmButton: false,
+                    })
+                }else{
+                    console.log(response.status);
+                    $('.auth-items').html(`
+                    <div class="row justify-content-center">
+                        <div class="col-lg-4">
+
+                            <div class="auth-logo text-center">
+                                <a href="/">
+                                  <h6 class="font-20 title-font">فروشگاه کیک پیک</h6>
+                                  <p class="mb-0 mt-1 text-muted">فروشگاهی برای همه سلیقه ها</p>
+                                </a>
+                            </div>
+                            <div class="auth-form shadow-xl rounded-3 bg-white">
+                                <div class="auth-form-title mb-4 slider-title-desc-center">
+                                    <h2 class="text-center h4 text-muted title-font">ورود به پنل کاربری</h2>
+                                </div>
+
+                                <div class="alert text-center alert-success">
+                                    یک کد برای شما پیامک شد لطفا آن را وارد کنید
+                                </div>
+
+                                    <div class="comment-item mb-3">
+                                        <input type="number" class="form-control" id="code" placeholder="کد تایید ۴ رقمی">
+                                </div>
+
+
+
+                                <div class="form-group mt-3">
+                                    <button class="btn btn-success w-100 mt-4 btn-login" onclick="verfy()">
+                               وورد به
+                                        سایت
+                                    </button>
+                                </div>
+
+
+                            </div>
+
+                            <p class="loginTermsDesc">با ورود و یا ثبت نام در کیک پیک شما <a class="underlined main-color-one-color fw-bold"
+                                                                                              href="/rules/">شرایط و
+                                قوانین</a> استفاده از سرویس‌های سایت کیک پیک و <a class="underlined main-color-one-color fw-bold"
+                                                                                   href="/privacy-polices/">قوانین حریم
+                                خصوصی</a> آن را می‌پذیرید.</p>
+
+
+                        </div>
+                    </div>
+                    
+                    `);
+                }; // end if
+            }, // end success func
+        }); // end ajax request
+        }else{
+            Swal.fire({
+                    icon: 'error',
+                    title: 'لطفا شماره تماس خود را وارد نمایید',
+                    showConfirmButton: false,
+                });
+        }; //end if
+    });
+</script>
+
+{% endblock %}
 {% endblock %}

@@ -2,10 +2,136 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.views.decorators.csrf import csrf_exempt
 from category.models import CategoryProduct as cat
 from brand.models import BrandPage as brand
+from brand.models import BrandPage
+from category.models import CategoryProduct
 from django.http import JsonResponse
 from .models import InventoryItem
 import random
 
+
+@csrf_exempt
+def single_product_data(request):
+    sku = request.POST.get('sku')
+    pq = InventoryItem.objects.all().public().live().search(sku)
+    item = {
+        'id': pq[0].id,
+        'slug': pq[0].slug,
+        'title': pq[0].title,
+        'product_title': pq[0].product_title,
+        'price': pq[0].price,
+        'offer': pq[0].PRODUCT_OFFER.values()[0]['value'] if i.PRODUCT_OFFER.values() else 0,
+        'quantity': pq[0].quantity,
+        'brand': pq[0].brand.title,
+        'color': [],
+        'image': pq[0].image.get_rendition('fill-250x280').url,
+        'is_available': pq[0].is_available,
+        'slider': pg[0].PRODUCT_SLIDE.values()
+    }
+    for color in colors:
+        color_data = {
+            'name': color['color_title'],
+            'code': color['color']
+    }
+    item['color'].append(color_data)
+    return JsonResponse({
+        'status': item,
+        'success': True
+    })
+
+@csrf_exempt
+def search(request):
+    search_text = request.POST.get('search_text')
+    context = []
+    if search_text:
+        query = InventoryItem.objects.all().public().live().search(search_text)
+        if query:
+            for i in query:
+                status = {                  
+                    'id':i.id,
+                    'slug':i.slug,
+                    'title':i.title,
+                    'price' :i.price,
+                    'offer':i.PRODUCT_OFFER.values()[0]['value'] if i.PRODUCT_OFFER.values() else 0,
+                    'quantity':i.quantity,
+                    'image':i.image.get_rendition('fill-250x280').url,
+                }
+                context.append(status)
+        else:
+            status = ''
+            context.append(status)
+    else:
+        status = ''
+        context.append(status)
+    return JsonResponse({'context': context, 'success': True})
+
+
+@csrf_exempt
+def load_brand_items(request):
+    context = []
+    list = [
+        'الکسا',
+        'نیلپر',
+        'فوروارد',
+        'فیلا',
+        'کت',
+        'گپ',
+    ]
+    bp = BrandPage.objects.live().public().order_by('first_published_at')
+    for i in list:
+        bps = bp.search(i)[0]
+        item = {
+            'id': bps.id,
+            'title': bps.title,
+            'image': bps.image.get_rendition('fill-75x75').url,
+        }
+        context.append(item)
+
+    return JsonResponse({'status': context, 'success': True})
+
+@csrf_exempt
+def load_category_items(request):
+    cat_list = []
+    for c in CategoryProduct.objects.live().public().order_by('first_published_at'):
+        if c.image:
+            item = {
+                'id': c.id,
+                'title': c.title,
+                'image': c.image.get_rendition('fill-100x100').url,
+                'count': 0,
+            }
+            count = InventoryItem.objects.filter(collection=c.id).count()
+            if count:
+                item['count'] = count
+                cat_list.append(item)
+            context = sorted(cat_list, key=lambda x: x['count'], reverse=True)
+    return JsonResponse({'status': context[0:8], 'success': True})
+
+@csrf_exempt
+def load_special_products(request):
+    context = []
+    list = [
+        '8020',
+        '6006',
+        '6008',
+        '8017',
+        '8002',
+        '6633',
+        '437',
+        '6501',
+        '7709',
+    ]
+    for i in list:
+        item = {
+            'title': InventoryItem.objects.all().public().live().search(i)[0].title,
+            'slug': InventoryItem.objects.all().public().live().search(i)[0].slug,
+            'price': InventoryItem.objects.all().public().live().search(i)[0].price,
+            'offer': InventoryItem.objects.all().public().live().search(i)[0].PRODUCT_OFFER.values()[0]['value'] if InventoryItem.objects.all().public().live().search(i)[0].PRODUCT_OFFER.values() else 0,
+            'quantity': InventoryItem.objects.all().public().live().search(i)[0].quantity,
+            'brand': InventoryItem.objects.all().public().live().search(i)[0].brand.title,
+            'image': InventoryItem.objects.all().public().live().search(i)[0].image.get_rendition('fill-250x280').url,
+        }
+        context.append(item)
+    return JsonResponse({'status' : context, 'success': True})
 
 @csrf_exempt
 def get_random_products(request):
@@ -13,19 +139,20 @@ def get_random_products(request):
     context = []
     for i in range(random_number):
         random_int = random.randint(1, len(InventoryItem.objects.all().live()) -1)
-        item = {
-            'id': InventoryItem.objects.all().live()[random_int].id,
-            'slug': InventoryItem.objects.all().live()[random_int].slug,
-            'title': InventoryItem.objects.all().live()[random_int].title,
-            'product_title': InventoryItem.objects.all().live()[random_int].product_title,
-            'price': InventoryItem.objects.all().live()[random_int].price,
-            'offer': InventoryItem.objects.all().live()[random_int].PRODUCT_OFFER.values()[0]['value'],
-            'quantity': InventoryItem.objects.all().live()[random_int].quantity,
-            'brand': InventoryItem.objects.all().live()[random_int].brand.title,
-            'image': InventoryItem.objects.all().live()[random_int].image.get_rendition('fill-250x280').url,
-            'is_available': InventoryItem.objects.all().live()[random_int].is_available,
-            }
-        context.append(item)
+        if InventoryItem.objects.all().live()[random_int].PRODUCT_OFFER.values():
+            item = {
+                'id': InventoryItem.objects.all().live()[random_int].id,
+                'slug': InventoryItem.objects.all().live()[random_int].slug,
+                'title': InventoryItem.objects.all().live()[random_int].title,
+                'product_title': InventoryItem.objects.all().live()[random_int].product_title,
+                'price': InventoryItem.objects.all().live()[random_int].price,
+                'offer': InventoryItem.objects.all().live()[random_int].PRODUCT_OFFER.values()[0]['value'],
+                'quantity': InventoryItem.objects.all().live()[random_int].quantity,
+                'brand': InventoryItem.objects.all().live()[random_int].brand.title,
+                'image': InventoryItem.objects.all().live()[random_int].image.get_rendition('fill-250x280').url,
+                'is_available': InventoryItem.objects.all().live()[random_int].is_available,
+                }
+            context.append(item)
     return JsonResponse({'status': context, 'success': True})
 
 @csrf_exempt
@@ -39,7 +166,7 @@ def shop_data(request):
             per_page = 10
             next_pagintage = 'index_products'
         else:
-            per_page = 8
+            per_page = 16
             next_pagintage = int(page_number) + 1
         products = InventoryItem.objects.live().public().order_by('first_published_at')
         paginator = Paginator(products, per_page)
@@ -146,7 +273,7 @@ def shop_data(request):
         products = InventoryItem.objects.live().public().order_by('-first_published_at')
         pagintage_key = ''
     if page_number == 'index':
-        per_page = 10
+        per_page = 16
         next_pagintage = 'index_products'
     else:
         per_page = 8

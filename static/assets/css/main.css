@@ -303,6 +303,7 @@ a {
 }
 
 .text-overflow-1 {
+    text-align: center;
     overflow: hidden;
     text-overflow: ellipsis;
     display: -webkit-box;
@@ -311,6 +312,7 @@ a {
 }
 
 .text-overflow-2 {
+    text-align: center;
     overflow: hidden;
     text-overflow: ellipsis;
     display: -webkit-box;
@@ -319,6 +321,7 @@ a {
 }
 
 .text-overflow-3 {
+    text-align: center;
     overflow: hidden;
     text-overflow: ellipsis;
     display: -webkit-box;
@@ -2318,7 +2321,7 @@ div#product-slider .swiper-slide {
     height: auto;
     border-radius: 10px;
     /* padding:10px 0 10px 10px; */
-    background: #fff;
+    background: #f4f4f4;
     position: relative;
     box-shadow: 3px 3px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
 }
@@ -2331,7 +2334,7 @@ div#product-slider .swiper-slide {
 }
 
 .offer-item {
-    max-height: fit-content;
+    max-height:max-content;
     padding: 0 10px;
     border-radius: 10px;
 }
@@ -2368,8 +2371,8 @@ div#product-slider .swiper-slide {
 }
 
 .offer-img {
-    width: 300px;
-    height: 300px;
+    width: 400px;
+    height: 400px;
     text-align: center;
     margin: 10px auto;
     border-left: 1px solid #ddd;
@@ -2478,9 +2481,6 @@ div#product-slider .swiper-slide {
 }
 
 
-.offer-item-link .swiper-slide {
-    width: 100% !important;
-}
 
 .offer-item-link .swiper-wrapper {
     flex-direction: column !important;
@@ -2937,7 +2937,7 @@ div#product-slider .swiper-slide {
     align-items: center;
     justify-content: space-between;
     padding: 5px 47px 17px;
-    background: var(--main-color-one);
+    background: var(--main-color-two);
     border-top-right-radius: 60px;
     border-top-left-radius: 60px;
 }
@@ -2980,7 +2980,7 @@ div#product-slider .swiper-slide {
 }
 
 .mobile-footer li.active i {
-    color: var(--main-color-one);
+    color: var(--main-color-two);
 }
 
 .mobile-footer ul {

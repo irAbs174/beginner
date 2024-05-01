@@ -1,190 +1,445 @@
-{% extends "base.html" %}
+{% extends 'layout/base.html' %}
 {% load static %}
-{% load wagtailcore_tags %}
-{% block HEADING %}
-<meta name="description" content="" />
-<meta name="keywords" content="" />
+{% block HEAD %}
+    <meta charset="utf-8">
+    <title>کیک پیک | پرداخت نهایی</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <meta property="og:title" content="">
+    <meta property="og:type" content="">
+    <meta property="og:url" content="">
+    <meta property="og:image" content="">
+
+    <link rel="apple-touch-icon" sizes="180x180" href="{% static 'assets/img/apple-touch-icon.png' %}">
+    <link rel="manifest" href="/site.webmanifest">
+    <!-- Place favicon.ico in the root directory -->
+
+    <link rel="stylesheet" href="{% static 'assets/css/normalize.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/font/bootstrap-icon/bootstrap-icons.min.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/js/plugin/swiper/swiper-bundle.min.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/js/plugin/countdown/countdown.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/js/plugin/rasta-contact/style.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/main.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/responsive.css' %}">
+
+    <script src="{% static 'js/jquery/jquery-3.6.0.min.js' %}"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <meta name="theme-color" content="#99ff00">
+
 {% endblock %}
-{% block TITLE %}پرداخت نهایی{% endblock %}
-{% block CSS %}
-<link rel="stylesheet" href="{% static 'css/style.css' %}">
-{% endblock %}
-{% block CONTENT %}
-{% csrf_token %}
-<header class="headerblog">
-    <div class="h1divhead">
-        <h1 class="blogh1 white-color">تسویه حساب</h1>
-    </div>
-</header>
-<div class="container">
-    <div class="row g-5">
-        <div class="col-md-5 col-lg-4 order-md-last">
-            <h4 class="d-flex justify-content-between align-items-center mb-3">
-                <span class="text-danger">محصولات شما</span>
-                <span class="badge bg-danger rounded-pill">{{ cart_count }}</span>
-            </h4>
-            <ul class="list-group mb-3 w-100">
-                {% for product in cart_items %}
-                <li class="list-group-item d-flex justify-content-between lh-sm w-100">
-                    <div>
-                        <h6 class="my-0">{{ product.product_title }}</h6>
-                    </div>
-                    <span class="text-body-secondary">{{ product.price }}</span>
-                </li>
-                {% empty %}
-                <li class="list-group-item d-flex justify-content-between lh-sm w-100">
-                    <div>
-                        <h6 class="my-0">محصولی برای خرید انتخاب نکردید</h6>
-                    </div>
-                </li>
-                {% endfor %}
-                <li class="list-group-item d-flex justify-content-between w-100">
-                    <span>مبلغ کل</span>
-                    <strong id="CART_P_TOTAL">در حال بارگیری</strong>
-                </li>
-            </ul>
-            <form class="card p-2">
-                <div class="input-group">
-                    <input type="text" class="form-control" placeholder="افزودن کد تخفیف" />
-                    <button type="submit" class="btn btn-danger">اعمال</button>
+    
+    {% block BODY %}
+
+    {% csrf_token %}
+    
+    <input type="hidden" name="shippng_number" value="2">
+
+    {% include 'layout/header.html' %}
+
+{% include 'layout/menu.html' %}
+
+    <div class="content">
+        <div class="container-fluid">
+    
+            <div class="payment_navigtions">
+                <div class="checkout-headers cart">
+                    <ul>
+                        <li class="nav">
+                            <a href="">
+                                <i class="bi bi-cart"></i>
+                                <p>سبد خرید</p>
+                            </a>
+                        </li>
+                        <li class="nav active">
+                            <a href="">
+                                <i class="bi bi-truck"></i>
+                                <p>پرداخت نهایی</p>
+                            </a>
+                        </li>
+                        <li class="nav">
+                            <i class="bi bi-card-list"></i>
+                            <p>نتیجه تراکنش</p>
+                        </li>
+                    </ul>
                 </div>
-            </form>
+    
+            </div>
+    
         </div>
-        <div class="col-md-7 col-lg-8">
-            <h4 class="mb-3">آدرس خود را وارد کنید</h4>
-            <div class="needs-validation" novalidate="">
-                <div class="row g-3">
-                    <div class="col-sm-4">
-                        <label for="firstName" class="form-label">نام</label>
-                        <input type="text" class="form-control" id="firstName"
-                            value="{% if request.user.first_name %}{{request.user.first_name}}{% endif %}" required />
+    
+        <div class="container-fluid">
+            <div class="slider-title mb-4">
+                <div class="slider-title-desc">
+                    <div class="slider-title-title">
+                        <h2 class="h1"> جزئیات <span class="title-font main-color-one-color">صورت حساب</span></h2>
                     </div>
-
-                    <div class="col-sm-4">
-                        <label for="lastName" class="form-label">نام خانوادگی</label>
-                        <input type="text" class="form-control" id="lastName"
-                            value="{% if request.user.last_name %}{{request.user.last_name}}{% endif %}" required />
-                    </div>
-
-                    <div class="col-sm-4">
-                        <label for="tel" class="form-label">تلفن همراه</label>
-                        <div class="input-group has-validation">
-                            <input type="tel" class="form-control" value="{{request.user.phoneNumber}}" id="tel"
-                                readonly />
-                        </div>
-                    </div>
-
-                    <div class="col-sm-4">
-                        <label for="email" class="form-label">ایمیل
-                            <span class="text-body-secondary">(اختیاری)</span></label>
-                        <input type="email" class="form-control" id="email"
-                            value="{% if request.user.email %}{{request.user.email}}{% endif %}"
-                            placeholder="you@example.com" />
-                    </div>
-
-                    <div class="col-sm-4">
-                        <label for="State" class="form-label">استان</label>
-                        <input type="text" class="form-control" id="State"
-                            value="{% for customer in customer_items %}{% if customer.ostan %}{{customer.ostan}}{% endif %}{% endfor %}"
-                            required />
-                    </div>
-
-                    <div class="col-sm-4">
-                        <label for="City" class="form-label">شهر / شهرستان</label>
-                        <input type="text" class="form-control" id="City"
-                            value="{% for customer in customer_items %}{% if customer.city %}{{customer.city}}{% endif %}{% endfor %}"
-                            required />
-                    </div>
-                    <div class="col-sm-4">
-                        <label for="nationalcode" class="form-label">کدملی</label>
-                        <input type="text" class="form-control" id="nationalcode"
-                            value="{% for customer in customer_items %}{% if customer.code_melli %}{{customer.code_melli}}{% endif %}{% endfor %}"
-                            required />
-                    </div>
-                    <div class="col-sm-4">
-                        <label for="postalcode" class="form-label">کدپستی</label>
-                        <input type="text" class="form-control" id="postalcode"
-                            value="{% for customer in customer_items %}{% if customer.zip_zode %}{{customer.zip_zode}}{% endif %}{% endfor %}"
-                            required />
-                    </div>
-                    <div class="col-sm-4">
-                        <label for="tel2" class="form-label">تلفن ثابت
-                            <span class="text-body-secondary">(اختیاری)</span>
-                        </label>
-                        <div class="input-group has-validation">
-                            <input type="tel" class="form-control" id="tel2"
-                                value="{% for customer in customer_items %}{% if customer.static_phone %}{{customer.static_phone}}{% endif %}{% endfor %}" />
-                        </div>
-                    </div>
-                    <div class="col-sm-8">
-                        <label for="address" class="form-label">آدرس دقیق</label>
-                        <input type="text" class="form-control" id="address"
-                            value="{% for customer in customer_items %}{% if customer.address %}{{customer.address}}{% endif %}{% endfor %}"
-                            required />
-                    </div>
-                    <div class="col-sm-4">
-                        <label for="address2" class="form-label">زنگ / پلاک
-                            <span class="text-body-secondary">(اختیاری)</span></label>
-                        <input type="text" class="form-control" id="address2"
-                            value="{% for customer in customer_items %}{% if customer.pelak %}{{customer.pelak}}{% endif %}{% endfor %}" />
-                    </div>
-                    <hr class="my-4" />
                 </div>
+            </div>
+            <div class="content-box checkouts-form">
+                <div class="container-fluid">
+                    <div class="checkout-form">
+                        <form action="">
+    
+                            <div class="row g-4">
+                                <div class="col-md-6">
+                                    <div class="comment-item mb-3">
+                                        <input type="text" class="form-control" id="floatingInputName" placeholder="نام خود را وارد کنید...">
+                                        <label for="floatingInputName" class="form-label label-float fw-bold font-16">نام <span class="text-danger">*</span></label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="comment-item mb-3">
+                                        <input type="text" class="form-control" id="floatingInputLName" placeholder="نام خانوادگی خود را وارد کنید ...">
+                                        <label for="floatingInputLName" class="form-label label-float fw-bold">نام خانوادگی <span class="text-danger">*</span></label>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="comment-item mb-3">
+                                        <input type="text" class="form-control" id="floatingInputStreet" placeholder="نام خانوادگی خود را وارد کنید ...">
+                                        <label for="floatingInputStreet" class="form-label label-float fw-bold">آدرس خیابان</label>
+                                    </div>
+                                </div>
+    
+                                <div class="col-md-6">
+                                    <div class="comment-item" for="floatingInputOstan">
+                                        <label class="label-float fw-bold">استان <span class="text-danger">*</span></label>
 
-                <div class="col-sm-5 fadax_btn">
-                    <label for="validationCustom04" class="form-label">انتخاب روش ارسال</label>
-                    <select class="form-select" id="validationCustom04" required>
-                        <option selected value="0">انتخاب کنید</option>
-                        <option value="1">تحویل حضوری : 0 تومان</option>
-                        <option value="2">پست پیشتاژ : 40,000 تومان</option>
-                        <option value="3">پیک : 50,000 تومان</option>
-                    </select>
+                                            <select name="" id="floatingInputOstan" class="form-select" onchange="set_city_list()">
+
+                                            </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="comment-item">
+                                        <label class="label-float fw-bold" for="floatingInputCity">شهر <span class="text-danger">*</span></label>
+
+                                            <select name="" id="floatingInputCity" class="form-select">
+
+                                            </select>
+
+                                    </div>
+                                </div>
+    
+                                <div class="col-12">
+                                    <div class="comment-item mb-3">
+                                        <input type="text" class="form-control" id="floatingInputTel" placeholder="شماره تلفن خود را وارد کنید ...">
+                                        <label for="floatingInputTel" class="form-label label-float fw-bold">شماره تلفن</label>
+                                    </div>
+                                </div>
+    
+                                <div class="col-12">
+                                    <div class="comment-item mb-3">
+                                        <textarea class="form-control py-3" id="floatingInputDesc" rows="5" placeholder="اگر سفارش شما توضیح خاصی دارد اینجا وارد کنید"></textarea>
+                                        <label for="floatingInputDesc" class="form-label label-float fw-bold">توضیحات سفارش</label>
+                                    </div>
+                                </div>
+    
+                                <div class="col-12">
+                                    <div class="cart-canvases position-sticky top-0">
+    
+                                        <div class="item shadow-none">
+                                            <div class="factor">
+                                                <div class="factor-item pb-3">
+                                                    <h5 class="title-font mb-3 h6">شیوه پرداخت</h5>
+                                                    <div class="row gy-3">
+                                                        <div class="col-sm-6">
+                                                            <div class="bank-item">
+                                                                <i class="bi bi-credit-card-2-back main-color-one-color"></i>
+                                                                <h6 class="font-14 mx-2">انتقال مستقیم بانکی</h6>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-6">
+                                                            <div class="bank-item active">
+                                                                <i class="bi bi-house-fill main-color-one-color"></i>
+                                                                <h6 class="font-14 mx-2">سرویس اعتباری فدکس</h6>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+    
+                                                <div class="d-flex factor-item flex-column mb-3 align-items-start justify-content-between">
+                                                    <h5 class="title-font mb-0 h6">حمل و نقل</h5>
+                                                    <form action="">
+                                                        <div class="form-check mt-3">
+                                                            <input onchange="set_shiping(1);" type="radio" checked="" class="form-check-input" name="post" id="post-1">
+                                                            <label for="post-1" class="form-check-label">
+                                                                تیپاکس هزینه پس کرایه (1 تا 5 روز کاری): صفر تومان
+                                                            </label>
+                                                        </div>
+                                                        <div class="form-check mt-3">
+                                                            <input onchange="set_shiping(2);" type="radio" checked="" class="form-check-input" name="post" id="post-2">
+                                                            <label for="post-2" class="form-check-label">
+                                                                پست ویژه (2 تا 6 روز کاری): 50,000 تومان
+                                                            </label>
+                                                        </div>
+                                                        <div class="form-check mt-3">
+                                                            <input  onchange="set_shiping(3);" type="radio" class="form-check-input" name="post" id="post-3">
+                                                            <label for="post-3" class="form-check-label">
+                                                                پیک موتوری اسنپ باکس هزینه پس کرایه (1 تا 2 روز کاری): صفر تومان
+                                                                </label>
+                                                        </div>
+                                                    </form>
+                                                </div>
+    
+                                                <div class="d-flex factor-item mb-3 align-items-center justify-content-between">
+                                                    <h5 class="title-font mb-0 h6">قابل پرداخت</h5>
+                                                    <p class="mb-0 font-18 total_text">{{cart_total}}</p>
+                                                    تومان
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+    
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <button type="submit" class="btn product-meta-add-to-cart-btn main-color-one-bg rounded-pill">
+                                            ثبت سفارش
+                                        </button>
+                                    </div>
+                                </div>
+    
+                            </div>
+    
+                        </form>
+                    </div>
+                    <div class="Dottedsquare-checkout d-lg-flex d-none"></div>
                 </div>
-                <hr class="my-4" />
-                {% if request.user.fadax_payment_possible %}
-                <button class="w-100 btn btn-success btn-lg" onclick="test();">
-                    پرداخت با درگاه فدکس
-                </button>
-                {% endif %}
-                <button class="w-100 btn btn-danger btn-lg" onclick="order();">
-                    پرداخت نهایی
-                </button>
             </div>
         </div>
+    
+    </div>
+
+
+
+<!--end cart canvas-->
+
+<div class="float-btn">
+    <div class="container-fluid">
+        <!-- contact us floating -->
+        <div id="btncollapzion" class=" btn_collapzion"></div>
+        <div class="" id="contactOverlay"></div>
+        <!-- end contact us floating -->
     </div>
 </div>
-{% block JS %}
-<script>
-    function test() {
-        $.ajax({
-            url: '/cart/test',
-            type: 'POST',
-            data: { 'task': 'recive_payment_token', },
-            success: function (response) {
-                if (response.success === false) {
-                    Swal.fire({
-                        icon: "error",
-                        title: response.status,
-                        showConfirmButton: false,
-                        timer: 3000,
-                    });
-                } else {
-                    Swal.fire({
-                        icon: "success",
-                        title: 'در حال انتقال به درگاخ فدکس',
-                        showConfirmButton: false,
-                        timer: 2000,
-                    });
-                    window.location.href = response.status;
-                }
-            },
-        });
-    };//end function
-</script>
-<script src="{% static 'js/product/checkout.js' %}"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.7/dist/umd/popper.min.js"
-    integrity="sha384-zYPOMqeu1DAVkHiLqWBUTcbYfZ8osu1Nd6Z89ify25QV9guujx43ITvfi12/QExE"
-    crossorigin="anonymous"></script>
 
+
+{% include 'layout/footer.html' %}
+
+{% include 'layout/mobile-menu.html' %}
+
+{% include 'layout/cart-convas.html' %}
+
+{% block JS %}
+
+<script src="{% static '' %}assets/js/vendor/modernizr-3.11.2.min.js"></script>
+<script src="{% static '' %}assets/js/vendor/jquery-3.7.1.min.js"></script>
+<script src="{% static '' %}assets/js/vendor/bootstrap.bundle-5.3.2.min.js"></script>
+<script src="{% static '' %}assets/js/plugin/swiper/swiper-bundle.min.js"></script>
+<script src="{% static '' %}assets/js/plugin/countdown/countdown.js"></script>
+<script src="{% static '' %}assets/js/plugin/vanilla-tilt/vanilla-tilt.min.js"></script>
+<script src="{% static '' %}assets/js/plugin/rasta-contact/script.js"></script>
+<script src="{% static '' %}assets/js/plugin/bootstrap-touchspin/jquery.bootstrap-touchspin.min.js"></script>
+<script src="{% static '' %}assets/js/plugins.js"></script>
+<script src="{% static '' %}assets/js/main.js"></script>
+<script>
+    function separateDigitsWithComma(number) {
+        // Convert the number to a string
+        var numberString = String(number);
+        
+        // Split the string into an array of characters
+        var digitsArray = numberString.split('');
+  
+        // Reverse the array to process digits from right to left
+        digitsArray.reverse();
+        
+        // Iterate over the array and insert commas after every third digit
+        for (var i = 3; i < digitsArray.length; i += 4) {
+            digitsArray.splice(i, 0, ',');
+        }
+        
+        // Reverse the array again to get the original order
+        digitsArray.reverse();
+        
+        // Join the array into a string
+        var result = digitsArray.join('');
+        
+        return result;
+    }
+    
+    function set_ostan_list(){
+        fetch('https://iran-locations-api.ir/api/v1/fa/states')
+            .then(response => response.json())
+            .then(json => {
+                const ostan_list = document.getElementById('floatingInputOstan');
+                for(let i = 0; i <= json.length; i++){
+                    const option = document.createElement('option');
+                    option.value = json[i].id;
+                    option.textContent = json[i].name;
+                    ostan_list.appendChild(option);
+                }//endfor
+            });
+    };
+    function set_city_list(){
+        const ostanID = document.getElementById('floatingInputOstan').selectedOptions[0].text;
+        console.log(ostanID);
+        fetch(`https://iran-locations-api.ir/api/v1/fa/cities?state=${ostanID}`)
+            .then(response => response.json())
+            .then(json => {
+                const citylist = document.getElementById('floatingInputCity');
+                while (citylist.firstChild) {
+                    citylist.removeChild(citylist.firstChild);
+                }
+            for(let j = 0; j <= json.cities.length; j++){
+                const city = document.createElement('option');
+                city.value = json.cities[j].id;
+                city.textContent = json.cities[j].name;
+                citylist.appendChild(city);
+            }; //end for 
+            });
+            
+    };
+    function set_shiping(num){
+        let shippng_number = $('input[name=shippng_number]').val();
+        $('input[name=shippng_number]').val(num);
+        console.log(shippng_number);
+        if (shippng_number == 2 && num == 2){
+        var currentText = $(".total_text").text();
+            console.log(currentText)
+        // Add 50 to the current text
+        var newText = parseInt(currentText) + 50;
+
+        // Update the text of the paragraph
+        $(".total_text").text(newText);
+
+        }else if (shippng_number == 2 && num == 3){
+        var currentText = $(".total_text").text();
+            console.log(currentText)
+        // Add 50 to the current text
+        var newText = parseInt(currentText) - 50;
+
+        // Update the text of the paragraph
+        $(".total_text").text(newText);
+
+        } else if(shippng_number == 2 && num == 1){
+            let shippng_number = $('input[name=shippng_number]').val(num);
+            var currentText = $(".total_text").text();
+
+        // Add 50 to the current text
+        var newText = parseInt(currentText) - 50;
+
+        // Update the text of the paragraph
+        $(".total_text").text(newText);
+    }else if(shippng_number == 1 && num == 2){
+        let shippng_number = $('input[name=shippng_number]').val(num);
+            var currentText = $(".total_text").text();
+
+        // Add 50 to the current text
+        var newText = parseInt(currentText) + 50;
+
+        // Update the text of the paragraph
+        $(".total_text").text(newText);
+    }else if(shippng_number == 3 && num == 2){
+        let shippng_number = $('input[name=shippng_number]').val(num);
+            var currentText = $(".total_text").text();
+
+        // Add 50 to the current text
+        var newText = parseInt(currentText) + 50;
+
+        // Update the text of the paragraph
+        $(".total_text").text(newText);
+    }//end if
+}
+function load_cart_data(){
+    $.ajax({
+        url:'/cart/load_cart_data',
+        type: 'POST',
+        data: {'Hello':'world!'},
+        success: function(response){
+            if(response.success === false){
+                console.log('REGESTER FIRST')
+            }else{
+                if(response.status.length > 0){
+                    $('.cart_title').html(`
+                    <h5 class="offcanvas-title title-font" id="offcanvasCartLabel">سبد خرید <small class="text-muted font-14 ms-1">${response.status.length} مورد</small></h5>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                    `);
+                    $('.cart_total').html(`
+                    <p class="text-muted mb-2">جمع کل</p>
+                        <h5 class="title-font">${separateDigitsWithComma(response.status[0].total_price)} تومان</h5>
+                    `);
+                    $('.checkout_button').html(`
+                    <a href="/cart" class="btn border-0 main-color-green text-white"><i
+                                class="bi bi-arrow-left me-1"></i>تکمیل خرید</a>
+                    `);
+                    if (response.status[0].offer_code_value){
+                        $('.cart_offer').text(separateDigitsWithComma(response.status[0].offer_code_value))
+                    }else{
+                        $('.cart_offer').text('0')
+                    }//endif
+                    for(let i = 0; i <= response.status.length; i++){
+                        $('.cart_body').append(`
+                        <li class="nav-item">
+                <div class="cart-canvas">
+                    <div class="row align-items-center">
+                        <div class="col-4 ps-0">
+                            <img src="https://kikpick.com/${response.status[i].image}" alt="${response.status[i].title}">
+                        </div>
+                        <div class="col-8">
+                            <a href="">
+                                <h3 class="text-overflow-1 title-font font-14">
+                                    ${response.status[i].title}
+                                </h3>
+                                <div class="cart-canvas-price my-3 d-flex align-items-center">
+                                    <h6 class="title-font main-color-one-color">${separateDigitsWithComma(response.status[i].price)} تومان</h6>
+                                </div>
+                            </a>
+                            <div class="cart-canvas-foot d-flex align-items-center justify-content-between">
+                                <div class="cart-canvas-count">
+                                    <span>تعداد:</span>
+                                    <span class="fw-bold main-color-one-color">${response.status[i].number}</span>
+                                </div>
+                                <div class="cart-canvas-delete">
+                                    <a href="" class="btn"><i class="bi bi-x"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </li>`);
+                    }//endfor
+                }else{
+                    $('.cart_title').html(`
+                    <h5 class="offcanvas-title title-font" id="offcanvasCartLabel">سبد خرید <small class="text-muted font-14 ms-1">خالی است</small></h5>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                    `);
+                    $('.checkout_button').html('')
+                    $('.cart_total').html(`
+                    <p class="text-muted mb-2">جمع کل</p>
+                        <h5 class="title-font">0 تومان</h5>
+                    `);
+                    $('.cart_body').html(`
+                    <div class="cart-empty-title">
+          <h2 class="text-center title-font">
+              سبد خرید شما خالی میباشد
+          </h2>
+          <div class="text-center mt-3">
+              <a href="/shop" class="btn main-color-one-outline rounded-pill px-4">برای شروع فرصت زیادی نیست</a>
+          </div>
+      </div>`);
+                }//endif
+            }//endif
+        },//end suncces
+    })//endajax
+  };//end function
+
+  load_cart_data();
+set_shiping(2);
+set_ostan_list();
+</script>
 {% endblock %}
 {% endblock %}

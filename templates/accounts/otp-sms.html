@@ -1,0 +1,92 @@
+{% extends 'layout/base.html' %}
+{% load static %}
+{% block HEAD %}
+    <meta charset="utf-8">
+    <title>کیک پیک | کد تایید</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <meta property="og:title" content="">
+    <meta property="og:type" content="">
+    <meta property="og:url" content="">
+    <meta property="og:image" content="">
+
+    <link rel="apple-touch-icon" sizes="180x180" href="{% static '' %}assets/img/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="{% static '' %}assets/img/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="{% static '' %}assets/img/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <!-- Place favicon.ico in the root directory -->{% static '' %}
+
+    <link rel="stylesheet" href="{% static '' %}assets/css/normalize.css">
+    <link rel="stylesheet" href="{% static '' %}assets/font/bootstrap-icon/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="{% static '' %}assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{% static '' %}assets/js/plugin/swiper/swiper-bundle.min.css">
+    <link rel="stylesheet" href="{% static '' %}assets/js/plugin/countdown/countdown.css">
+    <link rel="stylesheet" href="{% static '' %}assets/js/plugin/rasta-contact/style.css">
+    <link rel="stylesheet" href="{% static '' %}assets/js/plugin/bootstrap-touchspin/jquery.bootstrap-touchspin.min.css">
+    <link rel="stylesheet" href="{% static '' %}assets/css/main.css">
+    <link rel="stylesheet" href="{% static '' %}assets/css/responsive.css">
+
+    <meta name="theme-color" content="#f4f5f9">
+    {% endblock %}
+    
+    {% block BODY %}
+    
+    {% include 'layout/header.html' %}
+    
+    {% include 'layout/menu.html' %}
+<div class="content vh-100" style="background: url('{% static '' %}assets/img/bg-auth.jpg');background-repeat: no-repeat;background-size: cover"{% static '' %}>
+    <div class="container-fluid h-100">
+        <div class="auth h-100 d-flex align-items-center">
+            <div class="container-fluid">
+                <div class="auth-items">{# !!! #}
+                    
+                </div>{# !!! #}
+            </div>
+        </div>
+    </div>
+
+</div>
+
+{% include 'layout/footer.html' %}
+
+{% include 'layout/mobile-menu.html' %}
+
+{% include 'layout/cart-convas.html' %}
+
+{% block JS %}
+<script src="{% static '' %}assets/js/vendor/modernizr-3.11.2.min.js"></script>
+<script src="{% static '' %}assets/js/vendor/jquery-3.7.1.min.js"></script>
+<script src="{% static '' %}assets/js/vendor/bootstrap.bundle-5.3.2.min.js"></script>
+<script src="{% static '' %}assets/js/plugin/swiper/swiper-bundle.min.js"></script>
+<script src="{% static '' %}assets/js/plugin/countdown/countdown.js"></script>
+<script src="{% static '' %}assets/js/plugin/vanilla-tilt/vanilla-tilt.min.js"></script>
+<script src="{% static '' %}assets/js/plugin/rasta-contact/script.js"></script>
+<script src="{% static '' %}assets/js/plugin/bootstrap-touchspin/jquery.bootstrap-touchspin.min.js"></script>
+<script src="{% static '' %}assets/js/plugin/otp-sms/otp-input.js"></script>
+<script src="{% static '' %}assets/js/plugin/otp-loader/script.js"></script>
+<script src="{% static '' %}assets/js/plugins.js"></script>
+<script src="{% static '' %}assets/js/main.js"></script>
+
+<!-- Run Countdown Timer Script -->
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        countdown('countdownB', 0, 0, 0, 50);
+    });
+</script>
+<!-- End script -->
+
+
+<!-- otp input callback -->
+
+
+<script>
+    const submit_form = document.querySelector(".submit");
+    submit_form.addEventListener("click", (e) => {
+        updateValue(inputs);
+        alert(OTPValueContainer.value);
+    });
+</script>
+{% endblock %}
+{% endblock %}

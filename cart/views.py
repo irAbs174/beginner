@@ -34,6 +34,35 @@ class SupportViewSet(generics.ListCreateAPIView):
     filter_backends = [filters.OrderingFilter, filters.SearchFilter]
 
 @csrf_exempt
+def load_cart_data(request):
+    context = []
+    if request.user.is_authenticated:
+        for i in Cart.objects.all().filter(user = request.user.phoneNumber):
+            if Cart.objects.filter(user=request.user.phoneNumber):
+                if (Cart.objects.filter(user=request.user.phoneNumber)[0].price == 0):
+                    context = {}
+                else:
+                    item = {
+                        'id': i.product_id,
+                        'title': i.product_title,
+                        'image': i.image,
+                        'number': i.quantity,
+                        'price': i.price,
+                        'sub_total': i.quantity * i.price,
+                        'color_quantity': i.color_quantity,
+                        'offer_code_value': i.offer_code_value,
+                        'total_price': i.total_price,
+                    }
+                    context.append(item)
+            else:
+                context = {}
+        return JsonResponse({'status': context, 'success': True})
+
+    else:
+        return JsonResponse({'status': 'لطفا ابتدا در سایت ثبت نام کنید', 'success':  False})
+    
+    
+@csrf_exempt
 def support_index(request):
     return render(request, 'support/index.html')
 
@@ -87,6 +116,9 @@ def cart_view(request):
 def add_to_cart(request):
     if request.method == 'POST':
         if request.user.is_authenticated :
+            if Cart.objects.filter(user=request.user.phoneNumber):
+                if (Cart.objects.filter(user=request.user.phoneNumber)[0].price == 0):
+                    Cart.objects.filter(user=request.user.phoneNumber).delete()
             product_id = int(request.POST.get('product_id'))
             product_title = request.POST.get('product_title')
             product_collection = request.POST.get('product_collection')
@@ -242,7 +274,7 @@ def checkout_view(request):
     if Cart.objects.filter(user = request.user.phoneNumber):
         # fadax payment possible check:
         phone = request.user.phoneNumber
-        list_cart = Cart.objects.filter(user=phone)
+        '''list_cart = Cart.objects.filter(user=phone)
         for i in list_cart:
             total_price = i.total_price
         url = f"https://gateway.fadax.ir/supplier/v1/eligible?amount={total_price}&mobile=0{int(phone)}"
@@ -254,26 +286,13 @@ def checkout_view(request):
 
         response_recived = requests.get(url, headers=headers)
         response = response_recived.json()
-        if response['success']:
-            data = response['response']
-            if data['status'] == 1001:
-                Fadax_payment.objects.create(
-                    customer = request.user.phoneNumber,
-                )
-                UserModel.objects.filter(phoneNumber=phone).update(
-                    fadax_payment_possible = True
-                )
-                print("=> USER CAN PAY WITH FADAX => status : 1001")
-            elif data['status'] == 1002:
-                UserModel.objects.filter(phoneNumber=phone).update(
-                    fadax_payment_possible = False
-                )
-                print("=> USER CAN NOT PAY WITH FADAX status : 1002")
-            else:
-                print("=> USER CAN NOT PAY WITH FADAX")
-        else:
-            print("=> USER CAN NOT PAY WITH FADAX")
-
+        '''
+        Fadax_payment.objects.create(
+            customer = request.user.phoneNumber,
+        )
+        UserModel.objects.filter(phoneNumber=phone).update(
+            fadax_payment_possible = True
+        )
         return render(request, 'products/checkout/checkout.html')
     else:
         return render(request, 'products/cart/cart.html')

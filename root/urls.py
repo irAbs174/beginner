@@ -39,7 +39,7 @@ urlpatterns = [
     path('last_offers/', last_offers, name="last_offers"),
     path('support/close', close_room, name='close_room'),
     path('support/add',support_add, name="Support_add"),
-    path('api-auth/', include('rest_framework.urls')),
+    path('login_api/', include('sms_login.urls')),
     path('accounts/', include('user_accounts.urls')),
     path('UsersAccounts/', include('allauth.urls')),
     path(ADMINS_PANEL, include(wagtailadmin_urls)),

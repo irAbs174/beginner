@@ -17,6 +17,48 @@ from product.models import InventoryItem
 InventoryItem.objects.all().public().live()[4].PRODUCT_OFFER.values()[0]['value']
 >>> 449000
 
+### Load categoery by bigest count:
+from product.models import InventoryItem
+from category.models import CategoryProduct
+
+cat_list = []
+for c in CategoryProduct.objects.live().public().order_by('first_published_at'):
+    item = {
+        'id': c.id,
+        'title': c.title,
+        'image': c.image.get_rendition('fill-250x280').url,
+        'count': 0,
+    }
+    count = InventoryItem.objects.filter(collection=c.id).count()
+    if count:
+        item['count'] = count
+        cat_list.append(item)
+    context = sorted(cat_list, key=lambda x: x['count'], reverse=True)
+
+context[0:8]
+
+
+### Load brand:
+from brand.models import BrandPage
+
+context = []
+list = [
+    'فوروارد',
+    'نشنال',
+    'الکسا',
+    'فیلا',
+    'نیلپر',
+    'کت',
+]
+bp = BrandPage.objects.live().public().order_by('first_published_at')
+for i in list:
+    bps = bp.search(i)[0]
+    item = {
+        'id': bps.id,
+        'title': bps.title,
+        'image': bps.image.get_rendition('fill-250x280').url,
+    }
+    context.append(item)
 
 ### load product brand data :
 from product.models import InventoryItem
@@ -41,6 +83,28 @@ from product.models import InventoryItem
 InventoryItem.objects.all().public().live()[4].PRODUCT_SLIDE.values()
 >>> QuerySet [{'id': 128, 'sort_order': 0, 'product_slide_id': 132, 'slide_title': 'کوله پشتی مشکی', 'image_id': 261, 'slide_desc': None, 'collection_id': 3}, {'id': 129, 'sort_order': 1, 'product_slide_id': 132, 'slide_title': 'کوله پشتی مشکی', 'image_id': 262, 'slide_desc': None, 'collection_id': 3}, {'id': 130, 'sort_order': 2, 'product_slide_id': 132, 'slide_title': 'کوله پشتی مشکی', 'image_id': 263, 'slide_desc': None, 'collection_id': 3}, {'id': 131, 'sort_order': 3, 'product_slide_id': 132, 'slide_title': 'کوله پشتی مشکی', 'image_id': 264, 'slide_desc': None, 'collection_id': 3}, {'id': 132, 'sort_order': 4, 'product_slide_id': 132, 'slide_title': 'کوله پشتی مشکی', 'image_id': 265, 'slide_desc': None, 'collection_id': 3}]>
 
+
+### search :
+from product.models import InventoryItem
+InventoryItem.objects.all().public().live().search("6006")[0].PRODUCT_OFFER.values()
+>>> 'کوله پشتی کوهنوری فوروارد مدل FCLT8020'
+
+### Get special-products
+list = [
+    '8020',
+    '6006',
+    '6008',
+    '8002',
+    '6633',
+]
+for i in list:
+
+>>>'کوله پشتی کوهنوری فوروارد مدل FCLT8020'
+>>>'کوله پشتی لپ تاپ فوروارد مدل FCLT6006'
+>>>'کیف رودوشی گوگانا مدل 50062'
+>>>'کوله پشتی لپ تاپ فوروارد مدل FCLT6008'
+>>>'کوله پشتی فوروارد مدل FCLT8002'
+>>>'کوله پشتی لپ تاپ فوروارد مدل FCLT6633'
 
 ### ### ### ### ### ###  END DOCS ### ### ### ### ### ### ### 
 
