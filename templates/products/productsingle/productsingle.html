@@ -38,20 +38,14 @@
 
 <input type="hidden" name="sku" value="{{page.shenase}}">
 
-{% include 'layout/header.html' %}
-
 {% include 'layout/menu.html' %}
 {% csrf_token %}
 
 <div class="bread-crumb py-4">
     <div class="container-fluid">
         <nav aria-label="breadcrumb" class="my-lg-0 my-2">
-            <ol class="breadcrumb mb-0">
-                <li class="breadcrumb-item"><a href="#" class="font-14 text-muted-two">خانه</a></li>
-                <li class="breadcrumb-item"><a href="#" class="font-14 text-muted-two">فروشگاه</a></li>
-                <li class="breadcrumb-item"><a href="#" class="font-14 text-muted-two">گوشی هوشمند</a></li>
-                <li class="breadcrumb-item active main-color-one-color font-14 fw-bold" aria-current="page">گوشی شیائومی
-                </li>
+            <ol class="breadcrumb mb-0 bread_crump">
+                
             </ol>
         </nav>
     </div>
@@ -71,10 +65,6 @@
                     <div class="col-lg-4">
                         <div class="pro_gallery">
                             <div class="icon-product-box">
-                                <div class="icon-product-box-item" data-bs-toggle="modal" data-bs-target="#shareModal"
-                                     data-bs-placement="right" title="اشتراک گذاری">
-                                    <i class="bi bi-share"></i>
-                                </div>
                                 <div class="icon-product-box-item" data-bs-toggle="tooltip" data-bs-placement="right"
                                      data-bs-title="افزودن به علاقه مندی">
                                     <i class="bi bi-heart"></i>
@@ -83,44 +73,11 @@
                                      data-bs-title="مقایسه محصول">
                                     <i class="bi bi-arrow-left-right"></i>
                                 </div>
-                                <div class="icon-product-box-item" data-bs-toggle="modal" data-bs-target="#chartModal"
-                                     data-bs-toggle="tooltip" data-bs-placement="right" title="نمودار تغییر قیمت">
-                                    <i class="bi bi-bar-chart"></i>
-                                </div>
                             </div>
                             <div class="pro-gallery-parent">
                                 <div class="swiper product-gallery">
-                                    <div class="swiper-wrapper" title="برای بزرگنمایی تصویر دابل کلیک کنید">
-                                        <div class="swiper-slide">
-                                            <div class="swiper-zoom-container">
-                                                <img class="img-fluid" src="{% static '' %}assets/img/product/wach1.jpg"/>
-                                            </div>
-                                        </div>
-                                        <div class="swiper-slide">
-                                            <div class="swiper-zoom-container">
-                                                <img class="img-fluid" src="{% static '' %}assets/img/product/wach2.jpg"/>
-                                            </div>
-                                        </div>
-                                        <div class="swiper-slide">
-                                            <div class="swiper-zoom-container">
-                                                <img class="img-fluid" src="{% static '' %}assets/img/product/wach3.jpg"/>
-                                            </div>
-                                        </div>
-                                        <div class="swiper-slide">
-                                            <div class="swiper-zoom-container">
-                                                <img class="img-fluid" src="{% static '' %}assets/img/product/wach4.jpg"/>
-                                            </div>
-                                        </div>
-                                        <div class="swiper-slide">
-                                            <div class="swiper-zoom-container">
-                                                <img class="img-fluid" src="{% static '' %}assets/img/product/television3.jpg"/>
-                                            </div>
-                                        </div>
-                                        <div class="swiper-slide">
-                                            <div class="swiper-zoom-container">
-                                                <img class="img-fluid" src="{% static '' %}assets/img/product/television4.jpg"/>
-                                            </div>
-                                        </div>
+                                    <div class="swiper-wrapper product_slider" title="برای بزرگنمایی تصویر دابل کلیک کنید">
+                                        
                                     </div>
                                     <div class="swiper-button-next d-none d-lg-flex"></div>
                                     <div class="swiper-button-prev d-none d-lg-flex"></div>
@@ -128,25 +85,8 @@
                                 </div>
                             </div>
                             <div thumbsSlider="" class="swiper product-gallery-thumb">
-                                <div class="swiper-wrapper">
-                                    <div class="swiper-slide">
-                                        <img class="img-fluid" src="{% static '' %}{% static '' %}assets/img/product/wach1.jpg"/>
-                                    </div>
-                                    <div class="swiper-slide">
-                                        <img class="img-fluid" src="{% static '' %}{% static '' %}assets/img/product/wach2.jpg"/>
-                                    </div>
-                                    <div class="swiper-slide">
-                                        <img class="img-fluid" src="{% static '' %}{% static '' %}assets/img/product/wach3.jpg"/>
-                                    </div>
-                                    <div class="swiper-slide">
-                                        <img class="img-fluid" src="{% static '' %}{% static '' %}assets/img/product/wach4.jpg"/>
-                                    </div>
-                                    <div class="swiper-slide">
-                                        <img class="img-fluid" src="{% static '' %}{% static '' %}assets/img/product/television3.jpg"/>
-                                    </div>
-                                    <div class="swiper-slide">
-                                        <img class="img-fluid" src="{% static '' %}{% static '' %}assets/img/product/television4.jpg"/>
-                                    </div>
+                                <div class="swiper-wrapper product_slide_thumb">
+                                    
                                 </div>
                             </div>
 
@@ -154,14 +94,12 @@
                     </div>
                     <div class="col-lg-8">
                         <div class="product-mete-title bottom-border">
-                            <h3 class="title-font h4">لپ تاپ 15.6 اینچی لنوو مدل Legion 5 15ACH6-R5 16GB 512GB 3050Ti –
-                                کاستوم شده</h3>
-                            <p class="mb-0 mt-3">Lenovo Legion 5 15ACH6-R5 16GB 512GB 3050Ti 15.6 Inch Laptop -
-                                Customized</p>
+                            <h3 class="title-font h4">{{ page.title }}</h3>
+                            <p class="mb-0 mt-3">شناسه کالا : {{ page.shenase }}</p>
                         </div>
                         <div class="product-meta-overal my-3 bottom-border">
                             <div class="row gy-3 align-items-center">
-                                <div class="col-md-4">
+                                <div class="col-md-4 quantity_status">
                                     <div class="label-site rounded-pill label-success">
                                         <i class="bi bi-check-circle me-1"></i>
                                         موجود در انبار
@@ -1617,8 +1555,6 @@
 
 {% include 'layout/mobile-menu.html' %}
 
-{% include 'layout/cart-convas.html' %}
-
 {% block JS %}
 <script src="{% static '' %}assets/js/vendor/modernizr-3.11.2.min.js"></script>
 <script src="{% static '' %}assets/js/vendor/jquery-3.7.1.min.js"></script>
@@ -1631,6 +1567,69 @@
 <script src="{% static '' %}assets/js/plugins.js"></script>
 <script src="{% static '' %}assets/js/main.js"></script>
 <script>
+    $(function(){
+        let sku = $('input[name=sku]').val();
+    $.ajax({
+      url: '/shop_api/single_product_data',
+      type: 'POST',
+      data: {'sku': sku},
+      success: function(data){
+        if (data.success === false){
+          Swal.fire({
+            icon: 'error',
+            title: 'خطای اتصال به اینترنت',
+        })
+    }else{
+        if(data.status.colors.length.length < 1){
+            $('.quantity_status').html(`
+            <div class="label-site rounded-pill label-error">
+        <i class="bi bi-check-circle me-1"></i>
+        فاقد موجودی
+    </div>
+            `);
+        };// end if
+        Swal.fire({icon:'info', title:data.status.colors.length});
+        /* LOAD BREAD_CRUMP */
+        $('.bread_crump').html(`
+        <li class="breadcrumb-item"><a href="/" class="font-14 text-muted-two">خانه</a></li>
+        <li class="breadcrumb-item"><a href="/shop" class="font-14 text-muted-two">فروشگاه</a></li>
+        <li class="breadcrumb-item category_brd"><a href="/category/products/${data.status.collection[0].slug}" class="font-14 text-muted-two">${data.status.collection[0].title}</a></li>
+        `);
+        /* LOAD PRODUCT MAIN IMAGE */
+        $('.product_slider').append(`
+        <div class="swiper-slide">
+            <div class="swiper-zoom-container">
+                <img class="img-fluid" src="https://kikpick.com/${data.status.image}" alt="${data.status.title}"/>
+                </div>
+                </div>
+                `);
+        /* product main image thumb */
+        $('.product_slide_thumb').append(`
+    <div class="swiper-slide">
+        <img class="img-fluid" src="https://kikpick.com/${data.status.image}" alt="${data.status.product_title}" loading="lazy"/>
+    </div>
+    `);
+    /* LOAD PRODUCT SLIDER */
+    for(let i = 0; i <= data.status.slider.length; i++){
+        $('.product_slider').append(`
+        <div class="swiper-slide">
+            <div class="swiper-zoom-container">
+                <img class="img-fluid" src="https://kikpick.com/${data.status.slider[i].url}" alt="${data.status.slider[i].alt}"/>
+            </div>
+        </div>
+        `)
+        /* product slider thumb */
+    $('.product_slide_thumb').append(`
+    <div class="swiper-slide">
+        <img class="img-fluid" src="https://kikpick.com/${data.status.slider[i].url}" alt="${data.status.slider[i].alt}"/>
+    </div>
+    `)
+    };// endfor
+        }; //end if
+      } // end sunccess,
+    });// end ajax
+    }); // end DOM
+
       function separateDigitsWithComma(number) {
     // Convert the number to a string
     var numberString = String(number);
@@ -1731,24 +1730,6 @@
         },//end suncces
     })//endajax
   }//end function
-
-  function load_product_data(){
-    let sku = $('input[name=sku]').val();
-    $.ajax({
-      url: '/shop_api/single_product_data',
-      type: 'POST',
-      data: {'sku': sku},
-      success: function(data){
-        if (data.success === false){
-          console.log(data.status);
-        }else{
-          console.log(data.status);
-        }; //end if
-      } // end sunccess,
-    });// end ajax
-  }; // end function
-
-  load_product_data();
   load_cart_data();
 
 </script>

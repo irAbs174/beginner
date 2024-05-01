@@ -90,11 +90,11 @@ class ProductSlide(Orderable):
         APIField('image'),
         APIField('slide_desc'),
         APIField('collection'),
-        APIField('image', serializer=ImageRenditionField('fill-250x280')),
+        APIField('image', serializer=ImageRenditionField('')),
     ]
 
     def __str__(self):
-        return self.color_title
+        return self.slide_title
 
     class Meta:
         verbose_name = 'اسلاید تصاویر محصول'

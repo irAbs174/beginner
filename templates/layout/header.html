@@ -17,8 +17,8 @@
             </div>
             <div class="col-xl-5 d-xl-block d-none">
                 <div class="header-form">
-                        <input type="search" id="search_input"  oninput="search(this.value)" class="form-control input-search" placeholder="جستجوی محصول">
-                        <button class="btn input-btn-search " onclick="search(document.getElementById('search_input').value)"><i class="bi bi-search"></i></button>
+                        <input type="search" id="textInput" class="form-control textInput" placeholder="جستجوی محصول">
+                        <button class="btn input-btn-search " onclick="search(document.getElementById('textInput').value)"><i class="bi bi-search"></i></button>
                 </div>
             </div>
             <div class="col-xl-4 col-6">
@@ -151,8 +151,8 @@
             <div class="col-sm-11 col-10 d-xl-none d-block">
                 <div class="d-flex">
                     <div class="header-form w-100">
-                            <input type="search" id="mobile_rSearch" oninput="search(this.value)" class="form-control input-search" placeholder="جستجوی کالا">
-                            <button class="btn input-btn-search " onclick="search(document.getElementById('mobile_rSearch').value)"><i class="bi bi-search"></i></button>
+                            <input type="search" id="textInput_MOBILE" class="form-control" placeholder="جستجوی کالا">
+                            <button class="btn input-btn-search " onclick="search(document.getElementById('textInput_MOBILE').value)"><i class="bi bi-search"></i></button>
                     </div>
                     <div class="text-end ms-lg-4 ms-2">
                         <a data-bs-toggle="offcanvas" href="#offcanvasCart" role="button" aria-controls="offcanvasCart"
@@ -164,13 +164,48 @@
     </div>
 </header>
 <script>
-    const inputField = document.getElementById("search_input");
-    const clickButton = document.getElementById("search_product");
-    inputField.addEventListener("keydown", (event) => {
-      if (event.key === "Enter") {
-        search();
-      }
+    $(function(){
+        var typingTimer;
+    var doneTypingInterval = 750; // Time in milliseconds, adjust as needed
+
+    // Event listener for input
+    $('.textInput').keyup(function() {
+        clearTimeout(typingTimer);
+        if ($('.textInput').val()) {
+            typingTimer = setTimeout(doneTyping, doneTypingInterval);
+        }
     });
+
+    // Function to execute when typing stops
+    function doneTyping() {
+
+        $('.textInput').focus();
+        // Retrieve input value
+        var inputValue = $('.textInput').val();
+
+        // AJAX request to send the value to the server
+        search(inputValue)
+    }
+
+    $('#textInput_MOBILE').keyup(function() {
+        clearTimeout(typingTimer);
+        if ($('#textInput_MOBILE').val()) {
+            typingTimer = setTimeout(doneTyping_MOBILE, doneTypingInterval);
+        }
+    });
+
+    // Function to execute when typing stops
+    function doneTyping_MOBILE() {
+
+        // Retrieve input value
+        var inputValue = $('#textInput_MOBILE').val();
+
+        // AJAX request to send the value to the server
+        search(inputValue)
+    }
+    });//END DOM
+
+
     function separateDigitsWithComma(number) {
     // Convert the number to a string
     var numberString = String(number);
@@ -222,21 +257,6 @@
                     }else{
                         $('.zone').html(`
                     <div class="content">
-    <div class="container-fluid">
-        <div class="col-xl-5 d-xl-block d-none">
-                <div class="header-form">
-                        <input type="search" id="search_input" oninput="search(this.value)" class="form-control input-search" placeholder="جستجوی محصول">
-                        <button class="btn input-btn-search " onclick="search(document.getElementById('search_input').value)"><i class="bi bi-search"></i></button>
-                </div>
-            </div>
-<div class="col-sm-11 col-10 d-xl-none d-block">
-                <div class="d-flex">
-                    <div class="header-form w-100">
-                            <input type="search" id="mobile_rSearch" oninput="search(this.value)" class="form-control input-search" placeholder="جستجوی کالا">
-                            <button class="btn input-btn-search " onclick="search(document.getElementById('mobile_rSearch').value)"><i class="bi bi-search"></i></button>
-                    </div>
-                </div>
-            </div>
         <div class="content-box">
             <div class="container-fluid">
                 <div class="panel-header mb-5">
@@ -246,7 +266,7 @@
                         <h5>جستجو برای <span>"${search_text}"</span></h5>
                         <h5 class="main-color-one-color">${response.context.length} نتیجه پیدا شد</h5>
                     </div>
-                    <div class="row g-4 searcch-result"><a href="${window.location.href}"><button class="btn btn-success"><i class="bi bi-arrow-left"> بازگشت به فروشگاه </i></button></a></div>
+                    <div class="row g-4 searcch-result"><a href="${window.location.href}"><button class="btn btn-danger"><i class="bi bi-arrow-left">بستن جستجو</i></button></a>
                     
                 </div>
             </div>
