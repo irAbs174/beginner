@@ -113,20 +113,25 @@ def cart_view(request):
     }
     return render(request, 'products/cart/cart.html',context)
 
+@csrf_exempt
 def add_to_cart(request):
     if request.method == 'POST':
         if request.user.is_authenticated :
             if Cart.objects.filter(user=request.user.phoneNumber):
                 if (Cart.objects.filter(user=request.user.phoneNumber)[0].price == 0):
                     Cart.objects.filter(user=request.user.phoneNumber).delete()
-            product_id = int(request.POST.get('product_id'))
-            product_title = request.POST.get('product_title')
-            product_collection = request.POST.get('product_collection')
-            product_quantity = int(request.POST.get('quantity'))
-            product_color_text = request.POST.get('selected_color_text')
-            product_color_quantity = int(request.POST.get('product_color_quantity'))
-            product_image = request.POST.get('product_image_url')
-            add_cart_date = int(request.POST.get('add_cart_date'))
+            pq = InventoryItem.objects.all().public().live().search(request.POST.get('id'))
+            product_id = pq[0].id
+            product_title = pq[0].title,
+            product_collection = pq[0].collection.values()[0]['title'],
+            product_quantity = int(request.POST.get('number'))
+            product_color_text = pq[0].PRODUCT_COLORS.values().filter(id=int(request.POST.get('selected_color_text')))[0]['color_title']
+            product_color_quantity = pq[0].PRODUCT_COLORS.values().filter(id=int(request.POST.get('selected_color_text')))[0]['pquantity']
+            product_image = pq[0].image.get_rendition('max-550x450').url,
+            if pq[0].PRODUCT_OFFER.values()[0]['value']:
+                add_cart_date = pq[0].PRODUCT_OFFER.values()[0]['value']
+            else:
+                add_cart_date = pq[0].price
             try:
                 product = InventoryItem.objects.get(pk=product_id)
                 if product.is_available and product.is_active:

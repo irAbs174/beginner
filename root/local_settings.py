@@ -19,7 +19,7 @@ LOCAL_ACCOUNT_USERNAME_BLACKLIST = ["admin", 'security', 'secure', 'protection',
            'virus', 'vulnerabilityassessment', 'zeroday', "god"]
 
 # CSRF LOCAL TRUSTED ORIGINS :
-CSRF_LOCAL_TRUSTED_ORIGINS = ['https://8000-cs-b1a4892a-3c51-431a-b116-ad524438bddb.cs-europe-west1-onse.cloudshell.dev', 'https://www.https://8000-cs-b1a4892a-3c51-431a-b116-ad524438bddb.cs-europe-west1-onse.cloudshell.dev', 'https://www.8000-cs-b1a4892a-3c51-431a-b116-ad524438bddb.cs-europe-west1-onse.cloudshell.dev/', 'https://www.https://8000-cs-b1a4892a-3c51-431a-b116-ad524438bddb.cs-europe-west1-onse.cloudshell.dev']
+CSRF_LOCAL_TRUSTED_ORIGINS = ['https://8000-cs-256274267521-default.cs-europe-west4-fycr.cloudshell.dev',]
 
 # ALLOWED LOCAL HOSTS :
 ALLOWED_LOCAL_HOSTS = ['127.0.0.1', '8000-cs-b1a4892a-3c51-431a-b116-ad524438bddb.cs-europe-west1-onse.cloudshell.dev/', 'https://www.https://8000-cs-b1a4892a-3c51-431a-b116-ad524438bddb.cs-europe-west1-onse.cloudshell.dev', 'www.8000-cs-b1a4892a-3c51-431a-b116-ad524438bddb.cs-europe-west1-onse.cloudshell.dev/', 'https://www.https://8000-cs-b1a4892a-3c51-431a-b116-ad524438bddb.cs-europe-west1-onse.cloudshell.dev']

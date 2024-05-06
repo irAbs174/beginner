@@ -143,8 +143,8 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="product-meta-add-to-cart mt-4">
-                            <a href="" class="btn product-meta-add-to-cart-btn main-color-one-bg rounded-pill">افزودن به
+                        <div onClick="add_to_cart('{{page.shenase}}')" class="product-meta-add-to-cart mt-4">
+                            <a class="btn product-meta-add-to-cart-btn main-color-one-bg rounded-pill">افزودن به
                                 سبد خرید</a>
                         </div>
                     </div>
@@ -1545,11 +1545,12 @@
                 if(data.status.colors && data.status.colors.length > 0) {
                     for(let i = 0; i < data.status.colors.length; i++){
                         $('.product_color_select').append(`
-                            <input type="radio" class="btn-check" name="options" id="option${i}" autocomplete="off" checked>
+                        <input type="radio" class="btn-check" name="options"value="${data.status.colors[i]['id']}" id="option${i}" autocomplete="off" checked>
                             <label class="btn" for="option${i}">
                                 <span style="background-color: ${data.status.colors[i]['code']}"></span>
                                 ${data.status.colors[i]['title']}
                             </label>`);
+
                     }
                 }
 
@@ -1684,6 +1685,38 @@
         },//end suncces
     })//endajax
   }//end function
+
+
+  function add_to_cart(id){
+    let checkedValue = $('input[name="options"]:checked').val();
+    let number = $('input[name="count"]').val();
+    $.ajax({
+        url: '/cart/add',
+        type: 'POST',
+        data: {
+            'id': id,
+            'selected_color_text': checkedValue,
+            'number': number,
+        },
+        success: function (response) {
+      if (response.success === false) {
+        Swal.fire({
+            icon: 'error',
+            title: response.status,
+            showConfirmButton: false,
+        })
+      } else {
+        Swal.fire({
+            icon: 'success',
+            title: response.status,
+            showConfirmButton: false,
+        })
+        window.location.reload();
+      }
+    },
+    })
+  }
+
   load_cart_data();
 
 </script>

@@ -130,7 +130,7 @@
             $(".two_random_swipre").append(`
           <div class="swiper-slide">
                                 <div class="product-box">
-                                    <a href="">
+                                    <a href="/shop/${response.status[i].slug}">
                                         <div class="product-box-sugget">
                                             <h6>پیشنهاد لحظه ای</h6>
                                         </div>
@@ -176,7 +176,7 @@
             $(".two_random_swipre").append(`
           <div class="swiper-slide">
                                 <div class="product-box">
-                                    <a href="">
+                                    <a href="/shop/${response.status[i].slug}">
                                         <div class="product-box-sugget">
                                             <h6>پیشنهاد لحظه ای</h6>
                                         </div>
@@ -356,7 +356,7 @@
             $('.specail_pro').append(`
                     <div class="swiper-slide">
                         <div class="product-box">
-                            <a href="">
+                            <a href="/shop/${response.status[i].slug}">
                                 <div class="product-box-image">
                                     <img src="https://kikpick.com/${response.status[i].image}" alt="">
                                 </div>
@@ -379,12 +379,12 @@
                                             <li class="nav-item"><a href="/shop/${response.status[i].slug}"
                                                                     class="nav-item product-box-hover-item me-3">مشاهده
                                                 محصول</a></li>
-                                            <li class="nav-item"><a href=""
+                                            <li onClick="cart" class="nav-item"><a
                                                                     class="nav-item product-box-hover-item product-box-hover-item-btn me-1"
                                                                     data-bs-toggle="tooltip" data-bs-placement="top"
                                                                     data-bs-title="افزودن به سبد خرید"><i
                                                     class="bi bi-basket"></i></a></li>
-                                            <li class="nav-item"><a href=""
+                                            <li onClick="fev" class="nav-item"><a
                                                                     class="nav-item product-box-hover-item product-box-hover-item-btn"
                                                                     data-bs-toggle="tooltip" data-bs-placement="top"
                                                                     data-bs-title="افزودن به علاقه ها"><i
@@ -419,7 +419,7 @@
                 $(".newst_products").append(`
                 <div class="col-lg-3 col-sm-6">
                     <div class="product-row-item">
-                        <a href="">
+                        <a href="/shop/${response.status[i].slug}">
                             <div class="row align-items-center">
                                 <div class="col-4">
                                     <img src="https://kikpick.com/${response.context[i].image}" alt="">
@@ -446,7 +446,7 @@
                 $(".newst_products").append(`
                 <div class="col-lg-3 col-sm-6">
                     <div class="product-row-item">
-                        <a href="">
+                        <a href="/shop/${response.status[i].slug}">
                             <div class="row align-items-center">
                                 <div class="col-4">
                                     <img src="https://kikpick.com/${response.context[i].image}" alt="">
@@ -496,7 +496,7 @@
                 $(".offers_products").append(`
                 <div class="swiper-slide">
                     <div class="product-box">
-                        <a href="">
+                        <a href="/shop/${response.status[i].slug}">
                             <div class="product-box-image">
                                 <img src="https://kikpick.com/${response.context[i].image}" alt="">
                             </div>
