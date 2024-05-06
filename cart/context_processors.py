@@ -33,6 +33,19 @@ def cart_total(request):
         get_total = 0
     return {'cart_total': get_total}
 
+def cart_offer(request):
+    if request.user.is_authenticated:
+        if Cart.objects.filter(user=request.user.phoneNumber):
+            if (Cart.objects.filter(user=request.user.phoneNumber)[0].offer_code_value == 0):
+                cart_offer = 0
+            else:
+                cart_offer = Cart.objects.filter(user=request.user.phoneNumber)[0].offer_code_value
+        else:
+            cart_offer = 0
+    else:
+        cart_offer = 0
+    return {'cart_offer': cart_offer}
+
 def update_total(request):
     if request.user.is_authenticated:
         if Cart.objects.filter(user=request.user.phoneNumber):

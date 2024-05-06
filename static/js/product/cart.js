@@ -24,14 +24,11 @@ $(document).ready(function(){
   separateDigitsWithComma();
 });
 // end readfy
-function updateCart(productTitle, productId, productColorQuantity){
-  let token = $('input[name=csrfmiddlewaretoken]').val();
+function updateCart(productTitle, value){
   let quantity = document.getElementById(productId).value;
   let data = {
     'product_title': productTitle,
     'quantity':quantity,
-    'product_color_quantity': productColorQuantity,
-    csrfmiddlewaretoken: token,
   }
   $.ajax({
     url: '/cart/update',
@@ -68,10 +65,8 @@ function updateCart(productTitle, productId, productColorQuantity){
 }
 // remove cart item
 function removeItem(productTitle){
-  let token = $('input[name=csrfmiddlewaretoken]').val();
   let data = {
       'product_title': productTitle,
-      csrfmiddlewaretoken: token,
   };
   // Send request to server
   $.ajax({

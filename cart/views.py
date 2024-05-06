@@ -127,7 +127,7 @@ def add_to_cart(request):
             product_quantity = int(request.POST.get('number'))
             product_color_text = pq[0].PRODUCT_COLORS.values().filter(id=int(request.POST.get('selected_color_text')))[0]['color_title']
             product_color_quantity = pq[0].PRODUCT_COLORS.values().filter(id=int(request.POST.get('selected_color_text')))[0]['pquantity']
-            product_image = pq[0].image.get_rendition('max-550x450').url,
+            product_image = pq[0].image.get_rendition('fill-250x280').url,
             if pq[0].PRODUCT_OFFER.values()[0]['value']:
                 add_cart_date = pq[0].PRODUCT_OFFER.values()[0]['value']
             else:
@@ -144,13 +144,13 @@ def add_to_cart(request):
                                 Cart.objects.create(
                                     user = request.user.phoneNumber,
                                     product_id = product_id,
-                                    product_title = product_title,
-                                    product_collection = product_collection,
+                                    product_title = pq[0].title,
+                                    product_collection = pq[0].collection.values()[0]['title'],
                                     quantity = product_quantity,
                                     price = add_cart_date,
-                                    image = product_image,
-                                    color = product_color_text,
-                                    color_quantity = product_color_quantity,
+                                    image = pq[0].image.get_rendition('fill-250x280').url,
+                                    color = pq[0].PRODUCT_COLORS.values().filter(id=int(request.POST.get('selected_color_text')))[0]['color_title'],
+                                    color_quantity = pq[0].PRODUCT_COLORS.values().filter(id=int(request.POST.get('selected_color_text')))[0]['pquantity'],
                                 )
                                 Cart.update_total(request.user.phoneNumber)
                                 return JsonResponse({'status':f"محصول {product.product_title} با موفقیت به سبد خرید اضافه شد.", 'success': True})
@@ -158,13 +158,13 @@ def add_to_cart(request):
                                 Cart.objects.create(
                                     user = request.user.phoneNumber,
                                     product_id = product_id,
-                                    product_title = product_title,
-                                    product_collection = product_collection,
+                                    product_title = pq[0].title,
+                                    product_collection = pq[0].collection.values()[0]['title'],
                                     quantity = product_quantity,
                                     price = product.price,
-                                    image = product_image,
-                                    color = product_color_text,
-                                    color_quantity = product_color_quantity,
+                                    image = pq[0].image.get_rendition('fill-250x280').url,
+                                    color = pq[0].PRODUCT_COLORS.values().filter(id=int(request.POST.get('selected_color_text')))[0]['color_title'],
+                                    color_quantity = pq[0].PRODUCT_COLORS.values().filter(id=int(request.POST.get('selected_color_text')))[0]['pquantity'],
                                 )
                                 Cart.update_total(request.user.phoneNumber)
                                 return JsonResponse({'status':f"محصول {product.product_title} با موفقیت به سبد خرید اضافه شد.", 'success': True})
@@ -181,24 +181,24 @@ def add_to_cart(request):
     return render(request, 'products/cart/cart.html',{'discount': discount})
 
 @login_required
+@csrf_exempt
 def update_cart(request):
     if request.method == 'POST':
         product_title = request.POST.get('product_title')
         quantity = int(request.POST.get('quantity'))
-        color_quantity = int(request.POST.get('product_color_quantity'))
         if quantity > 0:
-            product = InventoryItem.objects.get(product_title=product_title)
-            if quantity <= product.quantity and quantity <= color_quantity:
-                try:
-                    user_cart = Cart.objects.get(user=request.user.phoneNumber, product_title=product_title)
+            product = InventoryItem.objects.filter(product_title=product_title)
+            try:
+                user_cart = Cart.objects.get(user=request.user.phoneNumber, product_title=product_title)
+                if user_cart.color_quantity >= quantity:
                     user_cart.quantity = quantity
                     user_cart.save()
                     Cart.update_total(request.user.phoneNumber)
                     return JsonResponse({'status': "تعداد درخواستی با موفقیت به روز شد", 'success': True})
-                except Cart.DoesNotExist:
-                    return JsonResponse({'status': "محصول مورد پیدا نشد.", 'success': False})
-            else:
-                return JsonResponse({'status': "تعداد درخواستی بالاتر از موجودی محصول است.", 'success': False})
+                else:
+                    return JsonResponse({'status': "تعداد درخواستی بالاتر از موجودی محصول است.", 'success': False})
+            except Cart.DoesNotExist:
+                return JsonResponse({'status': "محصول مورد پیدا نشد.", 'success': False})
         else:
             try:
                 Cart.objects.filter(user=request.user.phoneNumber, product_title=product_title).delete()
@@ -220,7 +220,7 @@ def remove_from_cart(request):
                 Cart.update_total(request.user.phoneNumber)
                 return JsonResponse({'status':"محصول از سبد خرید حذف شد.", 'success': True})
             except:
-                return JsonResponse({'status':"محصول مورد پیدا نشد.", 'success': False})
+                return JsonResponse({'status':"محصول از سبد خرید حذف شد.", 'success': True})
         else:
             return JsonResponse({'status':"محصول مورد پیدا نشد.", 'success': False})
     return render(request, 'products/cart/cart.html',{'discount': discount})
