@@ -60,6 +60,12 @@ SITE_API = 'UNIQUEAPI174/'
 # SITE DEBUG
 SITE_DEBIG = True
 
+fadax_API = 'YOUR_'
+
+fadax_API_PATH = 'YOUR_'
+
+SMS_API_KEY = 'YOUR_'
+
 
 
 

@@ -35,6 +35,8 @@
     {% block BODY %}
 
     {% csrf_token %}
+
+    <input type="hidden" name="payment_set" value="2">
     
     <input type="hidden" name="shippng_number" value="2">
 
@@ -80,8 +82,6 @@
             <div class="content-box checkouts-form">
                 <div class="container-fluid">
                     <div class="checkout-form">
-                        <form action="">
-    
                             <div class="row g-4">
                                 <div class="col-md-6">
                                     <div class="comment-item mb-3">
@@ -95,37 +95,52 @@
                                         <label for="floatingInputLName" class="form-label label-float fw-bold">نام خانوادگی <span class="text-danger">*</span></label>
                                     </div>
                                 </div>
-                                <div class="col-12">
-                                    <div class="comment-item mb-3">
-                                        <input type="text" class="form-control" id="floatingInputStreet" placeholder="نام خانوادگی خود را وارد کنید ...">
-                                        <label for="floatingInputStreet" class="form-label label-float fw-bold">آدرس خیابان</label>
-                                    </div>
-                                </div>
-    
+                                
                                 <div class="col-md-6">
                                     <div class="comment-item" for="floatingInputOstan">
                                         <label class="label-float fw-bold">استان <span class="text-danger">*</span></label>
-
-                                            <select name="" id="floatingInputOstan" class="form-select" onchange="set_city_list()">
-
-                                            </select>
+                                        
+                                        <select name="" id="floatingInputOstan" class="form-select" onchange="set_city_list()">
+                                            
+                                        </select>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="comment-item">
                                         <label class="label-float fw-bold" for="floatingInputCity">شهر <span class="text-danger">*</span></label>
-
-                                            <select name="" id="floatingInputCity" class="form-select">
-
-                                            </select>
-
+                                        
+                                        <select name="" id="floatingInputCity" class="form-select">
+                                            
+                                        </select>
+                                        
                                     </div>
                                 </div>
-    
+                                
+                                <div class="col-12">
+                                    <div class="comment-item mb-3">
+                                        <input type="text" class="form-control" id="floatingInputStreet" placeholder="لطفا آدرس کامل خود را وارد نمایید ...">
+                                        <label for="floatingInputStreet" class="form-label label-float fw-bold">آدرس کامل</label>
+                                    </div>
+                                </div>
+
                                 <div class="col-12">
                                     <div class="comment-item mb-3">
                                         <input type="text" class="form-control" id="floatingInputTel" placeholder="شماره تلفن خود را وارد کنید ...">
                                         <label for="floatingInputTel" class="form-label label-float fw-bold">شماره تلفن</label>
+                                    </div>
+                                </div>
+
+                                <div class="col-12">
+                                    <div class="comment-item mb-3">
+                                        <input type="text" class="form-control" id="floatingInputMelli" placeholder="کد ملی خود را وارد کنید ...">
+                                        <label for="floatingInputMelli" class="form-label label-float fw-bold">کد ملی</label>
+                                    </div>
+                                </div>
+
+                                <div class="col-12">
+                                    <div class="comment-item mb-3">
+                                        <input type="text" class="form-control" id="floatingInputPOST" placeholder="کد پستی خود را وارد کنید ...">
+                                        <label for="floatingInputPOST" class="form-label label-float fw-bold">کد پستی</label>
                                     </div>
                                 </div>
     
@@ -144,13 +159,13 @@
                                                 <div class="factor-item pb-3">
                                                     <h5 class="title-font mb-3 h6">شیوه پرداخت</h5>
                                                     <div class="row gy-3">
-                                                        <div class="col-sm-6">
+                                                        <div onclick="payment_set(1)" class="col-sm-6">
                                                             <div class="bank-item">
                                                                 <i class="bi bi-credit-card-2-back main-color-one-color"></i>
                                                                 <h6 class="font-14 mx-2">انتقال مستقیم بانکی</h6>
                                                             </div>
                                                         </div>
-                                                        <div class="col-sm-6">
+                                                        <div onclick="payment_set(2)" class="col-sm-6">
                                                             <div class="bank-item active">
                                                                 <i class="bi bi-house-fill main-color-one-color"></i>
                                                                 <h6 class="font-14 mx-2">سرویس اعتباری فدکس</h6>
@@ -161,7 +176,6 @@
     
                                                 <div class="d-flex factor-item flex-column mb-3 align-items-start justify-content-between">
                                                     <h5 class="title-font mb-0 h6">حمل و نقل</h5>
-                                                    <form action="">
                                                         <div class="form-check mt-3">
                                                             <input onchange="set_shiping(1);" type="radio" checked="" class="form-check-input" name="post" id="post-1">
                                                             <label for="post-1" class="form-check-label">
@@ -180,7 +194,6 @@
                                                                 پیک موتوری اسنپ باکس هزینه پس کرایه (1 تا 2 روز کاری): صفر تومان
                                                                 </label>
                                                         </div>
-                                                    </form>
                                                 </div>
     
                                                 <div class="d-flex factor-item mb-3 align-items-center justify-content-between">
@@ -195,15 +208,13 @@
     
                                 <div class="col-12">
                                     <div class="form-group">
-                                        <button onclick="test();" class="btn product-meta-add-to-cart-btn main-color-one-bg rounded-pill">
+                                        <button class="btn product-meta-add-to-cart-btn main-color-one-bg rounded-pill click_fadax_btn">
                                             ثبت سفارش
                                         </button>
                                     </div>
                                 </div>
     
                             </div>
-    
-                        </form>
                     </div>
                     <div class="Dottedsquare-checkout d-lg-flex d-none"></div>
                 </div>
@@ -243,6 +254,70 @@
 <script src="{% static '' %}assets/js/plugins.js"></script>
 <script src="{% static '' %}assets/js/main.js"></script>
 <script>
+    $(function(){
+        $('.click_fadax_btn').click(function (e) {
+        e.preventDefault();
+        let token = $('input[name=csrfmiddlewaretoken]').val();
+        firstName = document.getElementById('floatingInputName').value;
+        lastName = document.getElementById('floatingInputLName').value;
+        address = document.getElementById('floatingInputStreet').value;
+        tel = document.getElementById('floatingInputTel').value;
+        State = document.getElementById('floatingInputOstan').value;
+        City = document.getElementById('floatingInputCity').value;
+        postalcode = document.getElementById('floatingInputPOST').value;
+        nationalcode = document.getElementById('floatingInputMelli').value;
+        shipping = $('input[name=shippng_number]').val();
+        payment_method = $('input[name=payment_set]').val();
+        let data = {
+            csrfmiddlewaretoken: token,
+            'firstName': firstName,
+            'lastName': lastName,
+            'tel': tel,
+            'State': State,
+            'City': City,
+            'postalcode': postalcode,
+            'address': address,
+            'SEND_METHOD': shipping,
+            'nationalcode':nationalcode,
+            'PAYMENT_METHOD': payment_method,
+            'task': 'recive_payment_token',
+        };
+        // Send request to server
+        $.ajax({
+            url: '/cart/test',
+            type: 'POST',
+            data: data,
+            success: function (response) {
+            if (response.success === false) {
+                Swal.fire({
+                icon: "error",
+                title: response.status,
+                showConfirmButton: false,
+                timer: 3000,
+                });
+            } else {
+                Swal.fire({
+                icon: "success",
+                title: response.status,
+                showConfirmButton: false,
+                timer: 3000,
+                });
+                window.location.href = response.status;
+            }
+            },
+            error: function (xhr, status, error) {
+            console.log(status);
+            Swal.fire({
+                icon: "error",
+                title: status,
+                showConfirmButton: false,
+                timer: 3000,
+            });
+            }
+        });
+    })
+    })
+
     function test() {
         $.ajax({
             url: '/cart/test',
@@ -291,7 +366,29 @@
         
         return result;
     }
+
+    function reverce_comma(string_value){
+
+    }//endfunction
+
+    function convertToNumber(inputString) {
+    // حذف همه‌ی ویرگول‌ها از رشته
+    const stringWithoutCommas = inputString.replace(/,/g, '');
+    // تبدیل رشته به عدد صحیح
+    const number = parseInt(stringWithoutCommas);
+    return number;
+}
     
+function payment_set(num){
+        if (num == 1){
+            $('input[name=payment_set]').val(1)
+            console.log(num);
+        }else{
+            $('input[name=payment_set]').val(2)
+            console.log(num);
+        }// endif
+    };// end function
+
     function set_ostan_list(){
         fetch('https://iran-locations-api.ir/api/v1/fa/states')
             .then(response => response.json())
@@ -332,16 +429,16 @@
         var currentText = $(".total_text").text();
             console.log(currentText)
         // Add 50 to the current text
-        var newText = parseInt(currentText) + 50;
+        var newText = separateDigitsWithComma(parseInt(currentText) + 50000);
 
         // Update the text of the paragraph
         $(".total_text").text(newText);
 
         }else if (shippng_number == 2 && num == 3){
         var currentText = $(".total_text").text();
-            console.log(currentText)
         // Add 50 to the current text
-        var newText = parseInt(currentText) - 50;
+        currentText = convertToNumber(currentText);
+        var newText = separateDigitsWithComma(parseInt(currentText) - 50000);
 
         // Update the text of the paragraph
         $(".total_text").text(newText);
@@ -351,7 +448,8 @@
             var currentText = $(".total_text").text();
 
         // Add 50 to the current text
-        var newText = parseInt(currentText) - 50;
+        currentText = convertToNumber(currentText);
+        var newText = separateDigitsWithComma(parseInt(currentText) - 50000);
 
         // Update the text of the paragraph
         $(".total_text").text(newText);
@@ -360,7 +458,8 @@
             var currentText = $(".total_text").text();
 
         // Add 50 to the current text
-        var newText = parseInt(currentText) + 50;
+        currentText = convertToNumber(currentText);
+        var newText = separateDigitsWithComma(parseInt(currentText) + 50000);
 
         // Update the text of the paragraph
         $(".total_text").text(newText);
@@ -369,7 +468,8 @@
             var currentText = $(".total_text").text();
 
         // Add 50 to the current text
-        var newText = parseInt(currentText) + 50;
+        currentText = convertToNumber(currentText);
+        var newText = separateDigitsWithComma(parseInt(currentText) + 50000);
 
         // Update the text of the paragraph
         $(".total_text").text(newText);

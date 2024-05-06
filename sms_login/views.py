@@ -18,6 +18,8 @@ from datetime import datetime, timedelta
 
 from django.contrib.auth import login
 
+from root.local_settings import SMS_API_KEY
+
 
 def random_code():
     # the following function creates a random four digit code
@@ -56,7 +58,7 @@ class Create(View):
                 user_accounts.objects.filter(phoneNumber=phone_number
                                      ).update(WPOPass=four_digit_code)
             try:
-                api = KavenegarAPI('4F53434B37317946416957716B6F7038544B685A784968763844347A366C7A413434454A722F68573938383D', timeout=20)
+                api = KavenegarAPI(f'{SMS_API_KEY}')
                 params = {
                     'receptor': phone_number,
                     'template': 'kikpickLogin',

@@ -441,7 +441,7 @@
             'load_filter': 'offer_products_list',
           },
           success: function (response) {
-      if (response.success === false) {
+      if (response.context === false) {
         internet_connection_error();
       } else {
         $(".offers_products").html("")
@@ -450,7 +450,7 @@
                 $(".offers_products").append(`
                 <div class="swiper-slide">
                     <div class="product-box">
-                        <a href="/shop/${response.status[i].slug}">
+                        <a href="/shop/${response.context[i].slug}">
                             <div class="product-box-image">
                                 <img src="https://kikpick.com/${response.context[i].image}" alt="">
                             </div>
