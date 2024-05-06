@@ -49,13 +49,13 @@
                 <div class="checkout-headers cart">
                     <ul>
                         <li class="nav">
-                            <a href="">
+                            <a href="/cart">
                                 <i class="bi bi-cart"></i>
                                 <p>سبد خرید</p>
                             </a>
                         </li>
                         <li class="nav active">
-                            <a href="">
+                            <a href="/cart/checkout">
                                 <i class="bi bi-truck"></i>
                                 <p>پرداخت نهایی</p>
                             </a>
@@ -85,13 +85,13 @@
                             <div class="row g-4">
                                 <div class="col-md-6">
                                     <div class="comment-item mb-3">
-                                        <input type="text" class="form-control" id="floatingInputName" placeholder="نام خود را وارد کنید...">
+                                        <input type="text" class="form-control" id="floatingInputName" placeholder="نام خود را وارد کنید..." value="{% if request.user.first_name %}{{request.user.first_name}}{% endif %}">
                                         <label for="floatingInputName" class="form-label label-float fw-bold font-16">نام <span class="text-danger">*</span></label>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="comment-item mb-3">
-                                        <input type="text" class="form-control" id="floatingInputLName" placeholder="نام خانوادگی خود را وارد کنید ...">
+                                        <input type="text" class="form-control" id="floatingInputLName" placeholder="نام خانوادگی خود را وارد کنید ..." value="{% if request.user.last_name %}{{request.user.last_name}}{% endif %}">
                                         <label for="floatingInputLName" class="form-label label-float fw-bold">نام خانوادگی <span class="text-danger">*</span></label>
                                     </div>
                                 </div>
@@ -118,28 +118,28 @@
                                 
                                 <div class="col-12">
                                     <div class="comment-item mb-3">
-                                        <input type="text" class="form-control" id="floatingInputStreet" placeholder="لطفا آدرس کامل خود را وارد نمایید ...">
+                                        <input type="text" class="form-control" id="floatingInputStreet" placeholder="لطفا آدرس کامل خود را وارد نمایید ..." value="{% for customer in customer_items %}{% if customer.address %}{{customer.address}}{% endif %}{% endfor %}">
                                         <label for="floatingInputStreet" class="form-label label-float fw-bold">آدرس کامل</label>
                                     </div>
                                 </div>
 
                                 <div class="col-12">
                                     <div class="comment-item mb-3">
-                                        <input type="text" class="form-control" id="floatingInputTel" placeholder="شماره تلفن خود را وارد کنید ...">
+                                        <input type="text" class="form-control" id="floatingInputTel" placeholder="شماره تلفن خود را وارد کنید ..." value="{{request.user.phoneNumber}}">
                                         <label for="floatingInputTel" class="form-label label-float fw-bold">شماره تلفن</label>
                                     </div>
                                 </div>
 
                                 <div class="col-12">
                                     <div class="comment-item mb-3">
-                                        <input type="text" class="form-control" id="floatingInputMelli" placeholder="کد ملی خود را وارد کنید ...">
+                                        <input type="text" class="form-control" id="floatingInputMelli" placeholder="کد ملی خود را وارد کنید ..." value="{% for customer in customer_items %}{% if customer.code_melli %}{{customer.code_melli}}{% endif %}{% endfor %}">
                                         <label for="floatingInputMelli" class="form-label label-float fw-bold">کد ملی</label>
                                     </div>
                                 </div>
 
                                 <div class="col-12">
                                     <div class="comment-item mb-3">
-                                        <input type="text" class="form-control" id="floatingInputPOST" placeholder="کد پستی خود را وارد کنید ...">
+                                        <input type="text" class="form-control" id="floatingInputPOST" placeholder="کد پستی خود را وارد کنید ..." value="{% for customer in customer_items %}{% if customer.zip_zode %}{{customer.zip_zode}}{% endif %}{% endfor %}">
                                         <label for="floatingInputPOST" class="form-label label-float fw-bold">کد پستی</label>
                                     </div>
                                 </div>

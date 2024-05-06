@@ -5,7 +5,7 @@
             <div class="col-xl-3 col-6">
                 <div class="header-logo">
                     <div class="image">
-                        <a href="index.html">
+                        <a href="/">
                             <!--img src="{% static 'assets/img/logo.png' %}" class="img-fluid" alt=""--> 
                         </a>
                     </div>
@@ -46,17 +46,17 @@
                     <div class="header-btn-login d-lg-block d-none">
                         <a href="/accounts/dashboard" class="btn"><i class="bi bi-person-fill"></i>پنل کاربری</a>
                     </div>
+                    <div class="header-btn-login-responsive d-lg-none d-block">
+                        <a href="/accounts" class="btn"><i class="bi bi-person-fill fs-2"></i></a>
+                    </div>
+                    <div class="header-btn-favorite">
+                        <a href="/accounts/dashboard" class="btn"><i class="bi bi-heart"></i></a>
+                    </div>
                     {% else %}
                     <div class="header-btn-login d-lg-block d-none">
                         <a href="/accounts" class="btn"><i class="bi bi-key-fill"></i> ورود / ثبت نام</a>
                     </div>
                     {% endif %}
-                    <div class="header-btn-login-responsive d-lg-none d-block">
-                        <a href="" class="btn"><i class="bi bi-person-fill fs-2"></i></a>
-                    </div>
-                    <div class="header-btn-favorite">
-                        <a href="" class="btn"><i class="bi bi-heart"></i></a>
-                    </div>
                 </div>
             </div>
             <div class="col-sm-1 col-2 d-xl-none d-block">
