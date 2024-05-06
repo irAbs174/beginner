@@ -12,6 +12,7 @@ from django.contrib.auth.hashers import check_password
 from django.contrib.auth.models import User
 from user_accounts.models import user_accounts
 from cart.models import Cart as cart
+from kavenegar import *
 
 from datetime import datetime, timedelta
 
@@ -54,8 +55,20 @@ class Create(View):
             else:
                 user_accounts.objects.filter(phoneNumber=phone_number
                                      ).update(WPOPass=four_digit_code)
-
-            print(four_digit_code)
+            try:
+                api = KavenegarAPI('4F53434B37317946416957716B6F7038544B685A784968763844347A366C7A413434454A722F68573938383D', timeout=20)
+                params = {
+                    'receptor': phone_number,
+                    'template': 'kikpickLogin',
+                    'token': four_digit_code,
+                    'type': 'sms',
+                }   
+                response = api.verify_lookup(params)
+                print(response)
+            except APIException as e: 
+                print(e)
+            except HTTPException as e: 
+                print(e)
             return JsonResponse({'status': 'کد ارسال شد', 'phone_number': phone_number, 'success': True})
 
         return JsonResponse({'status': 'شماره وارد شده صحیح نیست', 'success': False})
