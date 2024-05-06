@@ -81,7 +81,9 @@ def fadax_pay(request):
                                                                     )
                                                                 send_price = 0
                                                                 s_method = 2
-                                                                shenase = random.randint(100000, 999999)
+                                                                shenase = random.randint(1000000000, 9999999999)
+                                                                if Orders.objects.filter(shenase = shenase).exists():
+                                                                    shenase = random.randint(1000000000, 9999999999)
                                                                 if (send_method == '1'):
                                                                     s_method = 0
                                                                     send_price = 0
@@ -102,6 +104,7 @@ def fadax_pay(request):
                                                                         status = 4,
                                                                         send_method = s_method,
                                                                         send_price = send_price,
+                                                                        order_note = request.POST.get('order_note'),
                                                                     )
 
                                                                 phone = request.user.phoneNumber
@@ -285,7 +288,9 @@ def fadax_pay(request):
                                                                 )
                                                             send_price = 0
                                                             s_method = 2
-                                                            shenase = random.randint(100000, 999999)
+                                                            shenase = random.randint(1000000000, 9999999999)
+                                                            if Orders.objects.filter(shenase = shenase).exists(): 
+                                                                shenase = random.randint(1000000000, 9999999999)
                                                             if (send_method == '1'):
                                                                 s_method = 0
                                                                 send_price = 0
@@ -306,6 +311,7 @@ def fadax_pay(request):
                                                                     status = 4,
                                                                     send_method = s_method,
                                                                     send_price = send_price,
+                                                                    order_note = request.POST.get('order_note'),
                                                                 )
                                                         #Cart.objects.filter(user = request.user.phoneNumber).delete()
                                                             return JsonResponse({'status':'https://kikpick.com/get_bank', 'success':True})

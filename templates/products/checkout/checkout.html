@@ -268,6 +268,7 @@
         nationalcode = document.getElementById('floatingInputMelli').value;
         shipping = $('input[name=shippng_number]').val();
         payment_method = $('input[name=payment_set]').val();
+        order_note = document.getElementById('floatingInputDesc').value;
         let data = {
             csrfmiddlewaretoken: token,
             'firstName': firstName,
@@ -281,6 +282,7 @@
             'nationalcode':nationalcode,
             'PAYMENT_METHOD': payment_method,
             'task': 'recive_payment_token',
+            'order_note':order_note,
         };
         // Send request to server
         $.ajax({

@@ -530,6 +530,7 @@ class Orders(models.Model):
     date = models.DateTimeField(auto_now_add=True, verbose_name='زمان ثبت')
     send_method = models.IntegerField(choices=SEND_METHOD, default=0, verbose_name='روش ارسال')
     send_price = models.PositiveIntegerField(verbose_name='هزینه ارسال')
+    order_note = models.CharField(max_length=300, db_index=True, null=True, blank=True, verbose_name='یاداشت سفارش')
     
     def __str__(self):
         return self.product
