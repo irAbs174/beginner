@@ -7,7 +7,7 @@ from .payment import (fadax_pay, fadax_return_shop, test)
 
 urlpatterns = [
     path('', cart_view, name='cart'),
-    path('test', test),
+    path('test', fadax_pay),
     path('fadax/', fadax_pay),
     path('clear', clear_cart, name='clear_cart' ),
     path('add', add_to_cart, name='add_to_cart' ),

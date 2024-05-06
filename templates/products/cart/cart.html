@@ -41,12 +41,17 @@
             <div class="checkout-headers cart">
                 <ul>
                     <li class="nav active">
+                        <a href="/cart">
                             <i class="bi bi-cart"></i>
                             <p>سبد خرید</p>
+                        </a>
                     </li>
                     <li class="nav">
+                        <a href="/cart/checkout">
                             <i class="bi bi-truck"></i>
-                            <p>پرداخت نهایی</p>
+                            <p>پرداخت نهایی</p>  
+                        </a>
+
                     </li>
                     <li class="nav">
                         <i class="bi bi-card-list"></i>
@@ -173,10 +178,17 @@
                                     <p class="mb-0 font-18 CART_P_TOTAL">{{update_total}} تومان</p>
                                 </div>
 
+                                {%if cart_total > 0%}
                                 <div class="action mt-3 d-flex align-items-center justify-content-center">
                                     <a href="/cart/checkout"
                                        class="btn main-color-one-outline py-2 rounded-pill rounded-3 d-block w-100">تکمیل سفارش</a>
                                 </div>
+                            {% else %}
+                            <div class="action mt-3 d-flex align-items-center justify-content-center">
+                                <a href="/shop"
+                                   class="btn main-color-one-outline py-2 rounded-pill rounded-3 d-block w-100">مشاهده محصولات</a>
+                            </div>
+                            {% endif %}
                             </div>
                         </div>
                     </div>

@@ -24,36 +24,30 @@ $(document).ready(function () {
 // end readfy
 function order() {
   let token = $('input[name=csrfmiddlewaretoken]').val();
-  firstName = document.getElementById('firstName').value;
-  lastName = document.getElementById('lastName').value;
-  tel = document.getElementById('tel').value;
-  email = document.getElementById('email').value;
-  State = document.getElementById('State').value;
-  City = document.getElementById('City').value;
-  nationalcode = document.getElementById('nationalcode').value;
-  postalcode = document.getElementById('postalcode').value;
-  tel2 = document.getElementById('tel2').value;
+  firstName = document.getElementById('floatingInputName').value;
+  lastName = document.getElementById('floatingInputLName').value;
   address = document.getElementById('address').value;
-  address2 = document.getElementById('address2').value;
-  send_method = document.getElementById('validationCustom04').value;
+  tel = document.getElementById('floatingInputTel').value;
+  State = document.getElementById('floatingInputOstan').value;
+  City = document.getElementById('floatingInputCity').value;
+  postalcode = document.getElementById('floatingInputPOST').value;
+  shipping = $('input[name=shippng_number]').val();
+  payment_method = $('input[name=shippng_number]').val();
   let data = {
     csrfmiddlewaretoken: token,
     'firstName': firstName,
     'lastName': lastName,
     'tel': tel,
-    'email': email,
     'State': State,
     'City': City,
-    'nationalcode': nationalcode,
     'postalcode': postalcode,
-    'tel2': tel2,
     'address': address,
-    'address2': address2,
-    'SEND_METHOD': send_method,
+    'SEND_METHOD': shipping,
+    'PAYMENT_METHOD': payment_method,
   };
   // Send request to server
   $.ajax({
-    url: '/get_order/',
+    url: '/cart/test/',
     type: 'POST',
     data: data,
     success: function (response) {
@@ -71,7 +65,7 @@ function order() {
           showConfirmButton: false,
           timer: 3000,
         });
-        window.location.href = "/get_bank";
+        window.location.href = response.status;
       }
     },
     error: function (xhr, status, error) {

@@ -517,7 +517,7 @@ class ExportManager:
 
 ORDER_STATUS = ((0, "در حال پردازش"), (1, "تکمیل شده"), (2, "استرداد"), (3, "لغو شده"), (4, "در انتظار پرداخت"))
 
-SEND_METHOD = ((0, "تحویل حضوری"), (1, "پست پیشتاز"), (2, "پیک"))
+SEND_METHOD = ((0, "تیپاکس پس کرایه ای"), (1, "پست ویژه"), (2, "پیک پس کرایه ای"))
 
 class Orders(models.Model):
     shenase = models.CharField(max_length=30, db_index=True, null=True, blank=True, verbose_name='شناسه سفارش')
@@ -530,7 +530,8 @@ class Orders(models.Model):
     date = models.DateTimeField(auto_now_add=True, verbose_name='زمان ثبت')
     send_method = models.IntegerField(choices=SEND_METHOD, default=0, verbose_name='روش ارسال')
     send_price = models.PositiveIntegerField(verbose_name='هزینه ارسال')
-
+    order_note = models.CharField(max_length=300, db_index=True, null=True, blank=True, verbose_name='یاداشت سفارش')
+    
     def __str__(self):
         return self.product
 

@@ -9,6 +9,7 @@ from django.http import HttpRequest, JsonResponse
 from .models import Cart, Support, SupportRequest
 from django.shortcuts import render, redirect
 from rest_framework import generics, filters
+from root.local_settings import fadax_API
 from product.forms import DiscountForm
 from django.contrib import messages
 from .models import Fadax_payment
@@ -285,7 +286,7 @@ def checkout_view(request):
         url = f"https://gateway.fadax.ir/supplier/v1/eligible?amount={total_price}&mobile=0{int(phone)}"
         headers = {
             "accept": "application/json",
-            "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Imtpa3BpY2siLCJpYXQiOjE2OTczNTMzMTd9.Dma35yx2c1L8j9Cwwk2y3McIaX_nAMWI4kXqoTF87Yw",
+            "Authorization": f"Bearer {fadax_API}",
             "Content-Type": "application/json"
             }
 
