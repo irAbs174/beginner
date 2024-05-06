@@ -127,7 +127,7 @@ def add_to_cart(request):
             product_quantity = int(request.POST.get('number'))
             product_color_text = pq[0].PRODUCT_COLORS.values().filter(id=int(request.POST.get('selected_color_text')))[0]['color_title']
             product_color_quantity = pq[0].PRODUCT_COLORS.values().filter(id=int(request.POST.get('selected_color_text')))[0]['pquantity']
-            product_image = pq[0].image.get_rendition('max-550x450').url,
+            product_image = pq[0].image.get_rendition('fill-250x280').url,
             if pq[0].PRODUCT_OFFER.values()[0]['value']:
                 add_cart_date = pq[0].PRODUCT_OFFER.values()[0]['value']
             else:
@@ -144,13 +144,13 @@ def add_to_cart(request):
                                 Cart.objects.create(
                                     user = request.user.phoneNumber,
                                     product_id = product_id,
-                                    product_title = product_title,
-                                    product_collection = product_collection,
+                                    product_title = pq[0].title,
+                                    product_collection = pq[0].collection.values()[0]['title'],
                                     quantity = product_quantity,
                                     price = add_cart_date,
-                                    image = product_image,
-                                    color = product_color_text,
-                                    color_quantity = product_color_quantity,
+                                    image = pq[0].image.get_rendition('fill-250x280').url,
+                                    color = pq[0].PRODUCT_COLORS.values().filter(id=int(request.POST.get('selected_color_text')))[0]['color_title'],
+                                    color_quantity = pq[0].PRODUCT_COLORS.values().filter(id=int(request.POST.get('selected_color_text')))[0]['pquantity'],
                                 )
                                 Cart.update_total(request.user.phoneNumber)
                                 return JsonResponse({'status':f"محصول {product.product_title} با موفقیت به سبد خرید اضافه شد.", 'success': True})
@@ -158,13 +158,13 @@ def add_to_cart(request):
                                 Cart.objects.create(
                                     user = request.user.phoneNumber,
                                     product_id = product_id,
-                                    product_title = product_title,
-                                    product_collection = product_collection,
+                                    product_title = pq[0].title,
+                                    product_collection = pq[0].collection.values()[0]['title'],
                                     quantity = product_quantity,
                                     price = product.price,
-                                    image = product_image,
-                                    color = product_color_text,
-                                    color_quantity = product_color_quantity,
+                                    image = pq[0].image.get_rendition('fill-250x280').url,
+                                    color = pq[0].PRODUCT_COLORS.values().filter(id=int(request.POST.get('selected_color_text')))[0]['color_title'],
+                                    color_quantity = pq[0].PRODUCT_COLORS.values().filter(id=int(request.POST.get('selected_color_text')))[0]['pquantity'],
                                 )
                                 Cart.update_total(request.user.phoneNumber)
                                 return JsonResponse({'status':f"محصول {product.product_title} با موفقیت به سبد خرید اضافه شد.", 'success': True})
