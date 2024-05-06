@@ -152,18 +152,6 @@
                                                     <li class="nav-item"><a href="/shop/${response.status[i].slug}"
                                                                             class="nav-item product-box-hover-item me-3">مشاهده
                                                         محصول</a></li>
-                                                    <li class="nav-item"><a href=""
-                                                                            class="nav-item product-box-hover-item product-box-hover-item-btn me-1"
-                                                                            data-bs-toggle="tooltip"
-                                                                            data-bs-placement="top"
-                                                                            data-bs-title="افزودن به سبد خرید"><i
-                                                            class="bi bi-basket"></i></a></li>
-                                                    <li class="nav-item"><a href=""
-                                                                            class="nav-item product-box-hover-item product-box-hover-item-btn"
-                                                                            data-bs-toggle="tooltip"
-                                                                            data-bs-placement="top"
-                                                                            data-bs-title="افزودن به علاقه ها"><i
-                                                            class="bi bi-heart"></i></a></li>
                                                 </ul>
                                             </nav>
                                         </div>
@@ -202,18 +190,6 @@
                                                     <li class="nav-item"><a href="/shop/${response.status[i].slug}"
                                                                             class="nav-item product-box-hover-item me-3">مشاهده
                                                         محصول</a></li>
-                                                    <li class="nav-item"><a href=""
-                                                                            class="nav-item product-box-hover-item product-box-hover-item-btn me-1"
-                                                                            data-bs-toggle="tooltip"
-                                                                            data-bs-placement="top"
-                                                                            data-bs-title="افزودن به سبد خرید"><i
-                                                            class="bi bi-basket"></i></a></li>
-                                                    <li class="nav-item"><a href=""
-                                                                            class="nav-item product-box-hover-item product-box-hover-item-btn"
-                                                                            data-bs-toggle="tooltip"
-                                                                            data-bs-placement="top"
-                                                                            data-bs-title="افزودن به علاقه ها"><i
-                                                            class="bi bi-heart"></i></a></li>
                                                 </ul>
                                             </nav>
                                         </div>
@@ -315,18 +291,6 @@
                                                     <li class="nav-item"><a href="/shop/${response.status[i].slug}"
                                                                             class="nav-item product-box-hover-item me-3">مشاهده
                                                         محصول</a></li>
-                                                    <li class="nav-item"><a href=""
-                                                                            class="nav-item product-box-hover-item product-box-hover-item-btn me-1"
-                                                                            data-bs-toggle="tooltip"
-                                                                            data-bs-placement="top"
-                                                                            data-bs-title="افزودن به سبد خرید"><i
-                                                            class="bi bi-basket"></i></a></li>
-                                                    <li class="nav-item"><a href=""
-                                                                            class="nav-item product-box-hover-item product-box-hover-item-btn"
-                                                                            data-bs-toggle="tooltip"
-                                                                            data-bs-placement="top"
-                                                                            data-bs-title="افزودن به علاقه ها"><i
-                                                            class="bi bi-heart"></i></a></li>
                                                 </ul>
                                             </nav>
                                         </div>
@@ -379,16 +343,6 @@
                                             <li class="nav-item"><a href="/shop/${response.status[i].slug}"
                                                                     class="nav-item product-box-hover-item me-3">مشاهده
                                                 محصول</a></li>
-                                            <li onClick="cart" class="nav-item"><a
-                                                                    class="nav-item product-box-hover-item product-box-hover-item-btn me-1"
-                                                                    data-bs-toggle="tooltip" data-bs-placement="top"
-                                                                    data-bs-title="افزودن به سبد خرید"><i
-                                                    class="bi bi-basket"></i></a></li>
-                                            <li onClick="fev" class="nav-item"><a
-                                                                    class="nav-item product-box-hover-item product-box-hover-item-btn"
-                                                                    data-bs-toggle="tooltip" data-bs-placement="top"
-                                                                    data-bs-title="افزودن به علاقه ها"><i
-                                                    class="bi bi-heart"></i></a></li>
                                         </ul>
                                     </nav>
                                 </div>
@@ -522,16 +476,6 @@
                                         <li class="nav-item"><a href="/shop/${response.context[i].slug}"
                                                                 class="nav-item product-box-hover-item me-3">مشاهده
                                             محصول</a></li>
-                                        <li class="nav-item"><a href=""
-                                                                class="nav-item product-box-hover-item product-box-hover-item-btn me-1"
-                                                                data-bs-toggle="tooltip" data-bs-placement="top"
-                                                                data-bs-title="افزودن به سبد خرید"><i
-                                                class="bi bi-basket"></i></a></li>
-                                        <li class="nav-item"><a href=""
-                                                                class="nav-item product-box-hover-item product-box-hover-item-btn"
-                                                                data-bs-toggle="tooltip" data-bs-placement="top"
-                                                                data-bs-title="افزودن به علاقه ها"><i
-                                                class="bi bi-heart"></i></a></li>
                                     </ul>
                                 </nav>
                             </div>
@@ -643,9 +587,6 @@
                                     <span>تعداد:</span>
                                     <span class="fw-bold main-color-one-color">${response.status[i].number}</span>
                                 </div>
-                                <div class="cart-canvas-delete">
-                                    <a href="" class="btn"><i class="bi bi-x"></i></a>
-                                </div>
                             </div>
                         </div>
                     </div>
@@ -676,6 +617,7 @@
         },//end suncces
     })//endajax
   }//end function
+
 
   load_two_random_products();
   load_five_random_products();

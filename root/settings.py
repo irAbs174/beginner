@@ -147,6 +147,7 @@ TEMPLATES = [
                 'cart.context_processors.cart_items',
                 'cart.context_processors.comparison_items',
                 'cart.context_processors.cart_total',
+                'cart.context_processors.cart_offer',
                 'cart.context_processors.update_total',
                 'cart.context_processors.support_requests',
                 'cart.context_processors.cart_count',

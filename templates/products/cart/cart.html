@@ -103,11 +103,11 @@
                                                             </div>
                                                             <div class="item d-flex align-items-center mt-3">
                                                                 <div class="counter">
-                                                                    <input type="text" name="count" class="counter"
+                                                                    <input onchange="updateCart('{{product.product_title}}',this.value)" type="text" name="count" class="counter"
                                                                            value="{{product.quantity}}">
                                                                 </div>
-                                                                <div class="remove danger-label ms-3">
-                                                                    <a href="" class="">
+                                                                <div onclick="removeItem('{{product.product_title}}')" class="remove danger-label ms-3">
+                                                                    <a class="">
                                                                         <i class="bi bi-trash-fill"></i>
                                                                     </a>
                                                                 </div>
@@ -165,7 +165,7 @@
 
                                 <div class="d-flex factor-item mb-3 align-items-center justify-content-between">
                                     <h5 class="title-font mb-0 h6">تخفیف کالا ها</h5>
-                                    <p class="mb-0 font-18 cart_offer">در حال محاسبه</p>
+                                    <p class="mb-0 font-18 cart_offer">{{cart_offer}}</p>
                                 </div>
 
                                 <div class="d-flex factor-item mb-3 align-items-center justify-content-between">
@@ -256,6 +256,83 @@
 <script src="{% static '' %}assets/js/main.js"></script>
 
 <script>
+    function updateCart(productTitle, value){
+  let data = {
+    'product_title': productTitle,
+    'quantity':value,
+  }
+  $.ajax({
+    url: '/cart/update',
+    type: 'POST',
+    data: data,
+    success: function(response) {
+      if (response.success === false) {
+        Swal.fire({
+          icon: "error",
+          title: response.status,
+          showConfirmButton: false,
+          timer: 3000,
+        });
+      } else {
+        Swal.fire({
+          icon: "success",
+          title: response.status,
+          showConfirmButton: false,
+          timer: 2000,
+        });
+        location.reload(true)
+      }
+    },
+    error: function(xhr, status, error) {
+      console.log(status);
+      Swal.fire({
+        icon: "error",
+        title: status,
+        showConfirmButton: false,
+        timer: 3000,
+      });
+    }
+  });
+}
+          function removeItem(productTitle){
+       let data = {
+           'product_title': productTitle,
+       };
+       // Send request to server
+       $.ajax({
+         url: '/cart/remove',
+         type: 'POST',
+         data: data,
+         success: function(response) {
+           if (response.success === false) {
+             Swal.fire({
+               icon: "error",
+               title: response.status,
+               showConfirmButton: false,
+               timer: 3000,
+             });
+           } else {
+             Swal.fire({
+               icon: "success",
+               title: response.status,
+               showConfirmButton: false,
+               timer: 2000,
+             });
+             location.reload(true)
+           }
+         },
+         error: function(xhr, status, error) {
+           console.log(status);
+           Swal.fire({
+             icon: "error",
+             title: status,
+             showConfirmButton: false,
+             timer: 3000,
+           });
+         }
+       });
+     }
+
     function separateDigitsWithComma(number) {
     // Convert the number to a string
     var numberString = String(number);
@@ -322,9 +399,6 @@
                                 <div class="cart-canvas-count">
                                     <span>تعداد:</span>
                                     <span class="fw-bold main-color-one-color">${response.status[i].number}</span>
-                                </div>
-                                <div class="cart-canvas-delete">
-                                    <a href="" class="btn"><i class="bi bi-x"></i></a>
                                 </div>
                             </div>
                         </div>
