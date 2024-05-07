@@ -138,7 +138,7 @@ def load_brand_items(request):
         item = {
             'id': bps.id,
             'title': bps.title,
-            'image': bps.image.get_rendition('fill-75x75').url,
+            'image': bps.image.get_rendition('fill-250x280').url,
         }
         context.append(item)
 
@@ -152,7 +152,7 @@ def load_category_items(request):
             item = {
                 'id': c.id,
                 'title': c.title,
-                'image': c.image.get_rendition('fill-100x100').url,
+                'image': c.image.get_rendition('fill-250x280').url,
                 'count': 0,
             }
             count = InventoryItem.objects.filter(collection=c.id).count()

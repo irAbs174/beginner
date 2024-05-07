@@ -499,6 +499,7 @@
             if(response.success ===false){
                 internet_connection_error();
             }else{
+                $(".category_items").html(``)
                 for(let i = 0; i <= response.status.length; i++){
                     $(".category_items").append(`
                     <div class="col-lg-2 col-sm-6">
@@ -527,6 +528,7 @@
             if(response.success ===false){
                 internet_connection_error();
             }else{
+                $(`.load_brand_items`).html('')
                 for(let i = 0; i <= response.status.length; i++){
                     $(`.load_brand_items`).append(`
                     <div class="col-md-2 col-6">

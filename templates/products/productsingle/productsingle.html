@@ -46,7 +46,9 @@
     <div class="container-fluid">
         <nav aria-label="breadcrumb" class="my-lg-0 my-2">
             <ol class="breadcrumb mb-0 bread_crump">
-                
+                <div class="spinner-grow text-danger" role="status">
+                    <span class="sr-only">Loading...</span>
+                  </div>
             </ol>
         </nav>
     </div>
@@ -78,7 +80,13 @@
                             <div class="pro-gallery-parent">
                                 <div class="swiper product-gallery">
                                     <div class="swiper-wrapper product_slider" title="برای بزرگنمایی تصویر دابل کلیک کنید">
-                                        
+                                        <div class="swiper-slide">
+                                            <div class="swiper-zoom-container">
+                                                <div class="spinner-border text-danger" role="status">
+                                                    <span class="sr-only">Loading...</span>
+                                                  </div>
+                                            </div>
+                                        </div>
                                     </div>
                                     <div class="swiper-button-next d-none d-lg-flex"></div>
                                     <div class="swiper-button-prev d-none d-lg-flex"></div>
@@ -111,7 +119,9 @@
                             <div class="row align-items-center gy-3">
                                 <div class="col-sm-6">
                                     <div class="d-flex align-items-center justify-content-sm-start justify-content-center product_price">
-                                        
+                                        <div class="spinner-grow text-danger" role="status">
+                                            <span class="sr-only">Loading...</span>
+                                          </div>
                                     </div>
                                 </div>
                                 <div class="col-sm-6 text-center">
@@ -126,7 +136,9 @@
                                 انتخاب رنگ کالا
                             </h5>
                             <div class="product-meta-color-items product_color_select">
-
+                                <div class="spinner-grow text-danger" role="status">
+                                    <span class="sr-only">Loading...</span>
+                                  </div>
                             </div>
                         </div>
                         <div class="product-meta-overal my-3 bottom-border">
@@ -205,9 +217,9 @@
                                         <input type="checkbox" class="read-more-state" id="readMore3"/>
                                         <!-- والد بیشتر ، کمتر ، تمام متن توضیحات باید داخل این تگ قرار بگیرند -->
                                         <div class="read-more-wrap product_short_desc">
-                                            
-                                            
-                                            
+                                            <div class="spinner-grow text-danger" role="status">
+                                                <span class="sr-only">Loading...</span>
+                                              </div>
                                         </div>
                                         <!-- پایان والد بیشتر کمتر -->
                                     </div>
@@ -217,8 +229,9 @@
                                         <input type="checkbox" class="read-more-state" id="readMore2"/>
                                         <!-- والد بیشتر ، کمتر ، تمام متن توضیحات باید داخل این تگ قرار بگیرند -->
                                         <div class="read-more-wrap product_detail_keywords">
-                                            
-                                            
+                                            <div class="spinner-grow text-danger" role="status">
+                                                <span class="sr-only">Loading...</span>
+                                              </div>
                                         </div>
                                     </div>
                                 </div>
@@ -289,7 +302,9 @@
                                         </div>
                                     </div>
                                     <div class="comment mb-4 comments_list">
-                                        
+                                        <div class="spinner-grow text-danger" role="status">
+                                            <span class="sr-only">Loading...</span>
+                                          </div>
                                     </div>
                                 </div>
                             </div>
@@ -488,6 +503,7 @@
                 <h5 class="font-22 mb-2 title-font">${data.status.keywords}</h5>
                 <h7>${data.status.description}</h7>
                 `);
+                $('.product_price').html("")
                 if(data.status.offer){
                     $('.product_price').append(`<p class="mb-0 old-price font-22 text-muted-two text-decoration-line-through me-3">
                                                 ${data.status.price}</p>
@@ -508,6 +524,7 @@
                 $('.product_brand').html(`<span class="text-muted-two me-2">برند</span><span>${data.status.brand}</span>`);
 
                 if(data.status.colors && data.status.colors.length > 0) {
+                    $('.product_color_select').html("")
                     for(let i = 0; i < data.status.colors.length; i++){
                         $('.product_color_select').append(`
                         <input type="radio" class="btn-check" name="options"value="${data.status.colors[i]['id']}" id="option${i}" autocomplete="off" checked>
@@ -520,6 +537,7 @@
                 }
 
                 if(data.status.slider && data.status.slider.length > 0) {
+                    $('.product_slider').html("")
                     for(let i = 0; i < data.status.slider.length; i++){
                         $('.product_slider').append(`
                             <div class="swiper-slide">
