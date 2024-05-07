@@ -5,6 +5,7 @@ from brand.models import BrandPage as brand
 from brand.models import BrandPage
 from category.models import CategoryProduct
 from django.http import JsonResponse
+from index.models import Comments
 from .models import InventoryItem
 import random
 
@@ -24,10 +25,33 @@ def single_product_data(request):
         'brand': pq[0].brand.title,
         'colors': [],
         'collection' : [],
-        'image': pq[0].image.get_rendition('max-550x450').url,
+        'image': pq[0].image.get_rendition('fill-680x680').url,
         'slider': [],
+        'keywords': pq[0].keywords,
+        'description': pq[0].description,
+        'short_description': pq[0].short_description,
+        'product_jense': pq[0].product_jense,
+        'product_wight': pq[0].product_wight,
+        'product_abad': pq[0].product_abad,
+        'product_garr': pq[0].product_garr,
+        'total_visits': pq[0].total_visits,
+        'comments': {}
     }
+    #set comments data
+    comments = []
+    for i in Comments.objects.all().filter(post=sku):
+        comment_item = {
+            'user': i.user,
+            'name': i.name,
+            'body': i.body,
+            'rate': i.title,
+            'created_at': i.user,
+        }
+        comments.append(comment_item)
+
+    item['comments'] = comments
     # Send product colors
+
     colors = []
     for i in pq[0].PRODUCT_COLORS.values():
         if not i['pquantity']:

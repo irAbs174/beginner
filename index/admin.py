@@ -6,7 +6,15 @@ developer : #ABS
 # Import all requirements
 from django_summernote.admin import SummernoteModelAdmin
 from django.contrib import admin
-from .models import Visit, Custom_pages
+from .models import Visit, Custom_pages, Comments
+
+
+class CommentsAdmin(admin.ModelAdmin):
+    list_display = ("post", "title", "user", "created_at")
+    list_filter = ("post", "created_at")
+    search_fields = ["post", "content"]
+
+admin.site.register(Comments, CommentsAdmin)
 
 
 class VisitAdmin(admin.ModelAdmin):

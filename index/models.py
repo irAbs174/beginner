@@ -71,7 +71,7 @@ class Comments(models.Model):
     created_at = models.DateTimeField(auto_now_add=True, verbose_name='تاریخ ثبت نظر',null=True, blank=True)
 
     def __str__(self):
-        return self.name
+        return self.post
 
     class Meta:
         verbose_name = 'بازخورد کاربر'

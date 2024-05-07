@@ -373,7 +373,7 @@ class InventoryItem(RoutablePageMixin, Page):
         APIField('is_active'),
         APIField('is_available'),
         APIField('total_visits'),
-        APIField('image', serializer=ImageRenditionField('fill-250x280')),
+        APIField('image', serializer=ImageRenditionField('fill-680x680')),
     ]
 
     @property
