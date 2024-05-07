@@ -2,13 +2,61 @@
 <!doctype html>
 <html class="no-js" lang="Fa_IR" dir="rtl">
      <head>
+      <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-QE4272TCQM"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-QE4272TCQM');
+</script>
           <script src="{% static 'js/jquery/jquery-3.6.0.min.js' %}"></script>
           <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
        {% block HEAD %}
             {% endblock %}
+            <style>
+               /* Center the loader */
+               .loader {
+                 position: fixed;
+                 left: 0;
+                 top: 0;
+                 right: 0;
+                 bottom: 0;
+                 z-index: 9999;
+                 background-color: rgba(255, 255, 255, 0.7);
+                 display: flex;
+                 justify-content: center;
+                 align-items: center;
+               }
+             
+               /* Loader icon */
+               .loader .spinner-border {
+                 width: 3rem;
+                 height: 3rem;
+                 color: #007bff;
+               }
+               .loader7{width:100px;height:100px;margin:50px auto;position:relative}
+               .loader7 .loader-inner-1,.loader7 .loader-inner-2,.loader7 .loader-inner-3,.loader7 .loader-inner-4{display:block;width:20px;height:20px;border-radius:20px;position:absolute}
+               .loader7 .loader-inner-1:before,.loader7 .loader-inner-2:before,.loader7 .loader-inner-3:before,.loader7 .loader-inner-4:before{content:"";display:block;width:20px;height:20px;border-radius:20px;position:absolute;right:0;animation-name:loading-7;animation-iteration-count:infinite;animation-direction:normal;animation-duration:2s}
+               .loader7 .loader-inner-1{top:0;left:0;transform:rotate(70deg)}
+               .loader7 .loader-inner-1:before{background:#06aed5}
+               .loader7 .loader-inner-2{top:0;right:0;transform:rotate(160deg)}
+               .loader7 .loader-inner-2:before{background:#ec008c}
+               .loader7 .loader-inner-3{bottom:0;right:0;transform:rotate(-110deg)}
+               .loader7 .loader-inner-3:before{background:#ffbf00}
+               .loader7 .loader-inner-4{bottom:0;left:0;transform:rotate(-20deg)}
+               .loader7 .loader-inner-4:before{background:#079c00}
+               @keyframes loading-7{
+               0%{width:20px;right:0}
+               30%{width:120px;right:-100px}
+               60%{width:20px;right:-100px}
+               }
+             </style>
         </head>
      
 <body>
+
 {% include 'layout/header.html' %}
      <div class="zone">
                {% block BODY %}
@@ -19,6 +67,27 @@
      {% endblock %}
      </div>
      {% include 'layout/cart-convas.html' %}
+     <!-- Loader HTML -->
 
+     <div class="container loader">
+          <br/><br/>
+          <div class="row">
+              <div class="col-md-12">
+                  <div class="loader7">
+                      <span class="loader-inner-1"></span>
+                      <span class="loader-inner-2"></span>
+                      <span class="loader-inner-3"></span>
+                      <span class="loader-inner-4"></span>
+                  </div>
+              </div>
+          </div>
+          <br/><br/>
+      </div>
+
+<script>
+  $(window).on('load', function() {
+    $(".loader").fadeOut("slow");
+  });
+</script>
 </body>
 </html>

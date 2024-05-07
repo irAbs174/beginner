@@ -52,6 +52,7 @@ urlpatterns = [
     path('cart/', include('cart.urls')),
     
     path(SITE_API, api_router.urls),
+    path('sitemap', sitemap),
     
     re_path(r'^sitemap.xml$', sitemap),
     re_path(r'^info/', include('monitor.info'), name='info'),

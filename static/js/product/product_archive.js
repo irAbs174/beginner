@@ -83,6 +83,7 @@ function set_page_data(url, data) {
         $('input[name=page_number]').val(response.next_pagintage);
         $('input[name=pagintage_key]').val(response.pagintage_key);
         let products = response.context;
+        $('#PRODUCT').html("");
         for (let i = 0; i < products.length; i++) {
           if (products === 'end'){
             $('.load-more').hide();
