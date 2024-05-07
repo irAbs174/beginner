@@ -3,8 +3,43 @@
 developer : #ABS
 """
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import Custom_pages
+from django.views.decorators.csrf import csrf_exempt
+from .models import Custom_pages, Comments
+from django.http import JsonResponse
 
+
+@csrf_exempt
+def submit_comment(request):
+    post = request.POST.get('post')
+    name = request.POST.get('name')
+    body = request.POST.get('body')
+    rate = request.POST.get('rate')
+    if request.user.is_authenticated:
+        if post:
+            if name:
+                if body:
+                    if rate:
+                        if Comments.objects.all().filter(user=request.user.phoneNumber, post=post).exists():
+                            return JsonResponse({'status': 'کاربر گرامی شما برای این کالا قبلا دیدگاه ثبت نموده اید', 'success': False})
+                        else:
+                            Comments.objects.create(
+                                title = rate,
+                                user = request.user.phoneNumber,
+                                name = name,
+                                post = post,
+                                body = body,
+                            )
+                            return JsonResponse({'status': 'با تشکر از شما برای ثبت دیدگاه خود', 'success': True})
+                    else:
+                        return JsonResponse({'status': 'لطفا نظر خود را وارد نمایید', 'success': False})
+                else:
+                    return JsonResponse({'status': 'لطفا نظر خود را بنویسید', 'success': False})
+            else:
+                return JsonResponse({'status': 'لطفا نام خود را وارد نمایید', 'success': False})
+        else:
+            return JsonResponse({'status': 'درخواست نامعتبر', 'success': False})
+    else:
+        return JsonResponse({'status': 'برای ثبت دیدگاه ابتدا وارد سایت شوید', 'success': False})
 
 # for site custom pages
 def custom_pages_view(request, Page):

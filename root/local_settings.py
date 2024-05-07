@@ -22,7 +22,7 @@ LOCAL_ACCOUNT_USERNAME_BLACKLIST = ["admin", 'security', 'secure', 'protection',
 CSRF_LOCAL_TRUSTED_ORIGINS = ['https://8000-cs-256274267521-default.cs-europe-west1-iuzs.cloudshell.dev',]
 
 # ALLOWED LOCAL HOSTS :
-ALLOWED_LOCAL_HOSTS = ['127.0.0.1', '8000-cs-256274267521-default.cs-europe-west1-iuzs.cloudshell.dev',]
+ALLOWED_LOCAL_HOSTS = ['127.0.0.1','kikpick.com', '8000-cs-256274267521-default.cs-europe-west1-iuzs.cloudshell.dev',]
 
 # SECRET KEY
 SEC_KEY = '!!!!!!!!!!!!!!!!YOUR_SEC_KEY_HERE!!!!!!!!!!!!!!!'
