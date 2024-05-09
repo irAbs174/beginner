@@ -8,7 +8,6 @@
 {% block CSS %}
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
 {% endblock %}
-{% if status %}
 {% block CONTENT %}
 <script>
     Swal.fire({
@@ -16,9 +15,7 @@
         showConfirmButton: false,
     });
 </script>
-{% else %}
 <script>
     window.location.href = "/";
 </script>
-{% endif %}
 {% endblock %}
