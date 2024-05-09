@@ -11,11 +11,14 @@
 {% block CONTENT %}
 <script>
     Swal.fire({
+        icon:'info',
         title: '{{message}}',
-        showConfirmButton: false,
+        showConfirmButton: true,
+        focusConfirm: true,
+        confirmButtonText: 'تایید',
+        preConfirm: () => {
+        window.location.href = "/";
+      }
     });
-</script>
-<script>
-    window.location.href = "/";
 </script>
 {% endblock %}
