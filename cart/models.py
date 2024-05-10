@@ -8,10 +8,11 @@ from django.db import models
 class Fadax_payment(models.Model):
     payment_time = models.DateTimeField(auto_now_add=True, null=True, blank=True)
     order_id = models.CharField(max_length=30, verbose_name='شماره سفارش', null=True, blank=True)
+    transactionId = models.CharField(max_length=30, verbose_name='شماره تراکنش', null=True, blank=True)
     customer = models.CharField(max_length=30, verbose_name='مشتری', null=True, blank=True)
     refId = models.CharField(max_length=30, verbose_name='شماره ارجاع', null=True, blank=True)
     fadaxTrackingId = models.CharField(max_length=30, verbose_name='شناسه ارجاع فدکس', null=True, blank=True)
-    fadaxTrackingNumber = models.CharField(max_length=30, verbose_name='شماره تراکنش فدکس', null=True, blank=True)
+    fadaxTrackingNumber = models.CharField(max_length=30, verbose_name='کد رهگیری فدکس', null=True, blank=True)
     status = models.CharField(max_length=30, verbose_name='وضعیت تراکنش', null=True, blank=True)
     paymentToken = models.CharField(max_length=30, verbose_name='وضعیت تراکنش', null=True, blank=True)
     class Meta:

@@ -8,17 +8,17 @@
 {% block CSS %}
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
 {% endblock %}
-{% if status %}
 {% block CONTENT %}
 <script>
     Swal.fire({
+        icon:'info',
         title: '{{message}}',
-        showConfirmButton: false,
+        showConfirmButton: true,
+        focusConfirm: true,
+        confirmButtonText: 'تایید',
+        preConfirm: () => {
+        window.location.href = "/";
+      }
     });
 </script>
-{% else %}
-<script>
-    window.location.href = "/";
-</script>
-{% endif %}
 {% endblock %}

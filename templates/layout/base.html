@@ -4,13 +4,7 @@
      <head>
       <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-QE4272TCQM"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
 
-  gtag('config', 'G-QE4272TCQM');
-</script>
           <script src="{% static 'js/jquery/jquery-3.6.0.min.js' %}"></script>
           <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
        {% block HEAD %}
@@ -56,11 +50,133 @@
         </head>
      
 <body>
-
-{% include 'layout/header.html' %}
      <div class="zone">
+               <script>
+               function favourite_items(menu){
+    $(`.zone`).html(`
+    <div class="slider-title mt-4">
+                            <div class="slider-title-desc">
+                                <div class="slider-title-title pb-4">
+                                    <h2 class="h1"><span class="title-font main-color-one-color"> ->  کالاهای مورد علاقه  <-</span></h2>
+                                </div>
+                            </div>
+                            <div class="row g-4 searcch-result"><a href="${window.location.href}"><button class="btn btn-danger"><i class="bi bi-arrow-left">بازگشت</i></button></a>
+                        </div>
+    `);
+    $(`.zone`).append(`
+    <div class="penel-form">
+                            <div class="content-box">
+                                <div class="container-fluid">
+                                    <div class="row g-3">
+                                      {% for item in favourite_items %}
+                                        <div class="col-lg-4 col-md-6">
+                                            <div class="cart-canvas border p-3">
+                                                <div class="row align-items-center">
+                                                    <div class="col-4 ps-0">
+                                                        <img src="https://kikpick.com/{{item.image}}" alt="">
+                                                    </div>
+                                                    <div class="col-8">
+                                                        <a href="/shop/{{item.slug}}">
+                                                            <h3 class="text-overflow-1 title-font font-14">
+                                                              {{item.product_title}}                              
+                                                            </h3>
+                                                        </a>
+                                                        <div class="cart-canvas-price my-3 d-flex align-items-center">
+                                                            <h6 class="title-font main-color-one-color">{{item.price}} تومان</h6>
+                                                        </div>
+                                                        <div class="cart-canvas-foot d-flex align-items-center justify-content-end">
+                                                            <div class="cart-canvas-delete">
+                                                                <a href="" class="btn"><i class="bi bi-x"></i></a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+    `);
+    $(`.penel-nav-mobile`).html(`
+    <div class="panel-nav-nav">
+                          <nav class="navbar profile-box-nav">
+                              <ul class="navbar-nav flex-column">
+                                  <li class="nav-item"><a href="" class="nav-link">
+                                      <i class="bi bi-house-door"></i>پروفایل</a>
+                                  </li>
+                                  <li class="nav-item"><a href="" class="nav-link">
+                                      <i class="bi bi-cart-check"></i>سفارش های من <span class="badge rounded-pill badge-spn">{{ order_items.count }}</span></a>
+                                  </li>
+                                  <li class="nav-item"><a href="" class="nav-link">
+                                      <i class="bi bi-pin-map"></i>آدرس های من</a>
+                                  </li>
+                                  <li class="nav-item"><a href="" class="nav-link">
+                                      <i class="bi bi-bell"></i>پیام ها و اطلاعیه ها</a>
+                                  </li>
+                                  <li class="nav-item"><a href="" class="nav-link">
+                                      <i class="bi bi-chat-dots"></i>نظرات من</a>
+                                  </li>
+                                  <li class="nav-item"><a href="" class="nav-link">
+                                      <i class="bi bi-question-circle"></i>درخواست پشتیبانی</a>
+                                  </li>
+                                  <li class="nav-item active">
+                                  <a onclick="favourite_items();"><i class="bi bi-cart-check "></i>علاقه مندی ها</a>
+                                  </li>
+                                  <li class="nav-item"><a href="" class="nav-link">
+                                      <i class="bi bi-gift"></i>کد های تخفیف من</a>
+                                  </li>
+                                  <li class="nav-item"><a href="" class="nav-link">
+                                      <i class="bi bi-arrow-right-square"></i>خروج از حساب کاربری</a>
+                                  </li>
+                              </ul>
+                          </nav>
+                      </div>
+    `);
+    $(`.penel-nav-desktop`).html(`
+    <div class="panel-nav-nav">
+                          <nav class="navbar profile-box-nav">
+                              <ul class="navbar-nav flex-column">
+                                  <li class="nav-item"><a href="" class="nav-link">
+                                      <i class="bi bi-house-door"></i>پروفایل</a>
+                                  </li>
+                                  <li class="nav-item"><a href="" class="nav-link">
+                                      <i class="bi bi-cart-check"></i>سفارش های من <span class="badge rounded-pill badge-spn">{{ order_items.count }}</span></a>
+                                  </li>
+                                  <li class="nav-item"><a href="" class="nav-link">
+                                      <i class="bi bi-pin-map"></i>آدرس های من</a>
+                                  </li>
+                                  <li class="nav-item"><a href="" class="nav-link">
+                                      <i class="bi bi-bell"></i>پیام ها و اطلاعیه ها</a>
+                                  </li>
+                                  <li class="nav-item"><a href="" class="nav-link">
+                                      <i class="bi bi-chat-dots"></i>نظرات من</a>
+                                  </li>
+                                  <li class="nav-item"><a href="" class="nav-link">
+                                      <i class="bi bi-question-circle"></i>درخواست پشتیبانی</a>
+                                  </li>
+                                  <li class="nav-item active"><a onclick="favourite_items();" class="nav-link">
+                                      <i class="bi bi-heart "></i>محصولات مورد علاقه</a>
+                                  </li>
+                                  <li class="nav-item"><a href="" class="nav-link">
+                                      <i class="bi bi-gift"></i>کد های تخفیف من</a>
+                                  </li>
+                                  <li class="nav-item"><a href="{% url 'logout' %}" class="nav-link">
+                                      <i class="bi bi-arrow-right-square"></i>خروج از حساب کاربری</a>
+                                  </li>
+                              </ul>
+                          </nav>
+                      </div>
+    `);
+  };//end func
+
+                $(window).on('load', function() {
+                  $(".loader").fadeOut("slow");
+                });
+              </script>
+               {% include 'layout/header.html' %}
                {% block BODY %}
-               
             {% block JS %}
 
             {% endblock %}
@@ -83,11 +199,5 @@
           </div>
           <br/><br/>
       </div>
-
-<script>
-  $(window).on('load', function() {
-    $(".loader").fadeOut("slow");
-  });
-</script>
 </body>
 </html>

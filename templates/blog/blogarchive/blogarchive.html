@@ -1,42 +1,307 @@
-{% extends "base.html" %}
+{% extends 'layout/base.html' %}
 {% load static %}
-{% load wagtailcore_tags %}
-{% block HEADING %}
-<meta name="description" content="" />
-<meta name="keywords" content="" />
-{% endblock %}
-{% block TITLE %}{{ page.title }}{% endblock %}
-{% block CSS %}
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
-{% endblock %}
-{% block CONTENT %}
-    <header class="headerblog">
-      <div class="h1divhead">
-        <h1 class="blogh1 white-color">{{ page.title }}</h1>
-      </div>
-    </header>
-    <section class="container-fluid">
-      <div class="row">
-        <section
-          class="col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12"
-        >
-          <div id="blog_posts_archive" class="row">
+{% block HEAD %}
+    <meta charset="utf-8">
+    <title>کیک پیک | مجله</title>
+    <meta name="description" content="مجله کیک پیک , مطالعه و سرگرمی">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-          </div>
-          </section>
+    <meta property="og:title" content="">
+    <meta property="og:type" content="">
+    <meta property="og:url" content="">
+    <meta property="og:image" content="">
+
+    <link rel="apple-touch-icon" sizes="180x180" href="{% static '' %}assets/img/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="{% static '' %}assets/img/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="{% static '' %}assets/img/favicon-16x16.png">
+    <!-- Place favicon.ico in the root directory -->
+
+    <link rel="stylesheet" href="{% static '' %}assets/css/normalize.css">
+    <link rel="stylesheet" href="{% static '' %}assets/font/bootstrap-icon/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="{% static '' %}assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{% static '' %}assets/js/plugin/swiper/swiper-bundle.min.css">
+    <link rel="stylesheet" href="{% static '' %}assets/js/plugin/countdown/countdown.css">
+    <link rel="stylesheet" href="{% static '' %}assets/js/plugin/rasta-contact/style.css">
+    <link rel="stylesheet" href="{% static '' %}assets/js/plugin/bootstrap-touchspin/jquery.bootstrap-touchspin.min.css">
+    <link rel="stylesheet" href="{% static '' %}assets/css/main.css">
+    <link rel="stylesheet" href="{% static '' %}assets/css/responsive.css">
+
+    <meta name="theme-color" content="#f4f5f9">
+    {% endblock %}
+    
+    {% block BODY %}
+    
+    {% include 'layout/menu.html' %}
+
+<!-- start breadcroumb -->
+
+<div class="bread-crumb py-4">
+    <div class="container-fluid">
+        <nav aria-label="breadcrumb" class="my-lg-0 my-2">
+            <ol class="breadcrumb mb-0">
+                <li class="breadcrumb-item"><a href="/" class="font-14 text-muted-two">خانه</a></li>
+                <li class="breadcrumb-item"><a href="/blog" class="font-14 text-muted-two">مجله</a></li>
+            </ol>
+        </nav>
+    </div>
+</div>
+
+<!-- end breadcroumb -->
+
+<!-- main content page -->
+<div class="content">
+    <div class="container-fluid">
+        <div class="blog-heeader">
+            <div class="row gy-3">
+                <div class="col-md-8">
+                    <div class="blog-header-title slider-title-desc">
+                        <h2 class="">مجله <span class="main-color-one-color title-font">کیک پیک</span></h2>
+                    </div>
+                </div>
+            </div>
         </div>
-      <div class="plusbutton">
-        <button type="button" class="btn btn-outline-danger" id="load-more">
-          بارگیری بیشتر مقالات
-        </button>
-      </div>
-    </section>
+    </div>
+</div>
+<!-- end main content page -->
+
+<!-- blog -->
+
+<div class="blog-slider blog-post py-30">
+    <div class="container-fluid">
+        <div class="slider-title">
+            <div class="slider-title-desc">
+                <div class="slider-title-title">
+                    <h2 class="h1"><span class="title-font main-color-one-color">مقالات</span> جدید</h2>
+                </div>
+            </div>
+        </div>
+
+        <div class="advert-banner d-sm-block d-none py-40 my-5">
+            <div class="container-fluid">
+                <div class="row g-3 align-items-center">
+
+                    <div class="col-12">
+                        <div class="advert-banner-item img-tilt" data-tilt>
+                            <a href="">
+                                <img src="assets/img/advert-6.webp" alt="">
+                            </a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <!-- end advert banner -->
+
+        <div class="blogs-items my-5">
+            <div class="row gy-5 blog_posts">
+                <div class="col-lg-6">
+                    <div class="blog-slider-item-row">
+                        <a href="">
+                            <div class="row gy-3 align-items-center">
+                                <div class="col-sm-4">
+                                    <div class="blog-slider-item-row-image">
+                                        <img src="assets/img/blog-1.jpg" alt="">
+                                    </div>
+                                </div>
+                                <div class="col-sm-8">
+                                    <div class="blog-slider-item-stand-text">
+                                        <div class="blog-slider-item-stand-title">
+                                            <h6 class="font-16 title-font text-overflow-1 main-color-one-color">راهنمای خرید موبایل آبان 1402</h6>
+                                            <p class="text-overflow-2 my-2">رید گوشی موبایل مانند هر وسیله دیگری، نیازمند تحقیق و کسب اطلاعات کافی است. ما در این راهنمای خرید سعی می‌کنیم تا بهترین محصولات بازار را معرفی کنیم و حتی به صورت اختصاصی</p>
+                                            <div class="blog-slider-item-info d-flex align-items-center">
+                                                <div class="blog-slider-item-info-item me-3">
+                                                    <i class="bi bi-clock me-1"></i>
+                                                    <span>2 روز پیش نوشته شده</span>
+                                                </div>
+                                                <div class="blog-slider-item-info-item">
+                                                    <i class="bi bi-eye me-1"></i>
+                                                    <span>17 بازدید</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- /blog-items -->
+    </div>
+</div>
+<!-- end blog -->
+
+{% include 'layout/footer.html' %}
+
+{% include 'layout/mobile-menu.html' %}
+
 {% block JS %}
-<script src="{%static 'js/blog/blog_archive.js'%}"></script>
-<script
-  src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.7/dist/umd/popper.min.js"
-  integrity="sha384-zYPOMqeu1DAVkHiLqWBUTcbYfZ8osu1Nd6Z89ify25QV9guujx43ITvfi12/QExE"
-  crossorigin="anonymous">
+
+<script src="{% static '' %}assets/js/vendor/modernizr-3.11.2.min.js"></script>
+<script src="{% static '' %}assets/js/vendor/jquery-3.7.1.min.js"></script>
+<script src="{% static '' %}assets/js/vendor/bootstrap.bundle-5.3.2.min.js"></script>
+<script src="{% static '' %}assets/js/plugin/swiper/swiper-bundle.min.js"></script>
+<script src="{% static '' %}assets/js/plugin/countdown/countdown.js"></script>
+<script src="{% static '' %}assets/js/plugin/vanilla-tilt/vanilla-tilt.min.js"></script>
+<script src="{% static '' %}assets/js/plugin/rasta-contact/script.js"></script>
+<script src="{% static '' %}assets/js/plugin/bootstrap-touchspin/jquery.bootstrap-touchspin.min.js"></script>
+<script src="{% static '' %}assets/js/plugins.js"></script>
+<script src="{% static '' %}assets/js/main.js"></script>
+<script>
+    $(function(){
+        function separateDigitsWithComma(number) {
+    // Convert the number to a string
+    var numberString = String(number);
+  
+    // Split the string into an array of characters
+    var digitsArray = numberString.split('');
+  
+    // Reverse the array to process digits from right to left
+    digitsArray.reverse();
+  
+    // Iterate over the array and insert commas after every third digit
+    for (var i = 3; i < digitsArray.length; i += 4) {
+      digitsArray.splice(i, 0, ',');
+    }
+  
+    // Reverse the array again to get the original order
+    digitsArray.reverse();
+  
+    // Join the array into a string
+    var result = digitsArray.join('');
+  
+    return result;
+  }
+
+  function load_cart_data(){
+    $.ajax({
+        url:'/cart/load_cart_data',
+        type: 'POST',
+        data: {'Hello':'world!'},
+        success: function(response){
+            if(response.success === false){
+                console.log(response.status);
+            }else{
+                if(response.status.length > 0){
+                    $('.cart_title').html(`
+                    <h5 class="offcanvas-title title-font" id="offcanvasCartLabel">سبد خرید <small class="text-muted font-14 ms-1">${response.status.length} مورد</small></h5>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                    `);
+                    $('.cart_total').html(`
+                    <p class="text-muted mb-2">جمع کل</p>
+                        <h5 class="title-font">${separateDigitsWithComma(response.status[0].total_price)} تومان</h5>
+                    `);
+                    $('.checkout_button').html(`
+                    <a href="/cart" class="btn border-0 main-color-green text-white"><i
+                                class="bi bi-arrow-left me-1"></i>تکمیل خرید</a>
+                    `);
+                    for(let i = 0; i <= response.status.length; i++){
+                        $('.cart_body').append(`
+                        <li class="nav-item">
+                <div class="cart-canvas">
+                    <div class="row align-items-center">
+                        <div class="col-4 ps-0">
+                            <img src="https://kikpick.com/${response.status[i].image}" alt="${response.status[i].title}">
+                        </div>
+                        <div class="col-8">
+                            <a href="https://kikpick.com/shop/${response.status[i].slug}">
+                                <h3 class="text-overflow-1 title-font font-14">
+                                    ${response.status[i].title}
+                                </h3>
+                                <div class="cart-canvas-price my-3 d-flex align-items-center">
+                                    <h6 class="title-font main-color-one-color">${separateDigitsWithComma(response.status[i].price)} تومان</h6>
+                                </div>
+                            </a>
+                            <div class="cart-canvas-foot d-flex align-items-center justify-content-between">
+                                <div class="cart-canvas-count">
+                                    <span>تعداد:</span>
+                                    <span class="fw-bold main-color-one-color">${response.status[i].number}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </li>`);
+                    }//endfor
+                }else{
+                    $('.cart_title').html(`
+                    <h5 class="offcanvas-title title-font" id="offcanvasCartLabel">سبد خرید <small class="text-muted font-14 ms-1">خالی است</small></h5>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                    `);
+                    $('.checkout_button').html('')
+                    $('.cart_total').html(`
+                    <p class="text-muted mb-2">جمع کل</p>
+                        <h5 class="title-font">0 تومان</h5>
+                    `);
+                    $('.cart_body').html(`
+                    <div class="cart-empty-title">
+          <h2 class="text-center title-font">
+              سبد خرید شما خالی میباشد
+          </h2>
+          <div class="text-center mt-3">
+              <a href="/shop" class="btn main-color-one-outline rounded-pill px-4">برای شروع فرصت زیادی نیست</a>
+          </div>
+      </div>`);
+                }//endif
+            }//endif
+        },//end suncces
+    })//endajax
+  }//end function
+
+function load_posts(){
+    $.ajax({
+        url:'/blog_api/archive_data',
+        type: 'POST',
+        data: {},
+        success:function(data){
+            if(data.success === false){
+                load_posts();
+            }else{
+                $('.blog_posts').html('')
+                for(let i = 0; i <= data.context.length; i++){
+                    let post = data.context[i];
+                    $('.blog_posts').append(`
+                    <div class="col-lg-6">
+                    <div class="blog-slider-item-row">
+                        <a href="/blog/${post.slug}">
+                            <div class="row gy-3 align-items-center">
+                                <div class="col-sm-4">
+                                    <div class="blog-slider-item-row-image">
+                                        <img src="https://kikpick.com/${post.image}" alt="/${post.description}">
+                                    </div>
+                                </div>
+                                <div class="col-sm-8">
+                                    <div class="blog-slider-item-stand-text">
+                                        <div class="blog-slider-item-stand-title">
+                                            <h6 class="font-16 title-font text-overflow-1 main-color-one-color">${post.title}</h6>
+                                            <p class="text-overflow-2 my-2">${post.intro}</p>
+                                            <div class="blog-slider-item-info d-flex align-items-center">
+                                                <div class="blog-slider-item-info-item me-3">
+                                                    <i class="bi bi-clock me-1"></i>
+                                                    <span>${post.date}</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                    `)
+                }//endfor
+            }//endif
+        },
+    });//end ajax req
+}// end func load posts
+
+  load_cart_data();
+  load_posts()
+    });//end document ready
 </script>
 {% endblock %}
 {% endblock %}
