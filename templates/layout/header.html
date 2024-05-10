@@ -49,8 +49,8 @@
                     <div class="header-btn-login-responsive d-lg-none d-block">
                         <a href="/accounts" class="btn"><i class="bi bi-person-fill fs-2"></i></a>
                     </div>
-                    <div class="header-btn-favorite">
-                        <a href="/accounts/dashboard" class="btn"><i class="bi bi-heart"></i></a>
+                    <div onclick="favourite_items();" class="header-btn-favorite">
+                        <a class="btn"><i class="bi bi-heart"></i></a>
                     </div>
                     {% else %}
                     <div class="header-btn-login d-lg-block d-none">
@@ -266,8 +266,7 @@
                         <h5>جستجو برای <span>"${search_text}"</span></h5>
                         <h5 class="main-color-one-color">${response.context.length} نتیجه پیدا شد</h5>
                     </div>
-                    <div class="row g-4 searcch-result"><a href="${window.location.href}"><button class="btn btn-danger"><i class="bi bi-arrow-left">بستن جستجو</i></button></a>
-                    
+                    <div class="row g-4 searcch-result"><a href="${window.location.href}"><button class="btn btn-danger"><i class="bi bi-arrow-left">بازگشت</i></button></a>
                 </div>
             </div>
         </div>

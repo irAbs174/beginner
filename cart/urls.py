@@ -2,7 +2,7 @@ from django.urls import path
 from .views import cart_view, load_cart_data, add_to_cart, update_cart, remove_from_cart, apply_discount, clear_cart ,checkout, checkout_view
 from .favourite import add_favourite, remove_favourite, clear_favourite
 from .comparison import comparison_view ,add_comparison, clear_comparison
-from .payment import (fadax_pay, fadax_return_shop, post)
+from .payment import (fadax_pay, fadax_return_shop,)
 
 
 urlpatterns = [
